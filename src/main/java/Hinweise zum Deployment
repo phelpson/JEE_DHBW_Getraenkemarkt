@@ -1,0 +1,122 @@
+=======================
+Hinweise zum Deployment
+=======================
+
+
+TomEE-User haben's besser
+-------------------------
+
+Wenn du den von uns bereitgestellten TomEE-Applikationsserver nutzt, kannst du
+dich freuen. Wir haben bereits alles für dich eingerichtet. :-) Du kannst also
+direkt aufhören, weiterzulesen, wenn du dich für die Details der Einrichtung
+nicht interessierst.
+
+
+Unterstützung von Datenbankschemas
+----------------------------------
+
+In der Praxis kommt es oft vor, dass mehrere Webanwendungen auf denselben
+Datenbankserver zugreifen, um ihre Daten zu speichern. Damit es dabei nicht
+zu ungewollten Konflikten kommt (z.B. bei gleichnamigen Datenbanktabellen)
+bekommt jede Anwendung ein eigenes "Datenbankschema" zugewiesen. Während der
+Verbindung mit der Datenbank muss die Anwendung dann neben Benutzername und
+Passwort (Datenbankbenutzer) auch das Schema angeben, in dem ihre Tabellen
+liegen. Für die Anwendung sieht es dann fast so aus, als gehöre ihr die
+Datenbank ganz alleine.
+
+Leider unterstützen das nicht alle Datenbanken, die im Java-Umfeld zum
+Entwickeln und Testen genutzt werden. Apache Derby kann es, die H2-Datenbank
+nicht. Stürzt die Anwendung beim Start mit obskuren Exceptions ab, könnte der
+erste Versuch sein, auf die Verwendung eines eigenen Datenbankschemas zu
+verzichten. Hierfür müssen Sie in der Datei
+
+    Other Sources
+        src/main/resources
+            META-INF
+                orm.xml
+
+folgende Zeile auskommentieren:
+
+    <schema>JTODO</schema>
+
+Bringt dies keine Besserung, sollten Sie die Zeile wieder einkommentieren.
+
+
+Konfiguration der Benutzerauthentifizierung
+-------------------------------------------
+
+In den Klassen ….jpa.User sowie ….ejb.UserBean sehen Sie, wie eine einfache
+Benutzerverwaltung in Java realisiert werden kann. Die Anwendung verwaltet
+hierfür eine eigene Tabelle, in der die Benutzer, Passwörter und zugeordneten
+Benutzergruppen (zur Steuerung des Berechtigungsumfangs) gespeichert werden.
+
+Die Authentifizierung und Autorisierung werden jedoch nicht von der Anwendung,
+sondern vom Applikationsserver vorgenommen, der hierfür entsprechend konfiguriert
+werden muss. Das heißt, der Applikationsserver muss wissen, in welchen Tabellen
+die Benutzer gespeichert sind. Dies erfolgt anhand den Einstellungen in der
+Datei
+
+    Web Pages
+        WEB-INF
+            web.xml
+
+Dort befinden sich die anwendungsspezifischen Einstellungen, welche Aktionen
+welche Berechtigungen erfordern. Am Ende wird dabei mit folgender Zeile
+
+    <realm-name>todo-app</realm-name>
+
+Realm ist dabei nur ein schöner Begriff für eine beliebige Datenbank mit
+Benutzern und ihren Passwörtern und Berechtigungen. Ihre Definition gehört
+nicht zur Anwendung, da die Anwendung theoretisch ja bei unterschiedlichen 
+Kunden in unterschiedlichen Systemlandschaften laufen könnte und nicht jeder
+Kunde denselben Authentifizierungsmechanismus nutzen möchte. Der eine Kunde
+freut sich vielleicht darüber, dass die Anwendung ihre eigenen Tabellen dafür
+mitbringt, während der andere Kunde lieber einen Single Sign On mit seinem
+zentralen LDAP-Verzeichnis oder Active Directory haben möchte. Aus diesem
+Grund muss das Realm in der Konfiguration des Applikationsservers angelegt
+werden.
+
+Im TomEE geschieht dies durch folgende Zeilen in der Konfigurationsdatei
+conf/server.xml:
+
+    <Realm
+        resourceName   = "todo-app"
+        className      = "org.apache.catalina.realm.DataSourceRealm"
+
+        dataSourceName = "Derby-Sample-Unmanaged"
+        userTable      = "jtodo.jtodo_user"
+        userNameCol    = "username"
+        userCredCol    = "password_hash"
+
+        userRoleTable  = "jtodo.jtodo_user_group"
+        roleNameCol    = "groupname"
+    >
+        <CredentialHandler
+            className = "org.apache.catalina.realm.MessageDigestCredentialHandler"
+            algorithm = "SHA-256"
+        />
+    </Realm>
+
+Die unter „dataSourceName“ genannte Datenbankverbindung muss dabei in der Datei
+conf/tomee.xml wie folgt definiert werden:
+
+    <Resource id="Derby-Sample-Managed" type="javax.sql.DataSource">
+        JdbcDriver = org.apache.derby.jdbc.ClientDriver
+        JdbcUrl    = jdbc:derby://localhost:1527/sample
+        UserName   = app
+        Password   = app
+        JtaManaged = true
+    </Resource>
+
+    <Resource id="Derby-Sample-Unmanaged" type="javax.sql.DataSource">
+        JdbcDriver = org.apache.derby.jdbc.ClientDriver
+        JdbcUrl    = jdbc:derby://localhost:1527/sample
+        UserName   = app
+        Password   = app
+        JtaManaged = false
+    </Resource>
+
+Das Beispiel geht dabei von der Derby-Beispieldatenbank aus, die Bestandteil
+von Netbeans ist. Für den Produktivbetrieb muss die Datenbankverbindung
+natürlich auf einen echten Datenbankserver (MariaDB, PostgreSQL, ...) gelenkt
+werden.
