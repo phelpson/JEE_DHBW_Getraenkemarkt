@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+         version="3.1">
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+    
+    <!--
+        Authentifizierung / Authorisierung
+        ==================================
+        
+        Alle URLs, die mit /app/ beginnen, können nur aufgerufen werden,
+        wenn der Anwender sich mit einem gültigen Benutzer eingeloggt hat.
+        Der Versuch, eine solche Seite aufzrufen, ohne eingeloggt zu sein,
+        führt automatisch zur Login-Seite.
+        
+        Vgl. https://stackoverflow.com/questions/3134228/restrict-jsp-servlet-access-to-specific-users-only/3134323#3134323
+        Vgl. https://docs.oracle.com/javaee/7/tutorial/security-advanced003.htm
+        Vgl. https://dzone.com/articles/jdbc-realm-and-form-based
+    -->
+    
+    <security-constraint>
+        <display-name>
+            Geschützter Bereich für angemeldete Benutzer
+        </display-name>
+        <!--
+            Alle URLs beginnend mit /app/ schützen
+        -->
+        <web-resource-collection>
+            <web-resource-name>todo-app</web-resource-name>
+            <url-pattern>/app/*</url-pattern>
+        </web-resource-collection>
+        
+        <!--
+            Ein Benutzer muss die Rolle "app-user" besitzen, um die
+            Seiten aufrufen zu können.
+        -->
+        <auth-constraint>
+            <role-name>app-user</role-name>
+        </auth-constraint>
+        
+        <!--
+            Sicherstellen, dass nur verschlüsselte Verbindungen via HTTPS
+            zugelassen werden. Unverschlüsselte HTTP-Anfragen werden auf
+            HTTPS umgeleitet.
+        -->
+        <user-data-constraint>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+
+    <!--
+        Übersicht über alle von dieser Webanwendung genutzten Benutzerollen
+        für den Admin. Die Vergabe der Rollen erfolgt durch Hinzufügen der
+        Benutzer zu bestimmten Benutzergruppen. In der Datei glassfish-web.xml
+        ist dabei das Mapping zwischen Benutzergruppen und Rollen definiert.
+    -->
+    <security-role>
+        <description>
+            Ein Benutzer der jTodo-Beispielanwendung. Jeder Benutzer muss
+            mindestens diese Rolle besitzen, um sich einloggen und neue
+            Aufgaben anlegen zu können.
+        </description>
+        <role-name>app-user</role-name>
+    </security-role>
+    
+    <!--
+        Definition der JSP-Dateien mit dem Loginformular und einer Fehlerseite,
+        falls der Anwender sich vertippt.
+    -->
+    <login-config>
+        <auth-method>FORM</auth-method>
+        <realm-name>todo-app</realm-name>
+        
+        <form-login-config>
+            <form-login-page>/WEB-INF/login/login.jsp</form-login-page>
+            <form-error-page>/WEB-INF/login/error.jsp</form-error-page>
+        </form-login-config>
+    </login-config>
+</web-app>
