@@ -36,9 +36,24 @@ public class BestellungBean {
      * @return Bestellung mit genannter ID
      * @param id
      */
-    public List<BestellungEntry> findById(long id){
+    public BestellungEntry findById(long id){
         return this.em.find(BestellungEntry.class, id);
     }
+    /**
+     * @return Bestellung durch LieferantID
+     * @param lieferantID
+     */
+    public BestellungEntry findByLieferantID(int lieferantID){
+        return this.em.find(BestellungEntry.class, lieferantID);
+    }
+    /**
+     * @return Bestellung durch UserID
+     * @param userID
+     */
+    public BestellungEntry findByUserID(int userID){
+        return this.em.find(BestellungEntry.class, userID);
+    }
+    
     /**
      * Speichert einen neuen Gästebucheintrag
      * @param id                ID der Bestellung

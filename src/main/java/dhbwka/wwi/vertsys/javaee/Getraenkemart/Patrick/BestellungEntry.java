@@ -34,6 +34,7 @@ public class BestellungEntry implements Serializable {
     private int lieferantID = 0;
     @OneToMany()
     private int getraenkID = 0;
+    private int userID = 0;
     private String bestellungStatus = "";
     
     public BestellungEntry(){
@@ -47,6 +48,7 @@ public class BestellungEntry implements Serializable {
         this.bestellungTime     = bestellungTime;
         this.lieferantID        = lieferantID;
         this.getraenkID         = getraenkID;
+        this.userID             = userID;
         this.bestellungStatus   = bestellungStatus;      
     }
 
@@ -80,6 +82,12 @@ public class BestellungEntry implements Serializable {
     }
     public void setgetraenkID(int getraenkID){
         this.getraenkID = getraenkID;
+    }
+    public int getuserID(){
+        return this.userID;
+    }
+    public void setuserID(int userID){
+        this.userID = userID;
     }
     public String getbestellungStatus(){
         return this.bestellungStatus;
