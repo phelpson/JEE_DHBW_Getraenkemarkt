@@ -61,13 +61,34 @@ public class AuftragBean {
             int getraenkID, 
             String auftragStatus){
         
-        AuftragEntity entity = new AuftragEntity(
-                auftragId, auftragDate, auftragTime, kundenID, getraenkID, auftragStatus);
+        AuftragEntity auftragentitiy = new AuftragEntity(
+                auftragId, auftragDate, auftragTime, kundenID, auftragStatus);
                         
-        em.persist(entity);
-        return em.merge(entity);
+        em.persist(auftragentitiy);
+        return em.merge(auftragentitiy);
     }
     
+    // Update eines bestehenden Auftrags
+    public AuftragEntity updateAuftrag(AuftragEntity auftragentitiy) {
+        return this.em.merge(auftragentitiy);
+    }
+    
+    // Auftrag löschen - Experimental (soll das implementiert werden?)
+    public void delete(AuftragEntity auftragentitiy) {
+        em.remove(auftragentitiy);
+    }
+    
+    // Suchen-Funktion für spätere REST-API
+    /* To be implemented for Customer
+    public List<AuftragEntity> sucheFilm(String firmenname) {
+            return em.createQuery(
+                        "SELECT f FROM AuftragEntity f"
+                      + "    WHERE f.firmenname LIKE :firmenname"
+                     )
+                     .setParameter("firmenname", firmenname)
+                     .getResultList();
+    }
+    */
     
     
 }

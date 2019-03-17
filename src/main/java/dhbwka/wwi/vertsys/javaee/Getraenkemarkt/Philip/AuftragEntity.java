@@ -17,6 +17,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -26,23 +27,32 @@ import javax.validation.constraints.Size;
  * @author Philip Mayer
  */
 @Entity
+@Table(name = "Auftrag")
 public class AuftragEntity implements Serializable {
     
         private static final long serialVersionUID = 1L;
     @Id
+    @Column
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long auftragId;
     
+    @Column(nullable=false)
     private Date auftragDate;
+    
+    @Column(nullable=false)
     private Time auftragTime;
     
     // for later implementation of relation model 
     // @OneToOne(optional = false, fetch = FetchType.LAZY)
+    @Column(nullable=false)
     private int kundenId = 0;
     
-    // for later implementation of relation model 
-    // @OneToMany()
-    private int getraenkID = 0;
+    // * Foreign Key Relation
+    // * For later implementation of relation model 
+    // * getraenkeId is placeholder for Getraenk Object
+    // * @OneToMany
+    // * @Column(nullable=false)
+    // * List <Getraenk> getraenk = new ArrayList<>();
     
     private String auftragStatus = "";
     
@@ -51,12 +61,11 @@ public class AuftragEntity implements Serializable {
     }
     
     public AuftragEntity(long auftragId, Date auftragDate, Time auftragTime, int kundenId, 
-                                                int getraenkID, String auftragStatus){
+                                                String auftragStatus){
         this.auftragId      = auftragId;
         this.auftragDate    = auftragDate;
         this.auftragTime    = auftragTime;
         this.kundenId       = kundenId;
-        this.getraenkID     = getraenkID;
         this.auftragStatus  = auftragStatus;      
     }
 
@@ -84,12 +93,6 @@ public class AuftragEntity implements Serializable {
     }
     public void setlieferantID(int lieferantID){
         this.kundenId = lieferantID;
-    }
-    public int getGetraenkId(){
-        return this.getraenkID;
-    }
-    public void setgetraenkID(int getraenkID){
-        this.getraenkID = getraenkID;
     }
     public String getAuftragStatus(){
         return this.auftragStatus;
