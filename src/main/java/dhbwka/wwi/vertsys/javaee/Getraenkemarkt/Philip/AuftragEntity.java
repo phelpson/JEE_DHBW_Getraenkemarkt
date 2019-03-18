@@ -30,7 +30,8 @@ import javax.validation.constraints.Size;
 @Table(name = "Auftrag")
 public class AuftragEntity implements Serializable {
     
-        private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+    
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.AUTO)
