@@ -30,9 +30,11 @@ public class BestellungEntry implements Serializable {
     
     private Date bestellungDate;
     private Time bestellungTime;
-    @OneToOne(optional = false, fetch = FetchType.LAZY)
+    
+    // @OneToOne(optional = false, fetch = FetchType.LAZY)
     private int lieferantID = 0;
-    @OneToMany()
+    
+    //@OneToMany()
     private int getraenkID = 0;
     private int userID = 0;
     private String bestellungStatus = "";

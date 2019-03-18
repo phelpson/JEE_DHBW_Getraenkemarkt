@@ -55,7 +55,7 @@ public class BestellungBean {
     }
     
     /**
-     * Speichert einen neuen Gästebucheintrag
+     * Speichert einer neuen Bestellung
      * @param id                ID der Bestellung
      * @param bestellungDate    Datum der Bestellung
      * @param bestellungTime    Zeit der Bestellung
