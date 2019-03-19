@@ -59,15 +59,15 @@ public class BestellungBean {
      * @param id                ID der Bestellung
      * @param bestellungDate    Datum der Bestellung
      * @param bestellungTime    Zeit der Bestellung
-     * @param lieferantID       ID des Lieferanten(Fremdschlüssel)
-     * @param getraenkID        ID der Getränke (Fremdschlüssel)
+     * @param lieferantEntry       ID des Lieferanten(Fremdschlüssel)
+     * @param getraenkeEntity        ID der Getränke (Fremdschlüssel)
      * @param bestellungStatus  Status der Bestellung
      * @return                  die gespeicherte Bestellung
      */
-    public BestellungEntry createNewEntry(Long id, Date bestellungDate, Time bestellungTime, int lieferantID, 
-                                                int getraenkID, String bestellungStatus){
-        BestellungEntry entry = new BestellungEntry(id, bestellungDate, bestellungTime, lieferantID, 
-                                                    getraenkID, bestellungStatus);
+    public BestellungEntry createNewEntry(Long id, Date bestellungDate, Time bestellungTime, LieferantEntry lieferantEntry, 
+                                                GetraenkeEntity getraenkeEntity, String bestellungStatus){
+        BestellungEntry entry = new BestellungEntry(id, bestellungDate, bestellungTime, lieferantEntry, 
+                                                    getraenkeEntity, bestellungStatus);
                     
         em.persist(entry);
         return em.merge(entry);
