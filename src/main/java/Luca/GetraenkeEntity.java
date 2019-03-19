@@ -33,7 +33,7 @@ public class GetraenkeEntity implements Serializable {
      GetraenkeEntity(Long getraenkeId,String getraenkename, int flaschenProKiste) {
        
     }
-
+//get Getränke ID
     public Long getGetraenkeId() {
         return this.getraenkeId ;
     }
