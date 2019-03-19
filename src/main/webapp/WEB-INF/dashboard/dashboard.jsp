@@ -15,7 +15,7 @@
 
 <template:base>
     <jsp:attribute name="title">
-        Dashboard
+        Auftragsübersicht
     </jsp:attribute>
 
     <jsp:attribute name="head">
@@ -28,7 +28,7 @@
         </div>
 
         <div class="menuitem">
-            <a href="<c:url value="/app/tasks/task/new/"/>">Aufgabe anlegen</a>
+            <a href="<c:url value="/app/tasks/task/new/"/>">Getränke-Bestellung anlegen</a>
         </div>
 
         <div class="menuitem">

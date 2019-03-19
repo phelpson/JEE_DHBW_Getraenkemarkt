@@ -5,6 +5,7 @@
  */
 package dhbwka.wwi.vertsys.javaee.Getraenkemart.Patrick;
 
+import Luca.GetraenkeEntity;
 import java.sql.Date;
 import java.sql.Time;
 import java.util.List;

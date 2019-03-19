@@ -10,6 +10,8 @@
     <non-jta-data-source>Default-Database-Unmanaged</non-jta-data-source>
     <!-- TomEE -->
     <class>dhbwka.wwi.vertsys.javaee.Getraenkemart.Patrick.BestellungEntry</class>
+    <class>Luca.MitarbeiterEntity</class>
+    <class>Luca.GetraenkeEntity</class>
     <properties>
       <property name="javax.persistence.schema-generation.database.action" value="create"/>
       <!-- TomEE -->

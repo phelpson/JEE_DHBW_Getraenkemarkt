@@ -17,10 +17,10 @@
     <jsp:attribute name="title">
         <c:choose>
             <c:when test="${edit}">
-                Aufgabe bearbeiten
+                Auftrag bearbeiten
             </c:when>
             <c:otherwise>
-                Aufgabe anlegen
+                Auftrag anlegen
             </c:otherwise>
         </c:choose>
     </jsp:attribute>
@@ -31,7 +31,7 @@
 
     <jsp:attribute name="menu">
         <div class="menuitem">
-            <a href="<c:url value="/app/dashboard/"/>">Dashboard</a>
+            <a href="<c:url value="/app/dashboard/"/>">Auftragsübersicht</a>
         </div>
         
         <div class="menuitem">
@@ -72,6 +72,8 @@
                     <input type="text" name="task_due_date" value="${task_form.values["task_due_date"][0]}">
                     <input type="text" name="task_due_time" value="${task_form.values["task_due_time"][0]}">
                 </div>
+                
+                
 
                 <label for="task_status">
                     Status:
