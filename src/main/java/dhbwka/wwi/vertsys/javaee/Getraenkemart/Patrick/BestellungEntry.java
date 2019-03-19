@@ -5,14 +5,18 @@
  */
 package dhbwka.wwi.vertsys.javaee.Getraenkemart.Patrick;
 
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.User;
 import java.io.Serializable;
 import java.sql.Date;
 import java.sql.Time;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
@@ -31,26 +35,29 @@ public class BestellungEntry implements Serializable {
     private Date bestellungDate;
     private Time bestellungTime;
     
-    // @OneToOne(optional = false, fetch = FetchType.LAZY)
-    private int lieferantID = 0;
+    @OneToOne(optional = false, fetch = FetchType.LAZY)
+    private LieferantEntry lieferantEntry = null;
     
-    //@OneToMany()
-    private int getraenkID = 0;
-    private int userID = 0;
+    @ManyToMany(optional = false, fetch = FetchType.LAZY)
+    private GetraenkeEntity getraenkeEntity = null;
+    
+    @OneToOne(optional = false, fetch = FetchType.LAZY)
+    private User userEntity = null;
+    
     private String bestellungStatus = "";
     
     public BestellungEntry(){
         
     }
     
-    public BestellungEntry(Long id, Date bestellungDate, Time bestellungTime, int lieferantID, 
-                                                int getraenkID, String bestellungStatus){
+    public BestellungEntry(Long id, Date bestellungDate, Time bestellungTime, LieferantEntry lieferantEntry, 
+                                                GetraenkeEntity getraenkeEntity, User userEntity, String bestellungStatus){
         this.id                 = id;
         this.bestellungDate     = bestellungDate;
         this.bestellungTime     = bestellungTime;
-        this.lieferantID        = lieferantID;
-        this.getraenkID         = getraenkID;
-        this.userID             = userID;
+        this.lieferantEntry     = lieferantEntry;
+        this.getraenkeEntity    = getraenkeEntity;
+        this.userEntity         = userEntity;
         this.bestellungStatus   = bestellungStatus;      
     }
 
