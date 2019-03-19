@@ -39,7 +39,7 @@ public class BestellungEntry implements Serializable {
     @OneToOne(optional = false, fetch = FetchType.LAZY)
     private LieferantEntry lieferantEntry = null;
     
-    @ManyToMany(optional = false, fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY)
     private GetraenkeEntity getraenkeEntity = null;
     
     @OneToOne(optional = false, fetch = FetchType.LAZY)
@@ -81,23 +81,23 @@ public class BestellungEntry implements Serializable {
     public void setbestellungTime(Time bestellungTime){
         this.bestellungTime = bestellungTime;
     }
-    public int getlieferantID(){
-        return this.lieferantID;
+    public LieferantEntry getlieferantID(){
+        return this.lieferantEntry;
     }
-    public void setlieferantID(int lieferantID){
-        this.lieferantID = lieferantID;
+    public void setlieferantID(LieferantEntry lieferantEntry){
+        this.lieferantEntry = lieferantEntry;
     }
-    public int getgetraenkID(){
-        return this.getraenkID;
+    public GetraenkeEntity getgetraenkID(){
+        return this.getraenkeEntity;
     }
-    public void setgetraenkID(int getraenkID){
-        this.getraenkID = getraenkID;
+    public void setgetraenkID(GetraenkeEntity getraenkeEntity){
+        this.getraenkeEntity = getraenkeEntity;
     }
-    public int getuserID(){
-        return this.userID;
+    public User getuserID(){
+        return this.userEntity;
     }
-    public void setuserID(int userID){
-        this.userID = userID;
+    public void setuserID(User userEntity){
+        this.userEntity = userEntity;
     }
     public String getbestellungStatus(){
         return this.bestellungStatus;

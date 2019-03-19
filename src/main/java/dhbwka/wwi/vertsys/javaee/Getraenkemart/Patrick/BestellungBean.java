@@ -6,6 +6,7 @@
 package dhbwka.wwi.vertsys.javaee.Getraenkemart.Patrick;
 
 import Luca.GetraenkeEntity;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.User;
 import java.sql.Date;
 import java.sql.Time;
 import java.util.List;
@@ -60,15 +61,16 @@ public class BestellungBean {
      * @param id                ID der Bestellung
      * @param bestellungDate    Datum der Bestellung
      * @param bestellungTime    Zeit der Bestellung
-     * @param lieferantEntry       ID des Lieferanten(Fremdschlüssel)
-     * @param getraenkeEntity        ID der Getränke (Fremdschlüssel)
+     * @param lieferantEntry    ID des Lieferanten(Fremdschlüssel)
+     * @param getraenkeEntity   ID der Getränke (Fremdschlüssel)
+     * @param userEntity        Verknüpfung zum User (Fremdschlüssel)
      * @param bestellungStatus  Status der Bestellung
      * @return                  die gespeicherte Bestellung
      */
     public BestellungEntry createNewEntry(Long id, Date bestellungDate, Time bestellungTime, LieferantEntry lieferantEntry, 
-                                                GetraenkeEntity getraenkeEntity, String bestellungStatus){
+                                                GetraenkeEntity getraenkeEntity, User userEntity, String bestellungStatus){
         BestellungEntry entry = new BestellungEntry(id, bestellungDate, bestellungTime, lieferantEntry, 
-                                                    getraenkeEntity, bestellungStatus);
+                                                    getraenkeEntity,userEntity, bestellungStatus);
                     
         em.persist(entry);
         return em.merge(entry);
