@@ -5,6 +5,7 @@
  */
 package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.Philip;
 
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb.EntityBean;
 import java.sql.Date;
 import java.sql.Time;
 import java.util.List;

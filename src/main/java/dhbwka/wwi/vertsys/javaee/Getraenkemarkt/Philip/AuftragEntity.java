@@ -57,6 +57,7 @@ public class AuftragEntity implements Serializable {
     
     private String auftragStatus = "";
     
+    //<editor-fold defaultstate="collapsed" desc="Constructors">
     public AuftragEntity(){
         
     }
@@ -69,7 +70,9 @@ public class AuftragEntity implements Serializable {
         this.kundenId       = kundenId;
         this.auftragStatus  = auftragStatus;      
     }
-
+    //</editor-fold>
+    
+    //<editor-fold defaultstate="collapsed" desc="Getter + Setter">
     public long getId() {
         return this.auftragId;
     }
@@ -101,7 +104,7 @@ public class AuftragEntity implements Serializable {
     public void setAuftragStatus(String bestellungStatus){
         this.auftragStatus = bestellungStatus;
     }
-    
+    //</editor-fold>
 
     @Override
     public int hashCode() {

@@ -20,12 +20,14 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Persistence Entity
  * @author Patrick Mahler
  */
 @Entity
+@XmlRootElement
 public class BestellungEntry implements Serializable {
 
     private static final long serialVersionUID = 1L;

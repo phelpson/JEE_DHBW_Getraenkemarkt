@@ -42,7 +42,7 @@ public class KundeEntity implements Serializable {
     private String land = "DE";
     
     
-    // Constructor
+    //<editor-fold defaultstate="collapsed" desc="Constructors">
     public KundeEntity() {
         // empty base constructor
     }
@@ -54,10 +54,10 @@ public class KundeEntity implements Serializable {
         this.plz = plz;
         this.land = land;
     }
+    //</editor-fold>
     
     
-    // Getter + Setter
-    
+    //<editor-fold defaultstate="collapsed" desc="Getter + Setter">
     public void setKundenId(Long kundeId) {
         this.kundeId = kundeId;
     }
@@ -88,6 +88,7 @@ public class KundeEntity implements Serializable {
     public String getLand() {
         return this.land;
     }
+    //</editor-fold>
 
     // Methods
             
