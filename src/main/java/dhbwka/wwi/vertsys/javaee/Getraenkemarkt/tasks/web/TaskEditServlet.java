@@ -156,8 +156,10 @@ public class TaskEditServlet extends HttpServlet {
         }
 
         try {
+
             task.setStatus(TaskStatus.valueOf(taskStatus));
             task.setGetraenkEnum(GetraenkeEnum.valueOf(taskGetraenk));
+
         } catch (IllegalArgumentException ex) {
             errors.add("Der ausgewählte Status ist nicht vorhanden.");
         }

@@ -5,6 +5,7 @@
  */
 package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa;
 
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.KundeEntity;
 import java.io.Serializable;
 import java.sql.Date;
 import java.sql.Time;
@@ -18,7 +19,10 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 import javax.validation.constraints.NotNull;
@@ -37,18 +41,16 @@ public class AuftragEntity implements Serializable {
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long auftragId;
+    private long auftragId;
     
+    @NotNull(message = "Das Datum darf nicht leer sein.")
     @Column(nullable=false)
     private Date auftragDate;
     
+    @NotNull(message = "Die Uhrzeit darf nicht leer sein.")
     @Column(nullable=false)
     private Time auftragTime;
     
-    // for later implementation of relation model 
-    // @OneToOne(optional = false, fetch = FetchType.LAZY)
-    @Column(nullable=false)
-    private int kundenId = 0;
     
     
     // * Foreign Key Relation
@@ -57,21 +59,28 @@ public class AuftragEntity implements Serializable {
     // * @OneToMany
     // * @Column(nullable=false)
     // * List <Getraenk> getraenk = new ArrayList<>();
+    //@ManyToOne
+    @Enumerated(EnumType.STRING)
+    @NotNull
+    private TaskStatus status = TaskStatus.OPEN;
+   
     
-    private String auftragStatus = "";
+    @Lob
+    @NotNull
+    private String longText;
+
     
     //<editor-fold defaultstate="collapsed" desc="Constructors">
     public AuftragEntity(){
         
     }
     
-    public AuftragEntity(long auftragId, Date auftragDate, Time auftragTime, int kundenId, 
-                                                String auftragStatus){
+    public AuftragEntity(long auftragId, Date auftragDate, Time auftragTime, 
+                                                TaskStatus status){
         this.auftragId      = auftragId;
         this.auftragDate    = auftragDate;
         this.auftragTime    = auftragTime;
-        this.kundenId       = kundenId;
-        this.auftragStatus  = auftragStatus;      
+        this.status         = status;      
     }
     //</editor-fold>
     
@@ -95,44 +104,14 @@ public class AuftragEntity implements Serializable {
     public void setAuftragTime(Time bestellungTime){
         this.auftragTime = bestellungTime;
     }
-    public int getKundenId(){
-        return this.kundenId;
+    public TaskStatus getAuftragStatus(){
+        return this.status;
     }
-    public void setlieferantID(int lieferantID){
-        this.kundenId = lieferantID;
-    }
-    public String getAuftragStatus(){
-        return this.auftragStatus;
-    }
-    public void setAuftragStatus(String bestellungStatus){
-        this.auftragStatus = bestellungStatus;
+    public void setAuftragStatus(TaskStatus status){
+        this.status = status;
     }
    
     //</editor-fold>
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (auftragId != null ? auftragId.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof AuftragEntity)) {
-            return false;
-        }
-        AuftragEntity other = (AuftragEntity) object;
-        if ((this.auftragId == null && other.auftragId != null) || (this.auftragId != null && !this.auftragId.equals(other.auftragId))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "Autrags ID lautet: " + auftragId;
-    }
     
 }

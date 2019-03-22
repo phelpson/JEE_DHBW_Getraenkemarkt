@@ -7,6 +7,8 @@ package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.ejb;
 
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa.AuftragEntity;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb.EntityBean;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.KundeEntity;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa.TaskStatus;
 import java.sql.Date;
 import java.sql.Time;
 import java.util.List;
@@ -56,15 +58,14 @@ public class AuftragBean {
      * @return               die gespeicherte Auftrag
      */
     public AuftragEntity createNewEntry(
-            Long auftragId, 
-            Date auftragDate, 
-            Time auftragTime, 
-            int kundenID,                                      
-            int getraenkID, 
-            String auftragStatus){
+         long auftragId,
+         Date auftragDate,
+         Time auftragTime, 
+         KundeEntity kundeEntity, 
+        TaskStatus status){
         
-        AuftragEntity auftragentitiy = new AuftragEntity(
-                auftragId, auftragDate, auftragTime, kundenID, auftragStatus);
+        AuftragEntity auftragentitiy = new AuftragEntity( auftragId,  auftragDate,  auftragTime,  
+                                                 status);
                         
         em.persist(auftragentitiy);
         return em.merge(auftragentitiy);
