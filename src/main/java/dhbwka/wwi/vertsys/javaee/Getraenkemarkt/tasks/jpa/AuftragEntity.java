@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -47,6 +49,7 @@ public class AuftragEntity implements Serializable {
     // @OneToOne(optional = false, fetch = FetchType.LAZY)
     @Column(nullable=false)
     private int kundenId = 0;
+    
     
     // * Foreign Key Relation
     // * For later implementation of relation model 
@@ -104,6 +107,7 @@ public class AuftragEntity implements Serializable {
     public void setAuftragStatus(String bestellungStatus){
         this.auftragStatus = bestellungStatus;
     }
+   
     //</editor-fold>
 
     @Override

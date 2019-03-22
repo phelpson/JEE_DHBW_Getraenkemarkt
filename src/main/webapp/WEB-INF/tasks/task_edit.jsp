@@ -89,6 +89,20 @@
                     </select>
                 </div>
 
+                <label for="task_getraenk">
+                    Getränk:
+                    <span class="required">*</span>
+                </label>
+                <div class="side-by-side margin">
+                    <select name="task_getraenk">
+                        <c:forEach items="${getraenk}" var="getraenk">
+                            <option value="${getraenk}" ${task_form.values["task_getraenk"][0] == getraenk ? 'selected' : ''}>
+                                <c:out value="${getraenk.label}"/>
+                            </option>
+                        </c:forEach>
+                    </select>
+                </div>
+                
                 <label for="task_short_text">
                     Bezeichnung:
                     <span class="required">*</span>

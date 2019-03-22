@@ -15,6 +15,8 @@ import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.ejb.CategoryBean;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.ejb.TaskBean;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb.UserBean;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb.ValidationBean;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa.AuftragEntity;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa.GetraenkeEnum;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa.Task;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa.TaskStatus;
 import java.io.IOException;
@@ -40,7 +42,7 @@ public class TaskEditServlet extends HttpServlet {
 
     @EJB
     TaskBean taskBean;
-
+    
     @EJB
     CategoryBean categoryBean;
 
@@ -49,6 +51,8 @@ public class TaskEditServlet extends HttpServlet {
 
     @EJB
     ValidationBean validationBean;
+    
+    AuftragEntity getraenk;
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -57,6 +61,7 @@ public class TaskEditServlet extends HttpServlet {
         // Verfügbare Kategorien und Stati für die Suchfelder ermitteln
         request.setAttribute("categories", this.categoryBean.findAllSorted());
         request.setAttribute("statuses", TaskStatus.values());
+        request.setAttribute("getraenk", GetraenkeEnum.values());
 
         // Zu bearbeitende Aufgabe einlesen
         HttpSession session = request.getSession();
@@ -65,15 +70,21 @@ public class TaskEditServlet extends HttpServlet {
         request.setAttribute("edit", task.getId() != 0);
                                 
         if (session.getAttribute("task_form") == null) {
-            // Keine Formulardaten mit fehlerhaften Daten in der Session,
+            // Keine Formulardaten mit fehlergetRequestedTaskhaften Daten in der Session,
             // daher Formulardaten aus dem Datenbankobjekt übernehmen
             request.setAttribute("task_form", this.createTaskForm(task));
         }
+        /*if (session.getAttribute("getraenk_form") == null) {
+            // Keine Formulardaten mit fehlergetRequestedTaskhaften Daten in der Session,
+            // daher Formulardaten aus dem Datenbankobjekt übernehmen
+            request.setAttribute("getraenk_form", this.createGetraenkForm(getraenk));
+        }*/
 
         // Anfrage an die JSP weiterleiten
         request.getRequestDispatcher("/WEB-INF/tasks/task_edit.jsp").forward(request, response);
         
         session.removeAttribute("task_form");
+        // session.removeAttribute("getraenk_form");
     }
 
     @Override
@@ -115,6 +126,7 @@ public class TaskEditServlet extends HttpServlet {
         String taskDueDate = request.getParameter("task_due_date");
         String taskDueTime = request.getParameter("task_due_time");
         String taskStatus = request.getParameter("task_status");
+        String taskGetraenk = request.getParameter("task_getraenk");
         String taskShortText = request.getParameter("task_short_text");
         String taskLongText = request.getParameter("task_long_text");
 
@@ -145,6 +157,7 @@ public class TaskEditServlet extends HttpServlet {
 
         try {
             task.setStatus(TaskStatus.valueOf(taskStatus));
+            task.setGetraenkEnum(GetraenkeEnum.valueOf(taskGetraenk));
         } catch (IllegalArgumentException ex) {
             errors.add("Der ausgewählte Status ist nicht vorhanden.");
         }
@@ -267,7 +280,7 @@ public class TaskEditServlet extends HttpServlet {
         values.put("task_status", new String[]{
             task.getStatus().toString()
         });
-
+       
         values.put("task_short_text", new String[]{
             task.getShortText()
         });
@@ -280,5 +293,7 @@ public class TaskEditServlet extends HttpServlet {
         formValues.setValues(values);
         return formValues;
     }
+    
+
 
 }

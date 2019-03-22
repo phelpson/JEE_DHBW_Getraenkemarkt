@@ -90,12 +90,14 @@ public class BestellungEntry implements Serializable {
     public void setlieferantID(LieferantEntry lieferantEntry){
         this.lieferantEntry = lieferantEntry;
     }
+    /*
     public GetraenkeEntity getgetraenkID(){
         return this.getraenkeEntity;
     }
     public void setgetraenkID(GetraenkeEntity getraenkeEntity){
         this.getraenkeEntity = getraenkeEntity;
     }
+    */
     public User getuserID(){
         return this.userEntity;
     }

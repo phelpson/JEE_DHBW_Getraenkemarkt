@@ -45,6 +45,8 @@ public class Task implements Serializable {
 
     @ManyToOne
     private Category category;
+    
+
 
     @Column(length = 50)
     @NotNull(message = "Die Bezeichnung darf nicht leer sein.")
@@ -64,18 +66,24 @@ public class Task implements Serializable {
     @Enumerated(EnumType.STRING)
     @NotNull
     private TaskStatus status = TaskStatus.OPEN;
+    
+    @Column
+    @Enumerated(EnumType.STRING)
+    @NotNull
+    private GetraenkeEnum getraenk = GetraenkeEnum.Bier;
 
     //<editor-fold defaultstate="collapsed" desc="Konstruktoren">
     public Task() {
     }
 
-    public Task(User owner, Category category, String shortText, String longText, Date dueDate, Time dueTime) {
+    public Task(User owner, Category category, String shortText, String longText, Date dueDate, Time dueTime, GetraenkeEnum getraenk) {
         this.owner = owner;
         this.category = category;
         this.shortText = shortText;
         this.longText = longText;
         this.dueDate = dueDate;
         this.dueTime = dueTime;
+        this.getraenk = getraenk;
     }
     //</editor-fold>
 
@@ -87,6 +95,7 @@ public class Task implements Serializable {
     public void setId(long id) {
         this.id = id;
     }
+    
 
     public User getOwner() {
         return owner;
@@ -143,6 +152,14 @@ public class Task implements Serializable {
     public void setStatus(TaskStatus status) {
         this.status = status;
     }
+    
+    public GetraenkeEnum getGetraenkEnum(){
+        return this.getraenk; 
+    }
+    public void setGetraenkEnum(GetraenkeEnum getraenk){
+        this.getraenk = getraenk; 
+    }
+
     //</editor-fold>
 
 }
