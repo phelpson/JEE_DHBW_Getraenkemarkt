@@ -4,7 +4,8 @@
  * and open the template in the editor.
  */
 
-package dhbwka.wwi.vertsys.javaee.Getraenkemart.Patrick;
+package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.LieferantEntry;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;

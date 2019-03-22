@@ -9,6 +9,8 @@
  */
 package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.web;
 
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb.MitarbeiterBean;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb.KundeBean;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb.ValidationBean;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb.UserBean;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.User;
@@ -36,6 +38,12 @@ public class SignUpServlet extends HttpServlet {
     @EJB
     UserBean userBean;
     
+    @EJB
+    KundeBean kunde;
+    
+    @EJB
+    MitarbeiterBean mitarbeiter;
+    
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -58,8 +66,21 @@ public class SignUpServlet extends HttpServlet {
         String password1    = request.getParameter("signup_password1");
         String password2    = request.getParameter("signup_password2");
         String companyname  = request.getParameter("signup_companyname");
+        
+        // Dropdown auslesen funktioniert nicht.
+        
         String usertype     = request.getParameter("signup_usertype");
         String email        = request.getParameter("signup_email");
+        
+        /* if dropdown jsp = kunde
+        *   create Kunde +
+        *   create User
+        */
+        
+        /* if dropdown jsp = mitarbeiter
+        *   create mitarbeiter +
+        *   create User
+        */
         
         // Eingaben prüfen
         User user = new User(
@@ -68,6 +89,7 @@ public class SignUpServlet extends HttpServlet {
                 email,
                 companyname
         );
+        
         List<String> errors = this.validationBean.validate(user);
         this.validationBean.validate(user.getPassword(), errors);
         

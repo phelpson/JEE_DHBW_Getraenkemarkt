@@ -17,7 +17,7 @@
 
 <template:base>
     <jsp:attribute name="title">
-        Registrierung
+        Signup
     </jsp:attribute>
 
     <jsp:attribute name="head">
@@ -85,9 +85,9 @@
                         <span class="required">*</span>
                     </label>
                     <select name="signup_usage" class="form-control" style="width=200px;">
-                        <option value="${signup_form.values["signup_usage"][0]}">Lieferant</option>
+                        <%-- <option value="${signup_form.values["signup_usage"][0]}">Lieferant</option> --%>
                         <option value="${signup_form.values["signup_usage"][0]}">Kunde</option>
-                        <option value="${signup_form.values["signup_usage"][0]}">Getränkemarkt Mitarbeiter</option>
+                        <option value="${signup_form.values["signup_usage"][1]}">Getränkemarkt Mitarbeiter</option>
                     </select>
  
                     <%-- Button zum Abschicken --%>

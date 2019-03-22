@@ -5,7 +5,7 @@
  */
 package api;
 
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.Philip.AuftragEntity;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa.AuftragEntity;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;

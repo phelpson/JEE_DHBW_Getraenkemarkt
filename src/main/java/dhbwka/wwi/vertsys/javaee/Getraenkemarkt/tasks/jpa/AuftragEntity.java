@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.Philip;
+package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa;
 
 import java.io.Serializable;
 import java.sql.Date;

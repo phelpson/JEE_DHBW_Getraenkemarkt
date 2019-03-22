@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Luca;
+package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
@@ -28,11 +28,11 @@ public class GetraenkeEntity implements Serializable {
     private String getraenkename = "";
     private int flaschenProKiste = 0;
 
-    GetraenkeEntity() {
+    public GetraenkeEntity() {
        
     }
     
-     GetraenkeEntity(Long getraenkeId,String getraenkename, int flaschenProKiste) {
+    public GetraenkeEntity(Long getraenkeId,String getraenkename, int flaschenProKiste) {
        
     }
 //get Getränke ID

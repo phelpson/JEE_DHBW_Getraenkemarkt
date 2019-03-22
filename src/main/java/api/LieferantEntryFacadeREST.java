@@ -5,7 +5,7 @@
  */
 package api;
 
-import dhbwka.wwi.vertsys.javaee.Getraenkemart.Patrick.LieferantEntry;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.LieferantEntry;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;

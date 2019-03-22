@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dhbwka.wwi.vertsys.javaee.Getraenkemart.Patrick;
+package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa;
 
-import Luca.GetraenkeEntity;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa.GetraenkeEntity;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.User;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.LieferantEntry;
 import java.io.Serializable;
 import java.sql.Date;
 import java.sql.Time;
@@ -41,8 +42,8 @@ public class BestellungEntry implements Serializable {
     @OneToOne(optional = false, fetch = FetchType.LAZY)
     private LieferantEntry lieferantEntry = null;
     
-    @ManyToMany(fetch = FetchType.LAZY)
-    private GetraenkeEntity getraenkeEntity = null;
+     @ManyToMany(fetch = FetchType.LAZY)
+    private List<GetraenkeEntity> getraenkeEntity = new ArrayList<>();
     
     @OneToOne(optional = false, fetch = FetchType.LAZY)
     private User userEntity = null;
@@ -54,7 +55,7 @@ public class BestellungEntry implements Serializable {
     }
     
     public BestellungEntry(Long id, Date bestellungDate, Time bestellungTime, LieferantEntry lieferantEntry, 
-                                                GetraenkeEntity getraenkeEntity, User userEntity, String bestellungStatus){
+                                                List<GetraenkeEntity> getraenkeEntity, User userEntity, String bestellungStatus){
         this.id                 = id;
         this.bestellungDate     = bestellungDate;
         this.bestellungTime     = bestellungTime;

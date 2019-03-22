@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.Philip;
+package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.ejb;
 
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa.AuftragEntity;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb.EntityBean;
 import java.sql.Date;
 import java.sql.Time;

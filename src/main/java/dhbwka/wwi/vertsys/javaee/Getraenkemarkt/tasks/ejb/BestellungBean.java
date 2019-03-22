@@ -3,10 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dhbwka.wwi.vertsys.javaee.Getraenkemart.Patrick;
+package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.ejb;
 
-import Luca.GetraenkeEntity;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa.GetraenkeEntity;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.User;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa.BestellungEntry;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.LieferantEntry;
 import java.sql.Date;
 import java.sql.Time;
 import java.util.List;
