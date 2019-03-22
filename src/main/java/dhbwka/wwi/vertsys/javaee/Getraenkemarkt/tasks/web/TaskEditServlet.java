@@ -15,8 +15,9 @@ import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.ejb.CategoryBean;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.ejb.TaskBean;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb.UserBean;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb.ValidationBean;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.ejb.AuftragBean;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa.Task;
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa.TaskStatus;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa.AuftragsStatus;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.Time;
@@ -40,6 +41,9 @@ public class TaskEditServlet extends HttpServlet {
 
     @EJB
     TaskBean taskBean;
+    
+    @EJB
+    AuftragBean auftragBean;
 
     @EJB
     CategoryBean categoryBean;
@@ -56,7 +60,7 @@ public class TaskEditServlet extends HttpServlet {
 
         // Verfügbare Kategorien und Stati für die Suchfelder ermitteln
         request.setAttribute("categories", this.categoryBean.findAllSorted());
-        request.setAttribute("statuses", TaskStatus.values());
+        request.setAttribute("statuses", AuftragsStatus.values());
 
         // Zu bearbeitende Aufgabe einlesen
         HttpSession session = request.getSession();
@@ -144,7 +148,7 @@ public class TaskEditServlet extends HttpServlet {
         }
 
         try {
-            task.setStatus(TaskStatus.valueOf(taskStatus));
+            task.setStatus(AuftragsStatus.valueOf(taskStatus));
         } catch (IllegalArgumentException ex) {
             errors.add("Der ausgewählte Status ist nicht vorhanden.");
         }

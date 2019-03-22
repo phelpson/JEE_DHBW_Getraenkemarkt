@@ -71,8 +71,8 @@ public class BestellungBean {
      */
     public BestellungEntry createNewEntry(Long id, Date bestellungDate, Time bestellungTime, LieferantEntry lieferantEntry, 
                                                 GetraenkeEntity getraenkeEntity, User userEntity, String bestellungStatus){
-        BestellungEntry entry = new BestellungEntry(id, bestellungDate, bestellungTime, lieferantEntry, 
-                                                    getraenkeEntity,userEntity, bestellungStatus);
+        /BestellungEntry entry = new BestellungEntry(id, bestellungDate, bestellungTime, lieferantEntry, 
+                                                    userEntity, bestellungStatus);
                     
         em.persist(entry);
         return em.merge(entry);

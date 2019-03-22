@@ -63,7 +63,7 @@ public class Task implements Serializable {
 
     @Enumerated(EnumType.STRING)
     @NotNull
-    private TaskStatus status = TaskStatus.OPEN;
+    private AuftragsStatus status = AuftragsStatus.OPEN;
 
     //<editor-fold defaultstate="collapsed" desc="Konstruktoren">
     public Task() {
@@ -136,11 +136,11 @@ public class Task implements Serializable {
         this.dueTime = dueTime;
     }
 
-    public TaskStatus getStatus() {
+    public AuftragsStatus getStatus() {
         return status;
     }
 
-    public void setStatus(TaskStatus status) {
+    public void setStatus(AuftragsStatus status) {
         this.status = status;
     }
     //</editor-fold>
