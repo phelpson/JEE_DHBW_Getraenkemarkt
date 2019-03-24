@@ -6,6 +6,8 @@
 package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa;
 
 import java.io.Serializable;
+import java.sql.Date;
+import java.text.DateFormat;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,68 +29,31 @@ public class MitarbeiterEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long mitarbeiterId;
     
-      @Column
-    private String vorname = "";
-      
-      @Column
-    private String nachname = "";
-    
-     @Column
-    private String adresse = "";
-    
     @Column
-    private int plz = 0;
+    private DateFormat eintrittsdatum;
     
      // Constructor
     public MitarbeiterEntity() {
         // empty base constructor
     }
     
-    public MitarbeiterEntity(String vorname, String nachname, String adresse, int plz) {
-        this.vorname = vorname;
-        this.nachname = nachname;
-        this.adresse = adresse;
-        this.plz = plz;
+    public MitarbeiterEntity(DateFormat eintrittsdatum) {
+        this.eintrittsdatum = eintrittsdatum;
+        
     }
-    
-
     public Long getMitarbeiterId() {
         return this.mitarbeiterId;
     }
-
     public void setMitarbeiterId(Long mitarbeiterId) {
         this.mitarbeiterId = mitarbeiterId;
     }
-    
-    public void setMitarbeitervorname(String mitarbeitervorname) {
-       this.vorname= mitarbeitervorname;
+    public void setDate (DateFormat eintrittsdatum) {
+        this.eintrittsdatum = eintrittsdatum;
     }
-    
-    public String getMitarbeitervorname() {
-        return this.vorname;
+    public DateFormat getDate() {
+        return this.eintrittsdatum;
     }
-    
-    public void setNachname(String mitarbeiternachname) {
-       this.nachname= mitarbeiternachname;
-    }
-    
-    public String getMitarbeiternachname() {
-        return this.nachname;
-    }
-    
-    public void setAdresse(String adresse) {
-        this.adresse= adresse;
-    }
-    public String getAdresse() {
-        return this.adresse;
-    }
-    public void setPlz(int plz) {
-        this.plz = plz;
-    }
-    public int getPlz () {
-        return this.plz;
-    }
-
+   
     @Override
     public int hashCode() {
         int hash = 0;

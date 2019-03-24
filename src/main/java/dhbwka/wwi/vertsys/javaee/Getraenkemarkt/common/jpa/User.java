@@ -64,11 +64,23 @@ public class User implements Serializable {
     @NotNull(message  = "Die E-Mail Adresse darf nicht leer sein.")
     private String email;
     
+    @Column
+    private String vorname = "";
+      
+    @Column
+    private String nachname = "";
+      
+    @Column(name="address")
+    private String adresse = "";
+    
+    @Column(name="post_code")
+    private int plz = 0;
     
     // Diskriminierendes Attribut für die Generalisierung/Spezialisierung
     // User, Kunde, Mitarbeiter ggf. Lieferant
     @Column(name = "disAttribut")
     private String disAttribut;
+    
     
 
     @ElementCollection
@@ -81,17 +93,25 @@ public class User implements Serializable {
 
     @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     List<Task> tasks = new ArrayList<>();
+    
 
     //<editor-fold defaultstate="collapsed" desc="Konstruktoren">
     public User() {
     }
 
     // Constructor
-    public User(String username, String password, String email) {
+    public User(
+            String username, String password, String email, String vorname, 
+            String nachname, String adresse, int plz, String disAttribut) {
         this.username = username;
         this.password.password = password;
         this.passwordHash = this.hashPassword(password);
         this.email = email;
+        this.vorname = vorname;
+        this.nachname = nachname;
+        this.adresse = adresse;
+        this.plz = plz;
+        this.disAttribut = disAttribut;
     }
     //</editor-fold>
 
@@ -112,6 +132,38 @@ public class User implements Serializable {
     public void setTasks(List<Task> tasks) {
         this.tasks = tasks;
     }
+    
+     public void setAdresse(String adresse) {
+        this.adresse= adresse;
+    }
+    public String getAdresse() {
+        return this.adresse;
+    }
+    public void setPlz(int plz) {
+        this.plz = plz;
+    }
+    public int getPlz () {
+        return this.plz;
+    }
+     public void setVorname(String vorname) {
+        this.vorname = vorname;
+    }
+    public String getVorname () {
+        return this.vorname;
+    }
+    public void setNachname(String nachname) {
+        this.nachname = nachname;
+    }
+    public String getNachname () {
+        return this.nachname;
+    }
+    public void setDisAttribut(String disAttribut) {
+        this.disAttribut = disAttribut;
+    }
+    public String getDisAttribut() {
+        return this.disAttribut;
+    }
+
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Passwort setzen und prüfen">

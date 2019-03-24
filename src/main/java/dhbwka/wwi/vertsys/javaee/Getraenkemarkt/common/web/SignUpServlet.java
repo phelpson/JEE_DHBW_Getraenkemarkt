@@ -17,6 +17,7 @@ import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.KundeEntity;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.MitarbeiterEntity;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.User;
 import java.io.IOException;
+import java.text.DateFormat;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -41,10 +42,10 @@ public class SignUpServlet extends HttpServlet {
     UserBean userBean;
     
     @EJB
-    KundeBean kunde;
+    KundeBean kundeBean;
     
     @EJB
-    MitarbeiterBean mitarbeiter;
+    MitarbeiterBean mitarbeiterBean;
     
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -77,19 +78,28 @@ public class SignUpServlet extends HttpServlet {
         String givenname    = request.getParameter("signup_givenname");
         String name         = request.getParameter("signup_name");
         
+        String disAttribut = usage;
+        DateFormat date = DateFormat.getDateInstance();
         
-        if (usage == "Kunde") {
-            KundeEntity kunde = new KundeEntity(companyname, address, plz);
+        if (usage.equals("Kunde") == true) {
+            KundeEntity kunde = new KundeEntity("das ist ein test");
+            disAttribut = "Kunde";
         }
-        else if (usage == "Getränkemarkt Mitarbeiter") {
-            MitarbeiterEntity mitarbeiter = new MitarbeiterEntity(givenname, name, address, plz);
+        else if (usage.equals("Getränkemarkt Mitarbeiter") == true) {
+            MitarbeiterEntity mitarbeiter = new MitarbeiterEntity(date);
+            disAttribut = "Mitarbeiter";
         }
         
         // Eingaben prüfen
         User user = new User(
                 username, 
                 password1,
-                email
+                email,
+                givenname,
+                name,
+                address,
+                plz,
+                disAttribut
         );
         
         List<String> errors = this.validationBean.validate(user);
@@ -102,7 +112,14 @@ public class SignUpServlet extends HttpServlet {
         // Neuen Benutzer anlegen
         if (errors.isEmpty()) {
             try {
-                this.userBean.signup(username, password1, email, companyname);
+                this.userBean.signup(username, 
+                password1,
+                email,
+                givenname,
+                name,
+                address,
+                plz,
+                disAttribut);
             } catch (UserBean.UserAlreadyExistsException ex) {
                 errors.add(ex.getMessage());
             }

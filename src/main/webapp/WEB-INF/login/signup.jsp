@@ -72,7 +72,7 @@
                     </div>
                     
                     <%-- Firmenname --%>
-                    <label for="signup_companyName">
+                    <label for="signup_companyname">
                         Firmenname
                         <span class="required">*</span>
                     </label>
@@ -105,8 +105,10 @@
                     </label>
                     <select name="signup_usage" class="form-control" style="width=200px;">
                         <%-- <option value="${signup_form.values["signup_usage"][0]}">Lieferant</option> --%>
-                        <option value="${signup_form.values["signup_usage"][0]}">Kunde</option>
-                        <option value="${signup_form.values["signup_usage"][1]}">Getränkemarkt Mitarbeiter</option>
+                        <option value="Kunde">Kunde</option>
+                        <option value="Mitarbeiter">Mitarbeiter</option>
+                        <%-- <option value="${signup_form.values["signup_usage"][0]}">Kunde</option>
+                        <option value="${signup_form.values["signup_usage"][1]}">Getränkemarkt Mitarbeiter</option> --%>
                     </select>
                     
                     <%-- Vorname --%>

@@ -52,20 +52,11 @@ public class KundeBean {
      * 
      * @param kundeId       Kundennummer (ID) des Kunden
      * @param firmenname    Firmenname des Kunden
-     * @param adresse       Adresse des Kunden
-     * @param plz           Postleitzahl des Kunden
-     * @param land          Land des Kunden
      * @return              neues Kundenobject nach Erstellung
      */
-    public KundeEntity createNewEntry(
-            Long kundeId, 
-            String firmenname,                                      
-            String adresse, 
-            int plz,
-            String land){
+    public KundeEntity createNewEntry(String firmenname){
         
-        KundeEntity kundeEntity = new KundeEntity(
-                kundeId, firmenname, adresse, plz, land);
+        KundeEntity kundeEntity = new KundeEntity(firmenname);
                         
         em.persist(kundeEntity);
         return em.merge(kundeEntity);

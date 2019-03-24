@@ -31,23 +31,14 @@ public class KundeEntity implements Serializable {
     
     @Column(name="company_name")
     private String firmenname = "";
-    
-    @Column(name="address")
-    private String adresse = "";
-    
-    @Column(name="post_code")
-    private int plz = 0;
-     
-    
+
     //<editor-fold defaultstate="collapsed" desc="Constructors">
     public KundeEntity() {
         // empty base constructor
     }
     
-    public KundeEntity(String firmenname, String adresse, int plz) {
+    public KundeEntity(String firmenname) {
         this.firmenname = firmenname;
-        this.adresse = adresse;
-        this.plz = plz;
         
         // Erstellen eine Kunden-Kategorie
         
@@ -68,23 +59,11 @@ public class KundeEntity implements Serializable {
     public String getFirmenname() {
         return this.firmenname;
     }
-    public void setAdresse(String adresse) {
-        this.adresse= adresse;
-    }
-    public String getAdresse() {
-        return this.adresse;
-    }
-    public void setPlz(int plz) {
-        this.plz = plz;
-    }
-    public int getPlz () {
-        return this.plz;
-    }
     //</editor-fold>
 
     // Methods
     @Override
     public String toString() {
-        return "Kunde: " + kundeId  + " " + firmenname + " " + adresse + " " + plz  + " " + land;
+        return "Kunde: " + kundeId  + " " + firmenname;
     }
 }
