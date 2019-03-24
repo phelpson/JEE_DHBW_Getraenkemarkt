@@ -13,7 +13,7 @@ import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.ejb.CategoryBean;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.ejb.TaskBean;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa.Category;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa.Task;
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa.AuftragsStatus;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa.TaskStatus;
 import java.io.IOException;
 import java.util.List;
 import javax.ejb.EJB;
@@ -41,7 +41,7 @@ public class TaskListServlet extends HttpServlet {
 
         // Verfügbare Kategorien und Stati für die Suchfelder ermitteln
         request.setAttribute("categories", this.categoryBean.findAllSorted());
-        request.setAttribute("statuses", AuftragsStatus.values());
+        request.setAttribute("statuses", TaskStatus.values());
 
         // Suchparameter aus der URL auslesen
         String searchText = request.getParameter("search_text");
@@ -50,7 +50,7 @@ public class TaskListServlet extends HttpServlet {
 
         // Anzuzeigende Aufgaben suchen
         Category category = null;
-        AuftragsStatus status = null;
+        TaskStatus status = null;
 
         if (searchCategory != null) {
             try {
@@ -62,7 +62,7 @@ public class TaskListServlet extends HttpServlet {
 
         if (searchStatus != null) {
             try {
-                status = AuftragsStatus.valueOf(searchStatus);
+                status = TaskStatus.valueOf(searchStatus);
             } catch (IllegalArgumentException ex) {
                 status = null;
             }

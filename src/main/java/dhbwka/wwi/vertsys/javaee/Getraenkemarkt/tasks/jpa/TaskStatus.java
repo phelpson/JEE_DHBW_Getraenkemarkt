@@ -12,7 +12,7 @@ package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa;
 /**
  * Statuswerte einer Aufgabe.
  */
-public enum AuftragsStatus {
+public enum TaskStatus {
     OPEN, IN_PROGRESS, FINISHED, CANCELED, POSTPONED;
 
     /**

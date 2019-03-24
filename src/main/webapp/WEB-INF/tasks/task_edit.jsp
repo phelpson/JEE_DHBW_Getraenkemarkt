@@ -108,7 +108,7 @@
                 </label>
                 <div class="side-by-side">
                     <input type="text" name="task_short_text" value="${task_form.values["task_short_text"][0]}">
-                </div>--%>
+                </div>
 
                 <label for="task_long_text">
                     Beschreibung:

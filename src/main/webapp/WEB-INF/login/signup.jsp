@@ -74,9 +74,28 @@
                     <%-- Firmenname --%>
                     <label for="signup_companyName">
                         Firmenname
+                        <span class="required">*</span>
                     </label>
                     <div class="side-by-side">
                         <input type="text" name="signup_companyname" value="${signup_form.values["signup_companyname"][0]}">
+                    </div>
+                    
+                    <%-- Adressdaten - Straße --%>
+                    <label for="signup_street">
+                        Strasse + Hausnummer
+                        <span class="required">*</span>
+                    </label>
+                    <div class="side-by-side">
+                        <input type="text" name="signup_street" value="${signup_form.values["signup_street"][0]}">
+                    </div>
+                    
+                    <%-- Adressdaten - PLZ --%>
+                    <label for="signup_plz">
+                        PLZ
+                        <span class="required">*</span>
+                    </label>
+                    <div class="side-by-side">
+                        <input type="number" name="signup_plz" value="${signup_form.values["signup_plz"][0]}">
                     </div>
                     
                     <%-- Dropdown Feld --%>
@@ -89,6 +108,24 @@
                         <option value="${signup_form.values["signup_usage"][0]}">Kunde</option>
                         <option value="${signup_form.values["signup_usage"][1]}">Getränkemarkt Mitarbeiter</option>
                     </select>
+                    
+                    <%-- Vorname --%>
+                    <label for="signup_givenname">
+                        Vorname
+                        <span class="required">*</span>
+                    </label>
+                    <div class="side-by-side">
+                        <input type="text" name="signup_givenname" value="${signup_form.values["signup_givenname"][0]}">
+                    </div>
+                    
+                    <%-- Nachname --%>
+                    <label for="signup_name">
+                        Nachname
+                        <span class="required">*</span>
+                    </label>
+                    <div class="side-by-side">
+                        <input type="text" name="signup_name" value="${signup_form.values["signup_name"][0]}">
+                    </div>
  
                     <%-- Button zum Abschicken --%>
                     <div class="side-by-side" style="margin-top: 30px;">

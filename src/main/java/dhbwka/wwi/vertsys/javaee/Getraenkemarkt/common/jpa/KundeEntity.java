@@ -19,40 +19,38 @@ import javax.persistence.Table;
  */
 
 @Entity
-@Table(name = "Kunde")
+@Table(name = "Kunden")
 public class KundeEntity implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
     @Id
-    @Column
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long kundeId;
+    private long kundeId;
     
-    @Column
+    @Column(name="company_name")
     private String firmenname = "";
     
-    @Column
+    @Column(name="address")
     private String adresse = "";
     
-    @Column
+    @Column(name="post_code")
     private int plz = 0;
-    
-    @Column
-    private String land = "DE";
-    
+     
     
     //<editor-fold defaultstate="collapsed" desc="Constructors">
     public KundeEntity() {
         // empty base constructor
     }
     
-    public KundeEntity(Long kundeId, String firmenname, String adresse, int plz, String land) {
-        this.kundeId = kundeId;
+    public KundeEntity(String firmenname, String adresse, int plz) {
         this.firmenname = firmenname;
         this.adresse = adresse;
         this.plz = plz;
-        this.land = land;
+        
+        // Erstellen eine Kunden-Kategorie
+        
     }
     //</editor-fold>
     
@@ -82,36 +80,9 @@ public class KundeEntity implements Serializable {
     public int getPlz () {
         return this.plz;
     }
-    public void setLand(String land){
-        this.land = land;
-    }
-    public String getLand() {
-        return this.land;
-    }
     //</editor-fold>
 
     // Methods
-            
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (kundeId != null ? kundeId.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof KundeEntity)) {
-            return false;
-        }
-        KundeEntity other = (KundeEntity) object;
-        if ((this.kundeId == null && other.kundeId != null) || (this.kundeId != null && !this.kundeId.equals(other.kundeId))) {
-            return false;
-        }
-        return true;
-    }
-
     @Override
     public String toString() {
         return "Kunde: " + kundeId  + " " + firmenname + " " + adresse + " " + plz  + " " + land;

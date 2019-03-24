@@ -14,7 +14,7 @@ import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.dashboard.ejb.DashboardContentPr
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.dashboard.ejb.DashboardSection;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.dashboard.ejb.DashboardTile;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa.Category;
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa.AuftragsStatus;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa.TaskStatus;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -83,7 +83,7 @@ public class DashboardContent implements DashboardContentProvider {
         section.getTiles().add(tile);
 
         // Ja Aufgabenstatus eine weitere Kachel erzeugen
-        for (AuftragsStatus status : AuftragsStatus.values()) {
+        for (TaskStatus status : TaskStatus.values()) {
             String cssClass1 = cssClass + " status-" + status.toString().toLowerCase();
             String icon = "";
 
@@ -125,7 +125,7 @@ public class DashboardContent implements DashboardContentProvider {
      * @param icon
      * @return
      */
-    private DashboardTile createTile(Category category, AuftragsStatus status, String label, String cssClass, String icon) {
+    private DashboardTile createTile(Category category, TaskStatus status, String label, String cssClass, String icon) {
         int amount = taskBean.search(null, category, status).size();
         String href = "/app/tasks/list/";
 

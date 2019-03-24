@@ -32,7 +32,7 @@ import javax.servlet.http.HttpSession;
  * die zum Löschen der Kategorien verwendet werden kann.
  */
 @WebServlet(urlPatterns = {"/app/tasks/categories/"})
-public class CategoryListServlet extends HttpServlet {
+public class KundenListServlet extends HttpServlet {
 
     @EJB
     CategoryBean categoryBean;
@@ -51,7 +51,7 @@ public class CategoryListServlet extends HttpServlet {
         request.setAttribute("categories", this.categoryBean.findAllSorted());
 
         // Anfrage an dazugerhörige JSP weiterleiten
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/tasks/category_list.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/tasks/kunden_list.jsp");
         dispatcher.forward(request, response);
 
         // Alte Formulardaten aus der Session entfernen

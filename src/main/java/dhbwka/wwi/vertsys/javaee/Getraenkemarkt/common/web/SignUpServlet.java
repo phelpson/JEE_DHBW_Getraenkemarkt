@@ -13,6 +13,8 @@ import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb.MitarbeiterBean;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb.KundeBean;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb.ValidationBean;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb.UserBean;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.KundeEntity;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.MitarbeiterEntity;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.User;
 import java.io.IOException;
 import java.util.List;
@@ -65,29 +67,29 @@ public class SignUpServlet extends HttpServlet {
         String username     = request.getParameter("signup_username");
         String password1    = request.getParameter("signup_password1");
         String password2    = request.getParameter("signup_password2");
+        
         String companyname  = request.getParameter("signup_companyname");
+        String address      = request.getParameter("signup_street");
+        int plz             = Integer.parseInt(request.getParameter("signup_plz"));
         
-        // Dropdown auslesen funktioniert nicht.
-        
-        String usertype     = request.getParameter("signup_usertype");
+        String usage        = request.getParameter("signup_usage");
         String email        = request.getParameter("signup_email");
+        String givenname    = request.getParameter("signup_givenname");
+        String name         = request.getParameter("signup_name");
         
-        /* if dropdown jsp = kunde
-        *   create Kunde +
-        *   create User
-        */
         
-        /* if dropdown jsp = mitarbeiter
-        *   create mitarbeiter +
-        *   create User
-        */
+        if (usage == "Kunde") {
+            KundeEntity kunde = new KundeEntity(companyname, address, plz);
+        }
+        else if (usage == "Getränkemarkt Mitarbeiter") {
+            MitarbeiterEntity mitarbeiter = new MitarbeiterEntity(givenname, name, address, plz);
+        }
         
         // Eingaben prüfen
         User user = new User(
                 username, 
                 password1,
-                email,
-                companyname
+                email
         );
         
         List<String> errors = this.validationBean.validate(user);

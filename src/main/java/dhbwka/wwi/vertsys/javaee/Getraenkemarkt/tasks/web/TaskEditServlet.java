@@ -282,6 +282,11 @@ public class TaskEditServlet extends HttpServlet {
         values.put("task_status", new String[]{
             task.getStatus().toString()
         });
+        
+        // Getraenk Enum mit Hilfsklasse zwischenspeichern
+        values.put("task_getraenk", new String[] {
+            task.getGetraenkEnum().toString()
+        });
        
         values.put("task_short_text", new String[]{
             task.getShortText()

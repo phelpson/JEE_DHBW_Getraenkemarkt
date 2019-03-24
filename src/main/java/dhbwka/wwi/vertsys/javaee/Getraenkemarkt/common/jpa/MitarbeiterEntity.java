@@ -44,8 +44,7 @@ public class MitarbeiterEntity implements Serializable {
         // empty base constructor
     }
     
-    public MitarbeiterEntity(Long mitarbeiterId,String vorname, String nachname, String adresse, int plz) {
-        this.mitarbeiterId = mitarbeiterId;
+    public MitarbeiterEntity(String vorname, String nachname, String adresse, int plz) {
         this.vorname = vorname;
         this.nachname = nachname;
         this.adresse = adresse;

@@ -64,8 +64,11 @@ public class User implements Serializable {
     @NotNull(message  = "Die E-Mail Adresse darf nicht leer sein.")
     private String email;
     
-    @Column(name = "Companyname", length = 64)
-    private String companyname;
+    
+    // Diskriminierendes Attribut für die Generalisierung/Spezialisierung
+    // User, Kunde, Mitarbeiter ggf. Lieferant
+    @Column(name = "disAttribut")
+    private String disAttribut;
     
 
     @ElementCollection
@@ -84,12 +87,11 @@ public class User implements Serializable {
     }
 
     // Constructor
-    public User(String username, String password, String email, String companyname) {
+    public User(String username, String password, String email) {
         this.username = username;
         this.password.password = password;
         this.passwordHash = this.hashPassword(password);
         this.email = email;
-        this.companyname = companyname;
     }
     //</editor-fold>
 

@@ -145,11 +145,11 @@ public class Task implements Serializable {
         this.dueTime = dueTime;
     }
 
-    public AuftragsStatus getStatus() {
+    public TaskStatus getStatus() {
         return status;
     }
 
-    public void setStatus(AuftragsStatus status) {
+    public void setStatus(TaskStatus status) {
         this.status = status;
     }
     
