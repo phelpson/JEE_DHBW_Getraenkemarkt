@@ -33,6 +33,7 @@ public class KundeBean {
     
     // Kunde via Kundennummer (ID - Primary Key) suchen
     public KundeEntity findByKundeId(int kundeId){
+        //test
         return this.em.find(KundeEntity.class, kundeId);
     }
     
