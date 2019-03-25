@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -31,14 +32,14 @@ public class MitarbeiterEntity implements Serializable {
     private Long mitarbeiterId;
     
     @Column
-    private SimpleDateFormat eintrittsdatum;
+    private String eintrittsdatum;
     
      // Constructor
     public MitarbeiterEntity() {
         // empty base constructor
     }
     
-    public MitarbeiterEntity(SimpleDateFormat eintrittsdatum) {
+    public MitarbeiterEntity(String  eintrittsdatum) {
         this.eintrittsdatum = eintrittsdatum;
         
     }
@@ -48,10 +49,10 @@ public class MitarbeiterEntity implements Serializable {
     public void setMitarbeiterId(Long mitarbeiterId) {
         this.mitarbeiterId = mitarbeiterId;
     }
-    public void setDate (SimpleDateFormat eintrittsdatum) {
+    public void setDate (String  eintrittsdatum) {
         this.eintrittsdatum = eintrittsdatum;
     }
-    public SimpleDateFormat getDate() {
+    public String  getDate() {
         return this.eintrittsdatum;
     }
    

@@ -17,7 +17,12 @@ import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.KundeEntity;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.MitarbeiterEntity;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.User;
 import java.io.IOException;
+import java.sql.Date;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -79,17 +84,6 @@ public class SignUpServlet extends HttpServlet {
         String name         = request.getParameter("signup_name");
         
         String disAttribut = usage;
-        SimpleDateFormat date = new SimpleDateFormat("yyyy:MM:dd:HH:mm");
-        
-        if (usage.equals("Kunde") == true) {
-            disAttribut = "Kunde";
-            this.kundeBean.createNewEntry("companyname");
-            }
-                
-        else if (usage.equals("Getränkemarkt Mitarbeiter") == true) {
-            this.mitarbeiterBean.createNewEntry(date);
-            disAttribut = "Mitarbeiter";
-            }
         
         // Eingaben prüfen
         User user = new User(
@@ -109,16 +103,27 @@ public class SignUpServlet extends HttpServlet {
         if (password1 != null && password2 != null && !password1.equals(password2)) {
             errors.add("Die beiden Passwörter stimmen nicht überein.");
         }
-        
+        if (usage.equals("Kunde") == true) {
+            disAttribut = "Kunde";
+            this.kundeBean.createNewEntry("companyname");
+            }
+                
+            else if (usage.equals("Mitarbeiter") == true) {
+                String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
+                disAttribut = "Mitarbeiter";
+                this.mitarbeiterBean.createNewEntry(timeStamp);
+                
+            }  
         // Neuen Benutzer anlegen
         if (errors.isEmpty()) {
             try {
                 this.userBean.signup(username, password1, email, givenname, name, address, plz, disAttribut);
-                
+                              
             } catch (UserBean.UserAlreadyExistsException ex) {
                 errors.add(ex.getMessage());
             }
-        }        
+        }   
+        
         
         // Weiter zur nächsten Seite
         if (errors.isEmpty()) {
