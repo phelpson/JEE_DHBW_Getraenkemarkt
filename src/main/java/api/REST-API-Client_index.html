@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>REST-WS Get Userdata</title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <h1>Show specific User</h1>
+
+        <input type="text" id="username" placeholder="Username">
+        <input type="password" id="password" placeholder="Password">
+
+
+        <input type="text" id="search" placeholder="Username suchen">
+
+        <button onclick="getData()">Call API</button>
+
+        <div>
+            <div id="result" class="unsichtbar"></div>
+        </div>
+
+        <script>
+            async function getData() {
+                let username = document.querySelector("username");
+                let passwort = document.querySelector("passwort");
+                let search = document.querySelector("suchfeld");
+
+                let resDiv = document.getElementById("result");
+
+                resDiv.textContent = "Searching …";
+                resDiv.classList.remove("inv");
+
+                // Neue Daten vom Server abrufen
+                let url = "http://localhost:8080/Getraenkemarkt/webresources/User/"
+                        + "?query=" + encodeURI(suchfeld.value);
+
+                let antwort = await fetch(url, {
+                    method: "get",
+                    headers: {
+                        "accept": "application/json"
+                    }
+                });
+
+                resDiv.innerHTML = "";
+                let json = await antwort.json();
+
+                json.series.forEach(User => {
+                    let html = `
+                        <div>
+                            <b>Id:</b> ${User.username} <br/>
+                            <b>Title:</b> ${User.adresse} <br/>
+                            <b>Genre:</b> ${User.plz} <br/>
+                            <b>Land:</b> ${User.disAttribut} <br/>
+                        </div>
+                    `;
+
+                    resDiv.innerHTML += html;
+                });
+            }
+        </script>
+    </body>
+</html>

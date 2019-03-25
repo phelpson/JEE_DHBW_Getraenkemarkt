@@ -10,6 +10,7 @@
 package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb;
 
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.User;
+import java.util.List;
 import javax.annotation.Resource;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJBContext;
@@ -103,6 +104,25 @@ public class UserBean {
     @RolesAllowed("app-user")
     public User update(User user) {
         return em.merge(user);
+    }
+
+    // Für REST-Call implementiert
+    // Roles Allowed only allow for Mitarbeiter
+    // @RolesAllowed("")
+    public List<User> findByQuery(String query) {
+        if (query == null || query.trim().isEmpty()) {
+            query = "";
+        }
+        
+        query = "%" + query + "%";
+
+        //Query not working yet
+        return em.createQuery("SELECT u FROM User u"
+                            + "    WHERE u.username     LIKE :query"
+                            + "       OR u.vorname      LIKE :query"
+                            + "       OR u.nachname     LIKE :query")
+                .setParameter("query", query)
+                .getResultList();
     }
 
     /**
