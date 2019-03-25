@@ -6,8 +6,7 @@
 package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb;
 
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.MitarbeiterEntity;
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.MitarbeiterEntity;
-import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -54,12 +53,11 @@ public class MitarbeiterBean {
      * @param date          Datum Eintritt
      * @return              neues Mitarbeiter nach Erstellung
      */
-    public MitarbeiterEntity createNewEntry(DateFormat date){
+    public MitarbeiterEntity createNewEntry(SimpleDateFormat date){
         
-       MitarbeiterEntity mitarbeiter = new MitarbeiterEntity(date);;
-                        
-        em.persist(mitarbeiter);
-        return em.merge(mitarbeiter);
+       MitarbeiterEntity mitarbeiter = new MitarbeiterEntity(date);                        
+       em.persist(mitarbeiter);
+       return em.merge(mitarbeiter);
     }
     
     // Kundeninformationen updaten

@@ -17,7 +17,7 @@ import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.KundeEntity;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.MitarbeiterEntity;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.User;
 import java.io.IOException;
-import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -79,16 +79,17 @@ public class SignUpServlet extends HttpServlet {
         String name         = request.getParameter("signup_name");
         
         String disAttribut = usage;
-        DateFormat date = DateFormat.getDateInstance();
+        SimpleDateFormat date = new SimpleDateFormat("yyyy:MM:dd:HH:mm");
         
         if (usage.equals("Kunde") == true) {
-            KundeEntity kunde = new KundeEntity("das ist ein test");
             disAttribut = "Kunde";
-        }
+            this.kundeBean.createNewEntry("companyname");
+            }
+                
         else if (usage.equals("Getränkemarkt Mitarbeiter") == true) {
-            MitarbeiterEntity mitarbeiter = new MitarbeiterEntity(date);
+            this.mitarbeiterBean.createNewEntry(date);
             disAttribut = "Mitarbeiter";
-        }
+            }
         
         // Eingaben prüfen
         User user = new User(
@@ -112,18 +113,12 @@ public class SignUpServlet extends HttpServlet {
         // Neuen Benutzer anlegen
         if (errors.isEmpty()) {
             try {
-                this.userBean.signup(username, 
-                password1,
-                email,
-                givenname,
-                name,
-                address,
-                plz,
-                disAttribut);
+                this.userBean.signup(username, password1, email, givenname, name, address, plz, disAttribut);
+                
             } catch (UserBean.UserAlreadyExistsException ex) {
                 errors.add(ex.getMessage());
             }
-        }
+        }        
         
         // Weiter zur nächsten Seite
         if (errors.isEmpty()) {

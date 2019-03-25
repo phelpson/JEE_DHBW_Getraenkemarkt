@@ -8,6 +8,7 @@ package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa;
 import java.io.Serializable;
 import java.sql.Date;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -30,14 +31,14 @@ public class MitarbeiterEntity implements Serializable {
     private Long mitarbeiterId;
     
     @Column
-    private DateFormat eintrittsdatum;
+    private SimpleDateFormat eintrittsdatum;
     
      // Constructor
     public MitarbeiterEntity() {
         // empty base constructor
     }
     
-    public MitarbeiterEntity(DateFormat eintrittsdatum) {
+    public MitarbeiterEntity(SimpleDateFormat eintrittsdatum) {
         this.eintrittsdatum = eintrittsdatum;
         
     }
@@ -47,10 +48,10 @@ public class MitarbeiterEntity implements Serializable {
     public void setMitarbeiterId(Long mitarbeiterId) {
         this.mitarbeiterId = mitarbeiterId;
     }
-    public void setDate (DateFormat eintrittsdatum) {
+    public void setDate (SimpleDateFormat eintrittsdatum) {
         this.eintrittsdatum = eintrittsdatum;
     }
-    public DateFormat getDate() {
+    public SimpleDateFormat getDate() {
         return this.eintrittsdatum;
     }
    
