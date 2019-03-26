@@ -21,30 +21,34 @@
 
         <script>
             async function getData() {
-                let username = document.querySelector("username");
-                let passwort = document.querySelector("passwort");
-                let search = document.querySelector("suchfeld");
+                let username = document.querySelector("#username");
+                let password = document.querySelector("#password");
+                let search = document.getElementById("search");
+
+                console.log("username " + username.value + " Passwort:" + password.value + " Search:" + search.value);
 
                 let resDiv = document.getElementById("result");
 
                 resDiv.textContent = "Searching …";
                 resDiv.classList.remove("inv");
-
-                // Neue Daten vom Server abrufen
+                
+                // Fetch new data from server
                 let url = "http://localhost:8080/Getraenkemarkt/webresources/User/"
-                        + "?query=" + encodeURI(suchfeld.value);
+                        + "?query=" + encodeURI(search.value);
 
-                let antwort = await fetch(url, {
+                let response = await fetch(url, {
                     method: "get",
                     headers: {
-                        "accept": "application/json"
+                        "accept": "application/json",
+                        // Setting HTTP-Heading for basic auth
+                        "Authorization": 'Basic ' + btoa(username.value + ":" + password.value) 
                     }
                 });
 
                 resDiv.innerHTML = "";
-                let json = await antwort.json();
+                let json = await response.json();
 
-                json.series.forEach(User => {
+                json.User.forEach(User => {
                     let html = `
                         <div>
                             <b>Id:</b> ${User.username} <br/>
