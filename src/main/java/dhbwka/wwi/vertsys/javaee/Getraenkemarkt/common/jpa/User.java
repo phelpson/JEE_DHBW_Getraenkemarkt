@@ -14,6 +14,7 @@ import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -75,6 +76,8 @@ public class User implements Serializable {
     
     @Column(name="post_code")
     private int plz = 0;
+    
+    
     
     // Diskriminierendes Attribut für die Generalisierung/Spezialisierung
     // User, Kunde, Mitarbeiter ggf. Lieferant
@@ -138,6 +141,12 @@ public class User implements Serializable {
     }
     public String getAdresse() {
         return this.adresse;
+    }
+    public String getEmail(){
+        return this.email;
+    }
+    public void setEmail(String email) {
+        this.email = email;
     }
     public void setPlz(int plz) {
         this.plz = plz;

@@ -6,10 +6,6 @@
 package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa;
 
 import java.io.Serializable;
-import java.sql.Date;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,10 +24,11 @@ public class MitarbeiterEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long mitarbeiterId;
+    private long mitarbeiterId;
     
-    @Column
+    @Column(name = "eintrittsdatum")
     private String eintrittsdatum;
     
      // Constructor
@@ -43,10 +40,10 @@ public class MitarbeiterEntity implements Serializable {
         this.eintrittsdatum = eintrittsdatum;
         
     }
-    public Long getMitarbeiterId() {
+    public long getMitarbeiterId() {
         return this.mitarbeiterId;
     }
-    public void setMitarbeiterId(Long mitarbeiterId) {
+    public void setMitarbeiterId(long mitarbeiterId) {
         this.mitarbeiterId = mitarbeiterId;
     }
     public void setDate (String  eintrittsdatum) {
@@ -56,25 +53,6 @@ public class MitarbeiterEntity implements Serializable {
         return this.eintrittsdatum;
     }
    
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (mitarbeiterId != null ? mitarbeiterId.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof MitarbeiterEntity)) {
-            return false;
-        }
-        MitarbeiterEntity other = (MitarbeiterEntity) object;
-        if ((this.mitarbeiterId == null && other.mitarbeiterId != null) || (this.mitarbeiterId != null && !this.mitarbeiterId.equals(other.mitarbeiterId))) {
-            return false;
-        }
-        return true;
-    }
 
     @Override
     public String toString() {
