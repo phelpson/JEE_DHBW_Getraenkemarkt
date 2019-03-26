@@ -58,18 +58,18 @@
 
             <%-- Vorhandene Kategorien --%>
             <c:choose>
-                <c:when test="${empty categories}">
+                <c:when test="${empty kunden}">
                     <p>
-                        Es sind noch keine Kategorien vorhanden. 🐏
+                        Es sind noch keine Kunden vorhanden. 🐏
                     </p>
                 </c:when>
                 <c:otherwise>
                     <div>
                         <div class="margin">
-                            <c:forEach items="${categories}" var="category">
-                                <input type="checkbox" name="category" id="${'category-'.concat(category.id)}" value="${category.id}" />
-                                <label for="${'category-'.concat(category.id)}">
-                                    <c:out value="${category.name}"/>
+                            <c:forEach items="${kunden}" var="kunden">
+                                <input type="checkbox" name="kunden" id="${'kunden-'.concat(kunden.firmenname)}" value="${kunden.firmenname}" />
+                                <label for="${'kunden-'.concat(kunden.firmenname)}">
+                                    <c:out value="${kunden.firmenname}"/>
                                 </label>
                                 <br />
                             </c:forEach>

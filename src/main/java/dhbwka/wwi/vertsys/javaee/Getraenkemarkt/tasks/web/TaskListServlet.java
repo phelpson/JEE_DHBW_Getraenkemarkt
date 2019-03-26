@@ -9,7 +9,9 @@
  */
 package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.web;
 
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.KundeEntity;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.ejb.CategoryBean;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.ejb.KundenListBean;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.ejb.TaskBean;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa.Category;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa.Task;
@@ -30,7 +32,7 @@ import javax.servlet.http.HttpServletResponse;
 public class TaskListServlet extends HttpServlet {
 
     @EJB
-    private CategoryBean categoryBean;
+    private KundenListBean KundenListBean;
     
     @EJB
     private TaskBean taskBean;
@@ -40,7 +42,8 @@ public class TaskListServlet extends HttpServlet {
             throws ServletException, IOException {
 
         // Verfügbare Kategorien und Stati für die Suchfelder ermitteln
-        request.setAttribute("categories", this.categoryBean.findAllSorted());
+       // request.setAttribute("categories", this.categoryBean.findAllSorted());
+        request.setAttribute("kunden", this.KundenListBean.findAllSortedKunden());
         request.setAttribute("statuses", TaskStatus.values());
 
         // Suchparameter aus der URL auslesen
@@ -49,14 +52,16 @@ public class TaskListServlet extends HttpServlet {
         String searchStatus = request.getParameter("search_status");
 
         // Anzuzeigende Aufgaben suchen
-        Category category = null;
+        KundeEntity kunde = null;
         TaskStatus status = null;
+        
+         Category category = null;
 
         if (searchCategory != null) {
             try {
-                category = this.categoryBean.findById(Long.parseLong(searchCategory));
+                kunde = this.KundenListBean.findById(Long.parseLong(searchCategory));
             } catch (NumberFormatException ex) {
-                category = null;
+                kunde = null;
             }
         }
 

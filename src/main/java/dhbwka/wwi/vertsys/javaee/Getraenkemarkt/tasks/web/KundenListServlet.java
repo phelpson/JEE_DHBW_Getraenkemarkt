@@ -13,6 +13,7 @@ import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.web.FormValues;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.ejb.CategoryBean;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.ejb.TaskBean;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb.ValidationBean;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.ejb.KundenListBean;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa.Category;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa.Task;
 import java.io.IOException;
@@ -35,7 +36,7 @@ import javax.servlet.http.HttpSession;
 public class KundenListServlet extends HttpServlet {
 
     @EJB
-    CategoryBean categoryBean;
+    KundenListBean kundelistbean;
 
     @EJB
     TaskBean taskBean;
@@ -48,8 +49,8 @@ public class KundenListServlet extends HttpServlet {
             throws ServletException, IOException {
 
         // Alle vorhandenen Kategorien ermitteln
-        request.setAttribute("categories", this.categoryBean.findAllSorted());
-
+        request.setAttribute("kunden", this.kundelistbean.findAllSortedKunden());
+       
         // Anfrage an dazugerhörige JSP weiterleiten
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/tasks/kunden_list.jsp");
         dispatcher.forward(request, response);
@@ -74,9 +75,7 @@ public class KundenListServlet extends HttpServlet {
             case "create":
                 this.createCategory(request, response);
                 break;
-            case "delete":
-                this.deleteCategories(request, response);
-                break;
+            
         }
     }
 
@@ -99,7 +98,7 @@ public class KundenListServlet extends HttpServlet {
 
         // Neue Kategorie anlegen
         if (errors.isEmpty()) {
-            this.categoryBean.saveNew(category);
+            this.kundelistbean.saveNew(category);
         }
 
         // Browser auffordern, die Seite neuzuladen
@@ -115,55 +114,5 @@ public class KundenListServlet extends HttpServlet {
         response.sendRedirect(request.getRequestURI());
     }
 
-    /**
-     * Aufgerufen in doPost(): Markierte Kategorien löschen
-     *
-     * @param request
-     * @param response
-     * @throws ServletException
-     * @throws IOException
-     */
-    private void deleteCategories(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
-        // Markierte Kategorie IDs auslesen
-        String[] categoryIds = request.getParameterValues("category");
-
-        if (categoryIds == null) {
-            categoryIds = new String[0];
-        }
-
-        // Kategorien löschen
-        for (String categoryId : categoryIds) {
-            // Zu löschende Kategorie ermitteln
-            Category category;
-
-            try {
-                category = this.categoryBean.findById(Long.parseLong(categoryId));
-            } catch (NumberFormatException ex) {
-                continue;
-            }
-
-            if (category == null) {
-                continue;
-            }
-
-            // Bei allen betroffenen Aufgaben, den Bezug zur Kategorie aufheben
-            List<Task> tasks = category.getTasks();
-
-            if (tasks != null) {
-                tasks.forEach((Task task) -> {
-                    task.setCategory(null);
-                    this.taskBean.update(task);
-                });
-            }
-
-            // Und weg damit
-            this.categoryBean.delete(category);
-        }
-
-        // Browser auffordern, die Seite neuzuladen
-        response.sendRedirect(request.getRequestURI());
-    }
 
 }
