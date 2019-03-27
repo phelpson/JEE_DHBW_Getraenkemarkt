@@ -30,7 +30,7 @@ public class DashboardContent implements DashboardContentProvider {
 
     @EJB
     private TaskBean taskBean;
-
+    
     /**
      * Vom Dashboard aufgerufenen Methode, um die anzuzeigenden Rubriken und
      * Kacheln zu ermitteln.
