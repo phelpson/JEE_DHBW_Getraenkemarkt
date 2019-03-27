@@ -10,12 +10,14 @@
 package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.web;
 
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb.MitarbeiterBean;
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb.KundeBean;
+
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb.ValidationBean;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb.UserBean;
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.KundeEntity;
+
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.MitarbeiterEntity;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.User;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.ejb.KundeBean;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa.Kunde;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

@@ -10,7 +10,7 @@
 package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.ejb;
 
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb.EntityBean;
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa.Category;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa.Kunde;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa.Task;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa.TaskStatus;
 import java.util.List;
@@ -50,11 +50,11 @@ public class TaskBean extends EntityBean<Task, Long> {
      * mit der CriteriaBuilder-API vollkommen dynamisch erzeugt.
      * 
      * @param search In der Kurzbeschreibung enthaltener Text (optional)
-     * @param category Kategorie (optional)
+     * @param kunde Kategorie (optional)
      * @param status Status (optional)
      * @return Liste mit den gefundenen Aufgaben
      */
-    public List<Task> search(String search, Category category, TaskStatus status) {
+    public List<Task> search(String search, Kunde kunde, TaskStatus status) {
         // Hilfsobjekt zum Bauen des Query
         CriteriaBuilder cb = this.em.getCriteriaBuilder();
         
@@ -74,9 +74,9 @@ public class TaskBean extends EntityBean<Task, Long> {
             query.where(p);
         }
         
-        // WHERE t.category = :category
-        if (category != null) {
-            p = cb.and(p, cb.equal(from.get("category"), category));
+        // WHERE t.kunde = :kunde
+        if (kunde != null) {
+            p = cb.and(p, cb.equal(from.get("kunde"), kunde));
             query.where(p);
         }
         

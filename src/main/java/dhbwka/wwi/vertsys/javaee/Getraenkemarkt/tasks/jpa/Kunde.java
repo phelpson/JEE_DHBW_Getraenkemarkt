@@ -27,29 +27,29 @@ import javax.validation.constraints.Size;
  * Kategorien, die den Aufgaben zugeordnet werden können.
  */
 @Entity
-public class Category implements Serializable {
+public class Kunde implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = "category_ids")
-    @TableGenerator(name = "category_ids", initialValue = 0, allocationSize = 50)
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "kunde_ids")
+    @TableGenerator(name = "kunde_ids", initialValue = 0, allocationSize = 50)
     private long id;
 
     @Column(length = 30)
     @NotNull(message = "Der Name darf nicht leer sein.")
     @Size(min = 3, max = 30, message = "Der Name muss zwischen drei und 30 Zeichen lang sein.")
-    private String name;
+    private String firmenName;
 
-    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "kunde", fetch = FetchType.LAZY)
     List<Task> tasks = new ArrayList<>();
 
     //<editor-fold defaultstate="collapsed" desc="Konstruktoren">
-    public Category() {
+    public Kunde() {
     }
 
-    public Category(String name) {
-        this.name = name;
+    public Kunde(String name) {
+        this.firmenName = name;
     }
     //</editor-fold>
 
@@ -63,11 +63,11 @@ public class Category implements Serializable {
     }
 
     public String getName() {
-        return name;
+        return firmenName;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.firmenName = name;
     }
 
     public List<Task> getTasks() {

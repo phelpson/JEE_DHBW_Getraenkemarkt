@@ -51,13 +51,13 @@
                     <input type="text" name="task_owner" value="${task_form.values["task_owner"][0]}" readonly="readonly">
                 </div>
 
-                <label for="task_category">Kunde</label>
+                <label for="task_kunde">Kunde</label>
                 <div class="side-by-side">
-                    <select name="task_category">
+                    <select name="task_kunde">
 
-                        <c:forEach items="${categories}" var="category">
-                            <option value="${category.id}" ${task_form.values["task_category"][0] == category.id.toString() ? 'selected' : ''}>
-                                <c:out value="${category.name}" />
+                        <c:forEach items="${kunden}" var="kunde">
+                            <option value="${kunde.id}" ${task_form.values["task_kunde"][0] == kunde.id.toString() ? 'selected' : ''}>
+                                <c:out value="${kunde.name}" />
                             </option>
                         </c:forEach>
                     </select>

@@ -19,7 +19,7 @@
     </jsp:attribute>
 
     <jsp:attribute name="head">
-        <link rel="stylesheet" href="<c:url value="/css/category_list.css"/>" />
+        <link rel="stylesheet" href="<c:url value="/css/kunde_list.css"/>" />
     </jsp:attribute>
 
     <jsp:attribute name="menu">
@@ -40,7 +40,7 @@
             <%-- Feld zum Anlegen einer neuen Kategorie --%>
             <div class="column margin">
                 <label for="j_username">Neue Kategorie:</label>
-                <input type="text" name="name" value="${categories_form.values["name"][0]}">
+                <input type="text" name="name" value="${kunden_form.values["name"][0]}">
 
                 <button type="submit" name="action" value="create" class="icon-pencil">
                     Anlegen
@@ -48,9 +48,9 @@
             </div>
 
             <%-- Fehlermeldungen --%>
-            <c:if test="${!empty categories_form.errors}">
+            <c:if test="${!empty kunden_form.errors}">
                 <ul class="errors margin">
-                    <c:forEach items="${categories_form.errors}" var="error">
+                    <c:forEach items="${kunden_form.errors}" var="error">
                         <li>${error}</li>
                         </c:forEach>
                 </ul>
@@ -67,9 +67,9 @@
                     <div>
                         <div class="margin">
                             <c:forEach items="${kunden}" var="kunden">
-                                <input type="checkbox" name="kunden" id="${'kunden-'.concat(kunden.firmenname)}" value="${kunden.firmenname}" />
-                                <label for="${'kunden-'.concat(kunden.firmenname)}">
-                                    <c:out value="${kunden.firmenname}"/>
+                                <input type="checkbox" name="kunden" id="${'kunden-'.concat(kunden.name)}" value="${kunden.name}" />
+                                <label for="${'kunden-'.concat(kunden.name)}">
+                                    <c:out value="${kunden.name}"/>
                                 </label>
                                 <br />
                             </c:forEach>

@@ -6,8 +6,7 @@
 package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.ejb;
 
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb.EntityBean;
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.KundeEntity;
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa.Category;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa.Kunde;
 import java.util.List;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
@@ -21,7 +20,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 @RolesAllowed("app-user")
-public class KundenListBean extends KundeEntity {
+public class KundenListBean extends Kunde {
      @PersistenceContext
     protected EntityManager em;
     
@@ -32,15 +31,15 @@ public class KundenListBean extends KundeEntity {
      *
      * @return
      */
-    public List<KundeEntity> findAllSortedKunden() {
-        return this.em.createQuery("SELECT p FROM KundeEntity p").getResultList();
+    public List<Kunde> findAllSorted() {
+        return this.em.createQuery("SELECT p FROM Kunde p").getResultList();
     }
 
-    public void saveNew(Category category) {
+    public void saveNew(Kunde kunde) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public KundeEntity findById(long parseLong) {
+    public Kunde findById(long parseLong) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

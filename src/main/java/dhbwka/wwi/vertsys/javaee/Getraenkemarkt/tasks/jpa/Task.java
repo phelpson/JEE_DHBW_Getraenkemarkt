@@ -44,7 +44,7 @@ public class Task implements Serializable {
     private User owner;
 
     @ManyToOne
-    private Category category;
+    private Kunde kunde;
     
 
 
@@ -76,9 +76,9 @@ public class Task implements Serializable {
     public Task() {
     }
 
-    public Task(User owner, Category category, String shortText, String longText, Date dueDate, Time dueTime, GetraenkeEnum getraenk) {
+    public Task(User owner, Kunde kunde, String shortText, String longText, Date dueDate, Time dueTime, GetraenkeEnum getraenk) {
         this.owner = owner;
-        this.category = category;
+        this.kunde = kunde;
         this.shortText = shortText;
         this.longText = longText;
         this.dueDate = dueDate;
@@ -105,12 +105,12 @@ public class Task implements Serializable {
         this.owner = owner;
     }
 
-    public Category getCategory() {
-        return category;
+    public Kunde getkunde() {
+        return kunde;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setkunde(Kunde kunde) {
+        this.kunde = kunde;
     }
 
     public String getShortText() {

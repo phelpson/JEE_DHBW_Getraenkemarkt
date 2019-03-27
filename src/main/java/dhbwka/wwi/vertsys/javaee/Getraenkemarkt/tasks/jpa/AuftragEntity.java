@@ -5,7 +5,7 @@
  */
 package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa;
 
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.KundeEntity;
+
 import java.io.Serializable;
 import java.sql.Date;
 import java.sql.Time;

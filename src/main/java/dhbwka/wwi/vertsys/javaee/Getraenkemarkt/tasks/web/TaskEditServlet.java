@@ -11,7 +11,7 @@ package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.web;
 
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.web.WebUtils;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.web.FormValues;
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.ejb.CategoryBean;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.ejb.KundeBean;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.ejb.TaskBean;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb.UserBean;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb.ValidationBean;
@@ -44,7 +44,7 @@ public class TaskEditServlet extends HttpServlet {
     TaskBean taskBean;
     
     @EJB
-    CategoryBean categoryBean;
+    KundeBean kundeBean;
 
     @EJB
     UserBean userBean;
@@ -59,7 +59,7 @@ public class TaskEditServlet extends HttpServlet {
             throws ServletException, IOException {
 
         // Verfügbare Kategorien und Stati für die Suchfelder ermitteln
-        request.setAttribute("categories", this.categoryBean.findAllSorted());
+        request.setAttribute("kunden", this.kundeBean.findAllSorted());
         request.setAttribute("statuses", TaskStatus.values());
         request.setAttribute("getraenk", GetraenkeEnum.values());
 
@@ -122,7 +122,7 @@ public class TaskEditServlet extends HttpServlet {
         // Formulareingaben prüfen
         List<String> errors = new ArrayList<>();
 
-        String taskCategory = request.getParameter("task_category");
+        String taskkunde = request.getParameter("task_kunde");
         String taskDueDate = request.getParameter("task_due_date");
         String taskDueTime = request.getParameter("task_due_time");
         String taskStatus = request.getParameter("task_status");
@@ -132,9 +132,9 @@ public class TaskEditServlet extends HttpServlet {
 
         Task task = this.getRequestedTask(request);
 
-        if (taskCategory != null && !taskCategory.trim().isEmpty()) {
+        if (taskkunde != null && !taskkunde.trim().isEmpty()) {
             try {
-                task.setCategory(this.categoryBean.findById(Long.parseLong(taskCategory)));
+                task.setkunde(this.kundeBean.findById(Long.parseLong(taskkunde)));
             } catch (NumberFormatException ex) {
                 // Ungültige oder keine ID mitgegeben
             }
@@ -265,9 +265,9 @@ public class TaskEditServlet extends HttpServlet {
             task.getOwner().getUsername()
         });
 
-        if (task.getCategory() != null) {
-            values.put("task_category", new String[]{
-                "" + task.getCategory().getId()
+        if (task.getkunde() != null) {
+            values.put("task_kunde", new String[]{
+                "" + task.getkunde().getId()
             });
         }
 

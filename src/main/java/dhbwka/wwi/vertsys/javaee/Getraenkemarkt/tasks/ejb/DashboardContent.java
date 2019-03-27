@@ -13,7 +13,7 @@ import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.web.WebUtils;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.dashboard.ejb.DashboardContentProvider;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.dashboard.ejb.DashboardSection;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.dashboard.ejb.DashboardTile;
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa.Category;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa.Kunde;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa.TaskStatus;
 import java.util.List;
 import javax.ejb.EJB;
@@ -26,7 +26,7 @@ import javax.ejb.Stateless;
 public class DashboardContent implements DashboardContentProvider {
 
     @EJB
-    private CategoryBean categoryBean;
+    private KundeBean kundeBean;
 
     @EJB
     private TaskBean taskBean;
@@ -46,10 +46,10 @@ public class DashboardContent implements DashboardContentProvider {
         sections.add(section);
 
         // Anschließend je Kategorie einen weiteren Abschnitt erzeugen
-        List<Category> categories = this.categoryBean.findAllSorted();
+        List<Kunde> kunden = this.kundeBean.findAllSorted();
 
-        for (Category category : categories) {
-            section = this.createSection(category);
+        for (Kunde kunde : kunden) {
+            section = this.createSection(kunde);
             sections.add(section);
         }
     }
@@ -63,23 +63,23 @@ public class DashboardContent implements DashboardContentProvider {
      * Ist die Kategorie null, bedeutet dass, dass eine Rubrik für alle Aufgaben
      * aus allen Kategorien erzeugt werden soll.
      *
-     * @param category Aufgaben-Kategorie, für die Kacheln erzeugt werden sollen
+     * @param kunde Aufgaben-Kategorie, für die Kacheln erzeugt werden sollen
      * @return Neue Dashboard-Rubrik mit den Kacheln
      */
-    private DashboardSection createSection(Category category) {
+    private DashboardSection createSection(Kunde kunde) {
         // Neue Rubrik im Dashboard erzeugen
         DashboardSection section = new DashboardSection();
         String cssClass = "";
 
-        if (category != null) {
-            section.setLabel(category.getName());
+        if (kunde != null) {
+            section.setLabel(kunde.getName());
         } else {
             section.setLabel("Alle Kategorien");
             cssClass = "overview";
         }
 
         // Eine Kachel für alle Aufgaben in dieser Rubrik erzeugen
-        DashboardTile tile = this.createTile(category, null, "Alle", cssClass + " status-all", "calendar");
+        DashboardTile tile = this.createTile(kunde, null, "Alle", cssClass + " status-all", "calendar");
         section.getTiles().add(tile);
 
         // Ja Aufgabenstatus eine weitere Kachel erzeugen
@@ -105,7 +105,7 @@ public class DashboardContent implements DashboardContentProvider {
                     break;
             }
 
-            tile = this.createTile(category, status, status.getLabel(), cssClass1, icon);
+            tile = this.createTile(kunde, status, status.getLabel(), cssClass1, icon);
             section.getTiles().add(tile);
         }
 
@@ -118,19 +118,19 @@ public class DashboardContent implements DashboardContentProvider {
      * Methode werden auch die in der Kachel angezeigte Anzahl sowie der Link,
      * auf den die Kachel zeigt, ermittelt.
      *
-     * @param category
+     * @param kunde
      * @param status
      * @param label
      * @param cssClass
      * @param icon
      * @return
      */
-    private DashboardTile createTile(Category category, TaskStatus status, String label, String cssClass, String icon) {
-        int amount = taskBean.search(null, category, status).size();
+    private DashboardTile createTile(Kunde kunde, TaskStatus status, String label, String cssClass, String icon) {
+        int amount = taskBean.search(null, kunde, status).size();
         String href = "/app/tasks/list/";
 
-        if (category != null) {
-            href = WebUtils.addQueryParameter(href, "search_category", "" + category.getId());
+        if (kunde != null) {
+            href = WebUtils.addQueryParameter(href, "search_kunde", "" + kunde.getId());
         }
 
         if (status != null) {

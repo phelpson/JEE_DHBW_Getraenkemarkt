@@ -10,11 +10,11 @@
 package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.web;
 
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.web.FormValues;
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.ejb.CategoryBean;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.ejb.KundeBean;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.ejb.TaskBean;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb.ValidationBean;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.ejb.KundenListBean;
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa.Category;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa.Kunde;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa.Task;
 import java.io.IOException;
 import java.util.List;
@@ -32,7 +32,7 @@ import javax.servlet.http.HttpSession;
  * Formular, mit dem ein neue Kategorie angelegt werden kann, sowie eine Liste,
  * die zum Löschen der Kategorien verwendet werden kann.
  */
-@WebServlet(urlPatterns = {"/app/tasks/categories/"})
+@WebServlet(urlPatterns = {"/app/tasks/kunden/"})
 public class KundenListServlet extends HttpServlet {
 
     @EJB
@@ -49,7 +49,7 @@ public class KundenListServlet extends HttpServlet {
             throws ServletException, IOException {
 
         // Alle vorhandenen Kategorien ermitteln
-        request.setAttribute("kunden", this.kundelistbean.findAllSortedKunden());
+        request.setAttribute("kunden", this.kundelistbean.findAllSorted());
        
         // Anfrage an dazugerhörige JSP weiterleiten
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/tasks/kunden_list.jsp");
@@ -57,7 +57,7 @@ public class KundenListServlet extends HttpServlet {
 
         // Alte Formulardaten aus der Session entfernen
         HttpSession session = request.getSession();
-        session.removeAttribute("categories_form");
+        session.removeAttribute("kunden_form");
     }
 
     @Override
@@ -73,7 +73,7 @@ public class KundenListServlet extends HttpServlet {
 
         switch (action) {
             case "create":
-                this.createCategory(request, response);
+                this.createkunde(request, response);
                 break;
             
         }
@@ -87,18 +87,18 @@ public class KundenListServlet extends HttpServlet {
      * @throws ServletException
      * @throws IOException
      */
-    private void createCategory(HttpServletRequest request, HttpServletResponse response)
+    private void createkunde(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         // Formulareingaben prüfen
         String name = request.getParameter("name");
 
-        Category category = new Category(name);
-        List<String> errors = this.validationBean.validate(category);
+        Kunde kunde = new Kunde(name);
+        List<String> errors = this.validationBean.validate(kunde);
 
         // Neue Kategorie anlegen
         if (errors.isEmpty()) {
-            this.kundelistbean.saveNew(category);
+            this.kundelistbean.saveNew(kunde);
         }
 
         // Browser auffordern, die Seite neuzuladen
@@ -108,7 +108,7 @@ public class KundenListServlet extends HttpServlet {
             formValues.setErrors(errors);
 
             HttpSession session = request.getSession();
-            session.setAttribute("categories_form", formValues);
+            session.setAttribute("kunden_form", formValues);
         }
 
         response.sendRedirect(request.getRequestURI());

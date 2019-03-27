@@ -32,7 +32,7 @@
         </div>
 
         <div class="menuitem">
-            <a href="<c:url value="/app/tasks/categories/"/>">Kunden verwalten</a>
+            <a href="<c:url value="/app/tasks/kunden/"/>">Kunden verwalten</a>
         </div>
     </jsp:attribute>
 

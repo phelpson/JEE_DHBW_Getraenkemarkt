@@ -9,11 +9,11 @@
  */
 package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.web;
 
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.KundeEntity;
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.ejb.CategoryBean;
+
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.ejb.KundeBean;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.ejb.KundenListBean;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.ejb.TaskBean;
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa.Category;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa.Kunde;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa.Task;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa.TaskStatus;
 import java.io.IOException;
@@ -32,7 +32,7 @@ import javax.servlet.http.HttpServletResponse;
 public class TaskListServlet extends HttpServlet {
 
     @EJB
-    private KundenListBean KundenListBean;
+    private KundeBean kundebean;
     
     @EJB
     private TaskBean taskBean;
@@ -42,24 +42,24 @@ public class TaskListServlet extends HttpServlet {
             throws ServletException, IOException {
 
         // Verfügbare Kategorien und Stati für die Suchfelder ermitteln
-       // request.setAttribute("categories", this.categoryBean.findAllSorted());
-        request.setAttribute("kunden", this.KundenListBean.findAllSortedKunden());
+       // request.setAttribute("kunden", this.kundeBean.findAllSorted());
+        request.setAttribute("kunde", this.kundebean.findAllSorted());
         request.setAttribute("statuses", TaskStatus.values());
 
         // Suchparameter aus der URL auslesen
         String searchText = request.getParameter("search_text");
-        String searchCategory = request.getParameter("search_category");
+        String searchkunde = request.getParameter("search_kunde");
         String searchStatus = request.getParameter("search_status");
 
         // Anzuzeigende Aufgaben suchen
-        KundeEntity kunde = null;
+       
         TaskStatus status = null;
         
-         Category category = null;
+         Kunde kunde = null;
 
-        if (searchCategory != null) {
+        if (searchkunde != null) {
             try {
-                kunde = this.KundenListBean.findById(Long.parseLong(searchCategory));
+                kunde = this.kundebean.findById(Long.parseLong(searchkunde));
             } catch (NumberFormatException ex) {
                 kunde = null;
             }
@@ -74,7 +74,7 @@ public class TaskListServlet extends HttpServlet {
 
         }
 
-        List<Task> tasks = this.taskBean.search(searchText, category, status);
+        List<Task> tasks = this.taskBean.search(searchText, kunde, status);
         request.setAttribute("tasks", tasks);
 
         // Anfrage an die JSP weiterleiten

@@ -7,7 +7,8 @@ package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.ejb;
 
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa.AuftragEntity;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb.EntityBean;
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.KundeEntity;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa.Kunde;
+
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa.TaskStatus;
 import java.sql.Date;
 import java.sql.Time;
@@ -61,7 +62,7 @@ public class AuftragBean {
          long auftragId,
          Date auftragDate,
          Time auftragTime, 
-         KundeEntity kundeEntity, 
+         Kunde Kunde, 
         TaskStatus status){
         
         AuftragEntity auftragentitiy = new AuftragEntity( auftragId,  auftragDate,  auftragTime,  
