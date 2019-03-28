@@ -7,15 +7,14 @@
  * Dieser Quellcode ist lizenziert unter einer
  * Creative Commons Namensnennung 4.0 International Lizenz.
  */
-package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.web;
+package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.web;
 
 
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.ejb.KundeBean;
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.ejb.KundenListBean;
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.ejb.TaskBean;
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa.Kunde;
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa.Task;
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa.TaskStatus;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.ejb.KundeBean;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.ejb.BestellungBean;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa.Kunde;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa.Bestellung;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa.BestellungStatus;
 import java.io.IOException;
 import java.util.List;
 import javax.ejb.EJB;
@@ -28,14 +27,14 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet für die tabellarische Auflisten der Aufgaben.
  */
-@WebServlet(urlPatterns = {"/app/tasks/list/"})
-public class TaskListServlet extends HttpServlet {
+@WebServlet(urlPatterns = {"/app/bestellungen/list/"})
+public class BestellungListServlet extends HttpServlet {
 
     @EJB
     private KundeBean kundebean;
     
     @EJB
-    private TaskBean taskBean;
+    private BestellungBean bestellungBean;
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -44,7 +43,7 @@ public class TaskListServlet extends HttpServlet {
         // Verfügbare Kategorien und Stati für die Suchfelder ermitteln
        // request.setAttribute("kunden", this.kundeBean.findAllSorted());
         request.setAttribute("kunde", this.kundebean.findAllSorted());
-        request.setAttribute("statuses", TaskStatus.values());
+        request.setAttribute("statuses", BestellungStatus.values());
 
         // Suchparameter aus der URL auslesen
         String searchText = request.getParameter("search_text");
@@ -53,7 +52,7 @@ public class TaskListServlet extends HttpServlet {
 
         // Anzuzeigende Aufgaben suchen
        
-        TaskStatus status = null;
+        BestellungStatus status = null;
         
          Kunde kunde = null;
 
@@ -67,17 +66,17 @@ public class TaskListServlet extends HttpServlet {
 
         if (searchStatus != null) {
             try {
-                status = TaskStatus.valueOf(searchStatus);
+                status = BestellungStatus.valueOf(searchStatus);
             } catch (IllegalArgumentException ex) {
                 status = null;
             }
 
         }
 
-        List<Task> tasks = this.taskBean.search(searchText, kunde, status);
-        request.setAttribute("tasks", tasks);
+        List<Bestellung> bestellungen = this.bestellungBean.search(searchText, kunde, status);
+        request.setAttribute("bestellungen", bestellungen);
 
         // Anfrage an die JSP weiterleiten
-        request.getRequestDispatcher("/WEB-INF/tasks/task_list.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/bestellungen/bestellung_list.jsp").forward(request, response);
     }
 }

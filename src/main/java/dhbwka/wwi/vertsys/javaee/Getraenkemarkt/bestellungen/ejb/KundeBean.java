@@ -7,10 +7,10 @@
  * Dieser Quellcode ist lizenziert unter einer
  * Creative Commons Namensnennung 4.0 International Lizenz.
  */
-package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.ejb;
+package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.ejb;
 
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb.EntityBean;
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa.Kunde;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa.Kunde;
 import java.util.List;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;

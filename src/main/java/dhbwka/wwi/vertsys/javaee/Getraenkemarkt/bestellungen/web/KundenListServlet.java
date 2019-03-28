@@ -7,15 +7,15 @@
  * Dieser Quellcode ist lizenziert unter einer
  * Creative Commons Namensnennung 4.0 International Lizenz.
  */
-package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.web;
+package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.web;
 
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.web.FormValues;
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.ejb.KundeBean;
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.ejb.TaskBean;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.ejb.KundeBean;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.ejb.BestellungBean;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb.ValidationBean;
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.ejb.KundenListBean;
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa.Kunde;
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa.Task;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.ejb.KundenListBean;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa.Kunde;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa.Bestellung;
 import java.io.IOException;
 import java.util.List;
 import javax.ejb.EJB;
@@ -32,14 +32,14 @@ import javax.servlet.http.HttpSession;
  * Formular, mit dem ein neue Kategorie angelegt werden kann, sowie eine Liste,
  * die zum Löschen der Kategorien verwendet werden kann.
  */
-@WebServlet(urlPatterns = {"/app/tasks/kunden/"})
+@WebServlet(urlPatterns = {"/app/bestellungen/kunden/"})
 public class KundenListServlet extends HttpServlet {
 
     @EJB
     KundenListBean kundelistbean;
 
     @EJB
-    TaskBean taskBean;
+    BestellungBean bestellungBean;
 
     @EJB
     ValidationBean validationBean;
@@ -52,7 +52,7 @@ public class KundenListServlet extends HttpServlet {
         request.setAttribute("kunden", this.kundelistbean.findAllSorted());
        
         // Anfrage an dazugerhörige JSP weiterleiten
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/tasks/kunden_list.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/bestellungen/kunden_list.jsp");
         dispatcher.forward(request, response);
 
         // Alte Formulardaten aus der Session entfernen

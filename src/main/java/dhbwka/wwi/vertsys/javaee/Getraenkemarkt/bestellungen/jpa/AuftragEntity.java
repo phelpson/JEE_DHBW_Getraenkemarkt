@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa;
+package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa;
 
 
 import java.io.Serializable;
@@ -62,7 +62,7 @@ public class AuftragEntity implements Serializable {
     //@ManyToOne
     @Enumerated(EnumType.STRING)
     @NotNull
-    private TaskStatus status = TaskStatus.OPEN;
+    private BestellungStatus status = BestellungStatus.OPEN;
    
     
     @Lob
@@ -76,7 +76,7 @@ public class AuftragEntity implements Serializable {
     }
     
     public AuftragEntity(long auftragId, Date auftragDate, Time auftragTime, 
-                                                TaskStatus status){
+                                                BestellungStatus status){
         this.auftragId      = auftragId;
         this.auftragDate    = auftragDate;
         this.auftragTime    = auftragTime;
@@ -104,10 +104,10 @@ public class AuftragEntity implements Serializable {
     public void setAuftragTime(Time bestellungTime){
         this.auftragTime = bestellungTime;
     }
-    public TaskStatus getAuftragStatus(){
+    public BestellungStatus getAuftragStatus(){
         return this.status;
     }
-    public void setAuftragStatus(TaskStatus status){
+    public void setAuftragStatus(BestellungStatus status){
         this.status = status;
     }
    

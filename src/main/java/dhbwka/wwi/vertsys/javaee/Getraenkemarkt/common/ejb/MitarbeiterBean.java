@@ -10,6 +10,7 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -27,6 +28,12 @@ public class MitarbeiterBean {
     */
     @PersistenceContext
     protected EntityManager em;
+    
+    public String generiereEintrittsdatum() {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        LocalDateTime date = LocalDateTime.now();
+        return dtf.format(date);
+    }
     
     // neuen Eintrag erstellen
     public MitarbeiterEntity createNewEntry(String dateString) {

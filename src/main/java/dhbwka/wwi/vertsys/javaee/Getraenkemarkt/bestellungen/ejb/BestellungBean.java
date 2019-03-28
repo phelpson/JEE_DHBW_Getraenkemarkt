@@ -7,12 +7,12 @@
  * Dieser Quellcode ist lizenziert unter einer
  * Creative Commons Namensnennung 4.0 International Lizenz.
  */
-package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.ejb;
+package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.ejb;
 
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb.EntityBean;
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa.Kunde;
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa.Task;
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa.TaskStatus;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa.Kunde;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa.Bestellung;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa.BestellungStatus;
 import java.util.List;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
@@ -26,10 +26,10 @@ import javax.persistence.criteria.Root;
  */
 @Stateless
 @RolesAllowed("app-user")
-public class TaskBean extends EntityBean<Task, Long> { 
+public class BestellungBean extends EntityBean<Bestellung, Long> { 
    
-    public TaskBean() {
-        super(Task.class);
+    public BestellungBean() {
+        super(Bestellung.class);
     }
     
     /**
@@ -37,8 +37,8 @@ public class TaskBean extends EntityBean<Task, Long> {
      * @param username Benutzername
      * @return Alle Aufgaben des Benutzers
      */
-    public List<Task> findByUsername(String username) {
-        return em.createQuery("SELECT t FROM Task t WHERE t.owner.username = :username ORDER BY t.dueDate, t.dueTime")
+    public List<Bestellung> findByUsername(String username) {
+        return em.createQuery("SELECT t FROM bestellung t WHERE t.owner.username = :username ORDER BY t.dueDate, t.dueTime")
                  .setParameter("username", username)
                  .getResultList();
     }
@@ -54,13 +54,13 @@ public class TaskBean extends EntityBean<Task, Long> {
      * @param status Status (optional)
      * @return Liste mit den gefundenen Aufgaben
      */
-    public List<Task> search(String search, Kunde kunde, TaskStatus status) {
+    public List<Bestellung> search(String search, Kunde kunde, BestellungStatus status) {
         // Hilfsobjekt zum Bauen des Query
         CriteriaBuilder cb = this.em.getCriteriaBuilder();
         
-        // SELECT t FROM Task t
-        CriteriaQuery<Task> query = cb.createQuery(Task.class);
-        Root<Task> from = query.from(Task.class);
+        // SELECT t FROM bestellung t
+        CriteriaQuery<Bestellung> query = cb.createQuery(Bestellung.class);
+        Root<Bestellung> from = query.from(Bestellung.class);
         query.select(from);
 
         // ORDER BY dueDate, dueTime

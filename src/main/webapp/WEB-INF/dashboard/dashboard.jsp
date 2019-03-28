@@ -24,15 +24,15 @@
 
     <jsp:attribute name="menu">
         <div class="menuitem">
-            <a href="<c:url value="/app/tasks/list/"/>">Liste</a>
+            <a href="<c:url value="/app/bestellungen/list/"/>">Liste</a>
         </div>
 
         <div class="menuitem">
-            <a href="<c:url value="/app/tasks/task/new/"/>">Auftrag anlegen</a>
+            <a href="<c:url value="/app/bestellungen/bestellung/new/"/>">Auftrag anlegen</a>
         </div>
 
         <div class="menuitem">
-            <a href="<c:url value="/app/tasks/kunden/"/>">Kunden verwalten</a>
+            <a href="<c:url value="/app/bestellungen/kunden/"/>">Kunden verwalten</a>
         </div>
     </jsp:attribute>
 

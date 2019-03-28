@@ -16,8 +16,8 @@ import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb.UserBean;
 
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.MitarbeiterEntity;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.User;
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.ejb.KundeBean;
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa.Kunde;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.ejb.KundeBean;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa.Kunde;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -74,15 +74,24 @@ public class SignUpServlet extends HttpServlet {
         
         String companyname  = request.getParameter("signup_companyname");
         String address      = request.getParameter("signup_street");
-        int plz             = Integer.parseInt(request.getParameter("signup_plz"));
+        int plz             = 000000;
+        String nfeMessage   = null;
+        try {
+            plz             = Integer.parseInt(request.getParameter("signup_plz"));
+        } catch(NumberFormatException nfe) {
+            nfeMessage = "Bitte geben Sie einen numerischen ganzzahligen Wert für die PLZ ein.";
+        }
         
         String usage        = request.getParameter("signup_usage");
         String email        = request.getParameter("signup_email");
         String givenname    = request.getParameter("signup_givenname");
         String name         = request.getParameter("signup_name");
         
+        // Diskriminierendes Attribut für die DB Zuordnung zwischen Mitarbeiter und Kunde
         String disAttribut = usage;
+        List<String> errors = null;
         
+
         // Eingaben prüfen
         User user = new User(
                 username, 
@@ -95,15 +104,30 @@ public class SignUpServlet extends HttpServlet {
                 disAttribut
         );
         
-        List<String> errors = this.validationBean.validate(user);
+
+        
+        Kunde kunde = new Kunde (companyname);
+        MitarbeiterEntity mitarbeiter = new MitarbeiterEntity (this.mitarbeiterBean.generiereEintrittsdatum());
+        
+        errors = this.validationBean.validate(user);
         this.validationBean.validate(user.getPassword(), errors);
+        
+        List<String> kunden_errors = this.validationBean.validate(kunde);
+        this.validationBean.validate(kunde, errors);
+        
+        List<String> mitarbeiter_errors = this.validationBean.validate(mitarbeiter);
+        this.validationBean.validate(mitarbeiter, errors);
         
         if (password1 != null && password2 != null && !password1.equals(password2)) {
             errors.add("Die beiden Passwörter stimmen nicht überein.");
         }
         
+        if (nfeMessage != null) {
+            errors.add(nfeMessage);
+        }
+        
         // Neuen Benutzer anlegen
-        if (errors.isEmpty()) {
+        if (errors.isEmpty() && kunden_errors.isEmpty() &&  mitarbeiter_errors.isEmpty()) {
             try {
                 if (usage.equals("Kunde") == true) {
                     disAttribut = "Kunde";
@@ -125,7 +149,7 @@ public class SignUpServlet extends HttpServlet {
         
         
         // Weiter zur nächsten Seite
-        if (errors.isEmpty()) {
+        if (errors.isEmpty() && kunden_errors.isEmpty() &&  mitarbeiter_errors.isEmpty()) {
             // Keine Fehler: Startseite aufrufen
             request.login(username, password1);
             response.sendRedirect(WebUtils.appUrl(request, "/app/dashboard/"));

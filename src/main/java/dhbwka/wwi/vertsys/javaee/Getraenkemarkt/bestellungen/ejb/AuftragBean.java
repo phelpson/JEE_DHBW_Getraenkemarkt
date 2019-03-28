@@ -3,13 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.ejb;
+package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.ejb;
 
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa.AuftragEntity;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa.AuftragEntity;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb.EntityBean;
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa.Kunde;
-
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa.TaskStatus;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa.Kunde;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa.BestellungStatus;
 import java.sql.Date;
 import java.sql.Time;
 import java.util.List;
@@ -63,7 +62,7 @@ public class AuftragBean {
          Date auftragDate,
          Time auftragTime, 
          Kunde Kunde, 
-        TaskStatus status){
+        BestellungStatus status){
         
         AuftragEntity auftragentitiy = new AuftragEntity( auftragId,  auftragDate,  auftragTime,  
                                                  status);

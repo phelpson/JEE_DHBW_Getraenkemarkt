@@ -7,14 +7,14 @@
  * Dieser Quellcode ist lizenziert unter einer
  * Creative Commons Namensnennung 4.0 International Lizenz.
  */
-package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.ejb;
+package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.ejb;
 
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.web.WebUtils;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.dashboard.ejb.DashboardContentProvider;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.dashboard.ejb.DashboardSection;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.dashboard.ejb.DashboardTile;
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa.Kunde;
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa.TaskStatus;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa.Kunde;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa.BestellungStatus;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -22,14 +22,14 @@ import javax.ejb.Stateless;
 /**
  * EJB zur Definition der Dashboard-Kacheln für Aufgaben.
  */
-@Stateless(name = "tasks")
+@Stateless(name = "bestellungen")
 public class DashboardContent implements DashboardContentProvider {
 
     @EJB
     private KundeBean kundeBean;
 
     @EJB
-    private TaskBean taskBean;
+    private BestellungBean bestellungBean;
     
     /**
      * Vom Dashboard aufgerufenen Methode, um die anzuzeigenden Rubriken und
@@ -83,7 +83,7 @@ public class DashboardContent implements DashboardContentProvider {
         section.getTiles().add(tile);
 
         // Ja Aufgabenstatus eine weitere Kachel erzeugen
-        for (TaskStatus status : TaskStatus.values()) {
+        for (BestellungStatus status : BestellungStatus.values()) {
             String cssClass1 = cssClass + " status-" + status.toString().toLowerCase();
             String icon = "";
 
@@ -125,9 +125,9 @@ public class DashboardContent implements DashboardContentProvider {
      * @param icon
      * @return
      */
-    private DashboardTile createTile(Kunde kunde, TaskStatus status, String label, String cssClass, String icon) {
-        int amount = taskBean.search(null, kunde, status).size();
-        String href = "/app/tasks/list/";
+    private DashboardTile createTile(Kunde kunde, BestellungStatus status, String label, String cssClass, String icon) {
+        int amount = bestellungBean.search(null, kunde, status).size();
+        String href = "/app/bestellungen/list/";
 
         if (kunde != null) {
             href = WebUtils.addQueryParameter(href, "search_kunde", "" + kunde.getId());

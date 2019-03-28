@@ -7,7 +7,7 @@
  * Dieser Quellcode ist lizenziert unter einer
  * Creative Commons Namensnennung 4.0 International Lizenz.
  */
-package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa;
+package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa;
 
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.User;
 import java.io.Serializable;
@@ -30,13 +30,13 @@ import javax.validation.constraints.Size;
  * Eine zu erledigende Aufgabe.
  */
 @Entity
-public class Task implements Serializable {
+public class Bestellung implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = "task_ids")
-    @TableGenerator(name = "task_ids", initialValue = 0, allocationSize = 50)
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "bestellung_ids")
+    @TableGenerator(name = "bestellung_ids", initialValue = 0, allocationSize = 50)
     private long id;
 
     @ManyToOne
@@ -65,7 +65,7 @@ public class Task implements Serializable {
 
     @Enumerated(EnumType.STRING)
     @NotNull
-    private TaskStatus status = TaskStatus.OPEN;
+    private BestellungStatus status = BestellungStatus.OPEN;
     
     @Column
     @Enumerated(EnumType.STRING)
@@ -73,10 +73,10 @@ public class Task implements Serializable {
     private GetraenkeEnum getraenk = GetraenkeEnum.Bier;
 
     //<editor-fold defaultstate="collapsed" desc="Konstruktoren">
-    public Task() {
+    public Bestellung() {
     }
 
-    public Task(User owner, Kunde kunde, String shortText, String longText, Date dueDate, Time dueTime, GetraenkeEnum getraenk) {
+    public Bestellung(User owner, Kunde kunde, String shortText, String longText, Date dueDate, Time dueTime, GetraenkeEnum getraenk) {
         this.owner = owner;
         this.kunde = kunde;
         this.shortText = shortText;
@@ -145,11 +145,11 @@ public class Task implements Serializable {
         this.dueTime = dueTime;
     }
 
-    public TaskStatus getStatus() {
+    public BestellungStatus getStatus() {
         return status;
     }
 
-    public void setStatus(TaskStatus status) {
+    public void setStatus(BestellungStatus status) {
         this.status = status;
     }
     

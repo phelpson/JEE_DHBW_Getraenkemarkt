@@ -7,7 +7,7 @@
  * Dieser Quellcode ist lizenziert unter einer
  * Creative Commons Namensnennung 4.0 International Lizenz.
  */
-package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa;
+package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -37,12 +37,12 @@ public class Kunde implements Serializable {
     private long id;
 
     @Column(length = 30)
-    @NotNull(message = "Der Name darf nicht leer sein.")
-    @Size(min = 3, max = 30, message = "Der Name muss zwischen drei und 30 Zeichen lang sein.")
+    @NotNull(message = "Der Firmennameame darf nicht leer sein.")
+    @Size(min = 3, max = 48, message = "Der Firmenname muss zwischen drei und 48 Zeichen lang sein.")
     private String firmenName;
 
     @OneToMany(mappedBy = "kunde", fetch = FetchType.LAZY)
-    List<Task> tasks = new ArrayList<>();
+    List<Bestellung> bestellungen = new ArrayList<>();
 
     //<editor-fold defaultstate="collapsed" desc="Konstruktoren">
     public Kunde() {
@@ -70,12 +70,12 @@ public class Kunde implements Serializable {
         this.firmenName = name;
     }
 
-    public List<Task> getTasks() {
-        return tasks;
+    public List<Bestellung> getbestellungen() {
+        return bestellungen;
     }
 
-    public void setTasks(List<Task> tasks) {
-        this.tasks = tasks;
+    public void setbestellungen(List<Bestellung> bestellungen) {
+        this.bestellungen = bestellungen;
     }
     //</editor-fold>
 

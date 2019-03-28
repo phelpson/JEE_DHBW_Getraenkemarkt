@@ -9,7 +9,7 @@
  */
 package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa;
 
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa.Task;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa.Bestellung;
 import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -62,6 +62,7 @@ public class User implements Serializable {
     private String passwordHash;
     
     @Column(name = "E-Mail", length = 64)
+    @Size(min = 6, max = 64, message = "Die E-Mail-Adresse muss zwischen 6 und 64 Zeichen lang sein.")
     @NotNull(message  = "Die E-Mail Adresse darf nicht leer sein.")
     private String email;
     
@@ -72,9 +73,11 @@ public class User implements Serializable {
     private String nachname = "";
       
     @Column(name="address")
+    @NotNull(message  = "Das Adress-Feld darf nicht leer sein.")
     private String adresse = "";
     
     @Column(name="post_code")
+    @NotNull(message  = "Die PLZ darf nicht leer sein.")
     private int plz = 0;
     
     
@@ -95,7 +98,7 @@ public class User implements Serializable {
     List<String> groups = new ArrayList<>();
 
     @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    List<Task> tasks = new ArrayList<>();
+    List<Bestellung> bestellungen = new ArrayList<>();
     
 
     //<editor-fold defaultstate="collapsed" desc="Konstruktoren">
@@ -128,12 +131,12 @@ public class User implements Serializable {
     }
 
     @XmlTransient
-    public List<Task> getTasks() {
-        return tasks;
+    public List<Bestellung> getbestellungen() {
+        return bestellungen;
     }
 
-    public void setTasks(List<Task> tasks) {
-        this.tasks = tasks;
+    public void setbestellungen(List<Bestellung> bestellungen) {
+        this.bestellungen = bestellungen;
     }
     
      public void setAdresse(String adresse) {

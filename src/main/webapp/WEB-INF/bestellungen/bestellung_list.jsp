@@ -19,7 +19,7 @@
     </jsp:attribute>
 
     <jsp:attribute name="head">
-        <link rel="stylesheet" href="<c:url value="/css/task_list.css"/>" />
+        <link rel="stylesheet" href="<c:url value="/css/bestellung_list.css"/>" />
     </jsp:attribute>
 
     <jsp:attribute name="menu">
@@ -28,11 +28,11 @@
         </div>
 
         <div class="menuitem">
-            <a href="<c:url value="/app/tasks/task/new/"/>">Auftrag anlegen</a>
+            <a href="<c:url value="/app/bestellungen/bestellung/new/"/>">Auftrag anlegen</a>
         </div>
 
         <div class="menuitem">
-            <a href="<c:url value="/app/tasks/kunden/"/>">Kunden verwalten</a>
+            <a href="<c:url value="/app/bestellungen/kunden/"/>">Kunden verwalten</a>
         </div>
     </jsp:attribute>
 
@@ -68,7 +68,7 @@
 
         <%-- Gefundene Aufgaben --%>
         <c:choose>
-            <c:when test="${empty tasks}">
+            <c:when test="${empty bestellungen}">
                 <p>
                     Es wurden keine Aufträge gefunden. 🐈
                 </p>
@@ -86,25 +86,25 @@
                             <th>Fällig am</th>
                         </tr>
                     </thead>
-                    <c:forEach items="${tasks}" var="task">
+                    <c:forEach items="${bestellungen}" var="bestellung">
                         <tr>
                             <td>
-                                <a href="<c:url value="/app/tasks/task/${task.id}/"/>">
-                                    <c:out value="${task.shortText}"/>
+                                <a href="<c:url value="/app/bestellungen/bestellung/${bestellung.id}/"/>">
+                                    <c:out value="${bestellung.shortText}"/>
                                 </a>
                             </td>
                             <td>
-                                <c:out value="${task.kunde.name}"/>
+                                <c:out value="${bestellung.kunde.name}"/>
                             </td>
                             <td>
-                                <c:out value="${task.owner.username}"/>
+                                <c:out value="${bestellung.owner.username}"/>
                             </td>
                             <td>
-                                <c:out value="${task.status.label}"/>
+                                <c:out value="${bestellung.status.label}"/>
                             </td>
                             <td>
-                                <c:out value="${utils.formatDate(task.dueDate)}"/>
-                                <c:out value="${utils.formatTime(task.dueTime)}"/>
+                                <c:out value="${utils.formatDate(bestellung.dueDate)}"/>
+                                <c:out value="${utils.formatTime(bestellung.dueTime)}"/>
                             </td>
                         </tr>
                     </c:forEach>

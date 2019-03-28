@@ -7,18 +7,18 @@
  * Dieser Quellcode ist lizenziert unter einer
  * Creative Commons Namensnennung 4.0 International Lizenz.
  */
-package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.web;
+package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.web;
 
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.web.WebUtils;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.web.FormValues;
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.ejb.KundeBean;
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.ejb.TaskBean;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.ejb.KundeBean;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.ejb.BestellungBean;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb.UserBean;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb.ValidationBean;
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa.AuftragEntity;
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa.GetraenkeEnum;
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa.Task;
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa.TaskStatus;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa.AuftragEntity;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa.GetraenkeEnum;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa.Bestellung;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa.BestellungStatus;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.Time;
@@ -37,11 +37,11 @@ import javax.servlet.http.HttpSession;
 /**
  * Seite zum Anlegen oder Bearbeiten einer Aufgabe.
  */
-@WebServlet(urlPatterns = "/app/tasks/task/*")
-public class TaskEditServlet extends HttpServlet {
+@WebServlet(urlPatterns = "/app/bestellungen/bestellung/*")
+public class BestellungEditServlet extends HttpServlet {
 
     @EJB
-    TaskBean taskBean;
+    BestellungBean bestellungBean;
     
     @EJB
     KundeBean kundeBean;
@@ -60,30 +60,30 @@ public class TaskEditServlet extends HttpServlet {
 
         // Verfügbare Kategorien und Stati für die Suchfelder ermitteln
         request.setAttribute("kunden", this.kundeBean.findAllSorted());
-        request.setAttribute("statuses", TaskStatus.values());
+        request.setAttribute("statuses", BestellungStatus.values());
         request.setAttribute("getraenk", GetraenkeEnum.values());
 
         // Zu bearbeitende Aufgabe einlesen
         HttpSession session = request.getSession();
 
-        Task task = this.getRequestedTask(request);
-        request.setAttribute("edit", task.getId() != 0);
+        Bestellung bestellung = this.getRequestedbestellung(request);
+        request.setAttribute("edit", bestellung.getId() != 0);
                                 
-        if (session.getAttribute("task_form") == null) {
-            // Keine Formulardaten mit fehlergetRequestedTaskhaften Daten in der Session,
+        if (session.getAttribute("bestellung_form") == null) {
+            // Keine Formulardaten mit fehlergetRequestedbestellunghaften Daten in der Session,
             // daher Formulardaten aus dem Datenbankobjekt übernehmen
-            request.setAttribute("task_form", this.createTaskForm(task));
+            request.setAttribute("bestellung_form", this.createbestellungForm(bestellung));
         }
         /*if (session.getAttribute("getraenk_form") == null) {
-            // Keine Formulardaten mit fehlergetRequestedTaskhaften Daten in der Session,
+            // Keine Formulardaten mit fehlergetRequestedbestellunghaften Daten in der Session,
             // daher Formulardaten aus dem Datenbankobjekt übernehmen
             request.setAttribute("getraenk_form", this.createGetraenkForm(getraenk));
         }*/
 
         // Anfrage an die JSP weiterleiten
-        request.getRequestDispatcher("/WEB-INF/tasks/task_edit.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/bestellungen/bestellung_edit.jsp").forward(request, response);
         
-        session.removeAttribute("task_form");
+        session.removeAttribute("bestellung_form");
         // session.removeAttribute("getraenk_form");
     }
 
@@ -100,10 +100,10 @@ public class TaskEditServlet extends HttpServlet {
 
         switch (action) {
             case "save":
-                this.saveTask(request, response);
+                this.savebestellung(request, response);
                 break;
             case "delete":
-                this.deleteTask(request, response);
+                this.deletebestellung(request, response);
                 break;
         }
     }
@@ -116,68 +116,68 @@ public class TaskEditServlet extends HttpServlet {
      * @throws ServletException
      * @throws IOException
      */
-    private void saveTask(HttpServletRequest request, HttpServletResponse response)
+    private void savebestellung(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         // Formulareingaben prüfen
         List<String> errors = new ArrayList<>();
 
-        String taskkunde = request.getParameter("task_kunde");
-        String taskDueDate = request.getParameter("task_due_date");
-        String taskDueTime = request.getParameter("task_due_time");
-        String taskStatus = request.getParameter("task_status");
-        String taskGetraenk = request.getParameter("task_getraenk");
-        String taskShortText = request.getParameter("task_short_text");
-        String taskLongText = request.getParameter("task_long_text");
+        String bestellungkunde = request.getParameter("bestellung_kunde");
+        String bestellungDueDate = request.getParameter("bestellung_due_date");
+        String bestellungDueTime = request.getParameter("bestellung_due_time");
+        String bestellungentatus = request.getParameter("bestellung_status");
+        String bestellungGetraenk = request.getParameter("bestellung_getraenk");
+        String bestellungenhortText = request.getParameter("bestellung_short_text");
+        String bestellungLongText = request.getParameter("bestellung_long_text");
 
-        Task task = this.getRequestedTask(request);
+        Bestellung bestellung = this.getRequestedbestellung(request);
 
-        if (taskkunde != null && !taskkunde.trim().isEmpty()) {
+        if (bestellungkunde != null && !bestellungkunde.trim().isEmpty()) {
             try {
-                task.setkunde(this.kundeBean.findById(Long.parseLong(taskkunde)));
+                bestellung.setkunde(this.kundeBean.findById(Long.parseLong(bestellungkunde)));
             } catch (NumberFormatException ex) {
                 // Ungültige oder keine ID mitgegeben
             }
         }
 
-        Date dueDate = WebUtils.parseDate(taskDueDate);
-        Time dueTime = WebUtils.parseTime(taskDueTime);
+        Date dueDate = WebUtils.parseDate(bestellungDueDate);
+        Time dueTime = WebUtils.parseTime(bestellungDueTime);
 
         if (dueDate != null) {
-            task.setDueDate(dueDate);
+            bestellung.setDueDate(dueDate);
         } else {
             errors.add("Das Datum muss dem Format dd.mm.yyyy entsprechen.");
         }
 
         if (dueTime != null) {
-            task.setDueTime(dueTime);
+            bestellung.setDueTime(dueTime);
         } else {
             errors.add("Die Uhrzeit muss dem Format hh:mm:ss entsprechen.");
         }
 
         try {
 
-            task.setStatus(TaskStatus.valueOf(taskStatus));
-            task.setGetraenkEnum(GetraenkeEnum.valueOf(taskGetraenk));
+            bestellung.setStatus(BestellungStatus.valueOf(bestellungentatus));
+            bestellung.setGetraenkEnum(GetraenkeEnum.valueOf(bestellungGetraenk));
 
         } catch (IllegalArgumentException ex) {
             errors.add("Der ausgewählte Status ist nicht vorhanden.");
         }
 
-        task.setShortText(taskShortText);
-        task.setLongText(taskLongText);
+        bestellung.setShortText(bestellungenhortText);
+        bestellung.setLongText(bestellungLongText);
 
-        this.validationBean.validate(task, errors);
+        this.validationBean.validate(bestellung, errors);
 
         // Datensatz speichern
         if (errors.isEmpty()) {
-            this.taskBean.update(task);
+            this.bestellungBean.update(bestellung);
         }
 
         // Weiter zur nächsten Seite
         if (errors.isEmpty()) {
             // Keine Fehler: Startseite aufrufen
-            response.sendRedirect(WebUtils.appUrl(request, "/app/tasks/list/"));
+            response.sendRedirect(WebUtils.appUrl(request, "/app/bestellungen/list/"));
         } else {
             // Fehler: Formuler erneut anzeigen
             FormValues formValues = new FormValues();
@@ -185,7 +185,7 @@ public class TaskEditServlet extends HttpServlet {
             formValues.setErrors(errors);
 
             HttpSession session = request.getSession();
-            session.setAttribute("task_form", formValues);
+            session.setAttribute("bestellung_form", formValues);
 
             response.sendRedirect(request.getRequestURI());
         }
@@ -199,15 +199,15 @@ public class TaskEditServlet extends HttpServlet {
      * @throws ServletException
      * @throws IOException
      */
-    private void deleteTask(HttpServletRequest request, HttpServletResponse response)
+    private void deletebestellung(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         // Datensatz löschen
-        Task task = this.getRequestedTask(request);
-        this.taskBean.delete(task);
+        Bestellung bestellung = this.getRequestedbestellung(request);
+        this.bestellungBean.delete(bestellung);
 
         // Zurück zur Übersicht
-        response.sendRedirect(WebUtils.appUrl(request, "/app/tasks/list/"));
+        response.sendRedirect(WebUtils.appUrl(request, "/app/bestellungen/list/"));
     }
 
     /**
@@ -218,34 +218,34 @@ public class TaskEditServlet extends HttpServlet {
      * @param request HTTP-Anfrage
      * @return Zu bearbeitende Aufgabe
      */
-    private Task getRequestedTask(HttpServletRequest request) {
+    private Bestellung getRequestedbestellung(HttpServletRequest request) {
         // Zunächst davon ausgehen, dass ein neuer Satz angelegt werden soll
-        Task task = new Task();
-        task.setOwner(this.userBean.getCurrentUser());
-        task.setDueDate(new Date(System.currentTimeMillis()));
-        task.setDueTime(new Time(System.currentTimeMillis()));
+        Bestellung bestellung = new Bestellung();
+        bestellung.setOwner(this.userBean.getCurrentUser());
+        bestellung.setDueDate(new Date(System.currentTimeMillis()));
+        bestellung.setDueTime(new Time(System.currentTimeMillis()));
 
         // ID aus der URL herausschneiden
-        String taskId = request.getPathInfo();
+        String bestellungId = request.getPathInfo();
 
-        if (taskId == null) {
-            taskId = "";
+        if (bestellungId == null) {
+            bestellungId = "";
         }
 
-        taskId = taskId.substring(1);
+        bestellungId = bestellungId.substring(1);
 
-        if (taskId.endsWith("/")) {
-            taskId = taskId.substring(0, taskId.length() - 1);
+        if (bestellungId.endsWith("/")) {
+            bestellungId = bestellungId.substring(0, bestellungId.length() - 1);
         }
 
         // Versuchen, den Datensatz mit der übergebenen ID zu finden
         try {
-            task = this.taskBean.findById(Long.parseLong(taskId));
+            bestellung = this.bestellungBean.findById(Long.parseLong(bestellungId));
         } catch (NumberFormatException ex) {
             // Ungültige oder keine ID in der URL enthalten
         }
 
-        return task;
+        return bestellung;
     }
 
     /**
@@ -255,45 +255,45 @@ public class TaskEditServlet extends HttpServlet {
      * Formular aus der Entity oder aus einer vorherigen Formulareingabe
      * stammen.
      *
-     * @param task Die zu bearbeitende Aufgabe
+     * @param bestellung Die zu bearbeitende Aufgabe
      * @return Neues, gefülltes FormValues-Objekt
      */
-    private FormValues createTaskForm(Task task) {
+    private FormValues createbestellungForm(Bestellung bestellung) {
         Map<String, String[]> values = new HashMap<>();
 
-        values.put("task_owner", new String[]{
-            task.getOwner().getUsername()
+        values.put("bestellung_owner", new String[]{
+            bestellung.getOwner().getUsername()
         });
 
-        if (task.getkunde() != null) {
-            values.put("task_kunde", new String[]{
-                "" + task.getkunde().getId()
+        if (bestellung.getkunde() != null) {
+            values.put("bestellung_kunde", new String[]{
+                "" + bestellung.getkunde().getId()
             });
         }
 
-        values.put("task_due_date", new String[]{
-            WebUtils.formatDate(task.getDueDate())
+        values.put("bestellung_due_date", new String[]{
+            WebUtils.formatDate(bestellung.getDueDate())
         });
 
-        values.put("task_due_time", new String[]{
-            WebUtils.formatTime(task.getDueTime())
+        values.put("bestellung_due_time", new String[]{
+            WebUtils.formatTime(bestellung.getDueTime())
         });
 
-        values.put("task_status", new String[]{
-            task.getStatus().toString()
+        values.put("bestellung_status", new String[]{
+            bestellung.getStatus().toString()
         });
         
         // Getraenk Enum mit Hilfsklasse zwischenspeichern
-        values.put("task_getraenk", new String[] {
-            task.getGetraenkEnum().toString()
+        values.put("bestellung_getraenk", new String[] {
+            bestellung.getGetraenkEnum().toString()
         });
        
-        values.put("task_short_text", new String[]{
-            task.getShortText()
+        values.put("bestellung_short_text", new String[]{
+            bestellung.getShortText()
         });
 
-        values.put("task_long_text", new String[]{
-            task.getLongText()
+        values.put("bestellung_long_text", new String[]{
+            bestellung.getLongText()
         });
 
         FormValues formValues = new FormValues();

@@ -9,9 +9,8 @@
     <jta-data-source>Default-Database-Managed</jta-data-source>
     <non-jta-data-source>Default-Database-Unmanaged</non-jta-data-source>
     <!-- TomEE -->
-    <class>dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa.GetraenkeEntity</class>
     <class>dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.MitarbeiterEntity</class>
-    <class>dhbwka.wwi.vertsys.javaee.Getraenkemarkt.tasks.jpa.BestellungEntry</class>
+    <class>dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa.GetraenkeEntity</class>
     <properties>
       <property name="javax.persistence.schema-generation.database.action" value="create"/>
       <!-- TomEE -->

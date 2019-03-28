@@ -28,8 +28,8 @@ import javax.servlet.http.HttpServletResponse;
 public class DashboardServlet extends HttpServlet {
 
     // Kacheln für Aufgaben
-    @EJB(beanName = "tasks")
-    DashboardContentProvider taskContent;
+    @EJB(beanName = "bestellungen")
+    DashboardContentProvider bestellungContent;
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -39,7 +39,7 @@ public class DashboardServlet extends HttpServlet {
         List<DashboardSection> sections = new ArrayList<>();
         request.setAttribute("sections", sections);
         
-        taskContent.createDashboardContent(sections);
+        bestellungContent.createDashboardContent(sections);
 
         // Anfrage an die JSP weiterleiten
         request.getRequestDispatcher("/WEB-INF/dashboard/dashboard.jsp").forward(request, response);

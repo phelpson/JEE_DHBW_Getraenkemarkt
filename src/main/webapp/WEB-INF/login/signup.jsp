@@ -111,10 +111,10 @@
                         <option value="${signup_form.values["signup_usage"][1]}">Getränkemarkt Mitarbeiter</option> --%>
                     </select>
                     
+                    
                     <%-- Vorname --%>
                     <label for="signup_givenname">
                         Vorname
-                        <span class="required">*</span>
                     </label>
                     <div class="side-by-side">
                         <input type="text" name="signup_givenname" value="${signup_form.values["signup_givenname"][0]}">
@@ -123,11 +123,15 @@
                     <%-- Nachname --%>
                     <label for="signup_name">
                         Nachname
-                        <span class="required">*</span>
                     </label>
                     <div class="side-by-side">
                         <input type="text" name="signup_name" value="${signup_form.values["signup_name"][0]}">
                     </div>
+                    
+                    <label for="Pflichtfelder">
+                        <span class="required">*</span>
+                        Pflichtfelder
+                    </label>
  
                     <%-- Button zum Abschicken --%>
                     <div class="side-by-side" style="margin-top: 30px;">
