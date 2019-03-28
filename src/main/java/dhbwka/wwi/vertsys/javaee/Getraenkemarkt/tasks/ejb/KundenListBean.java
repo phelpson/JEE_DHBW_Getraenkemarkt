@@ -19,8 +19,7 @@ import javax.persistence.PersistenceContext;
  * @author LU_MA
  */
 @Stateless
-@RolesAllowed("app-user")
-public class KundenListBean extends Kunde {
+public class KundenListBean {
      @PersistenceContext
     protected EntityManager em;
     
@@ -35,8 +34,12 @@ public class KundenListBean extends Kunde {
         return this.em.createQuery("SELECT p FROM Kunde p").getResultList();
     }
 
-    public void saveNew(Kunde kunde) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Kunde saveNew(Kunde kunde) {
+        if (kunde == null || kunde.equals(null)) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+        this.em.persist(kunde);
+        return this.em.merge(kunde);
     }
 
     public Kunde findById(long parseLong) {

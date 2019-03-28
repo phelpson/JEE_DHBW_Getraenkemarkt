@@ -19,7 +19,6 @@ import javax.ejb.Stateless;
  * Einfache EJB mit den üblichen CRUD-Methoden für Kategorien.
  */
 @Stateless
-@RolesAllowed("app-user")
 public class KundeBean extends EntityBean<Kunde, Long> {
 
     public KundeBean() {
