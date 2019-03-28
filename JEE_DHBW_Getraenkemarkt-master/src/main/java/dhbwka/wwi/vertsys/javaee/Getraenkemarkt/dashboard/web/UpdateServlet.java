@@ -144,7 +144,7 @@ public class UpdateServlet extends HttpServlet {
         // Weiter zur nächsten Seite
         if (errors.isEmpty() && kunden_errors.isEmpty() &&  mitarbeiter_errors.isEmpty()) {
             // Keine Fehler: Startseite aufrufen
-            request.login(username, password1);
+            //request.login(username, password1);
             response.sendRedirect(WebUtils.appUrl(request, "/app/dashboard/"));
         } else {
             // Fehler: Formuler erneut anzeigen

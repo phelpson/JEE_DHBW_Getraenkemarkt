@@ -24,14 +24,14 @@
             <version>${javaee.version}</version>
             <scope>provided</scope>
         </dependency>
-        <!-- BasicAuth Filter 
+        <!-- BasicAuth Filter -->
         <dependency>
             <groupId>org.apache.tomcat</groupId>
             <artifactId>catalina</artifactId>
             <version>6.0.16</version>
             <scope>provided</scope>
         </dependency>
-        -->
+        
     </dependencies>
     
 

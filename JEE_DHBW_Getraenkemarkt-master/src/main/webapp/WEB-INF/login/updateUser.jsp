@@ -49,7 +49,7 @@
                         <span class="required">*</span>
                     </label>
                     <div class="side-by-side">
-                        <input type="text" name="update_username" value="${update_form.values["update_username"][0]}" readonly = "readonly">
+                        <input type="text" name="update_username" value="${update_form.values["update_username"][0]}">
                     </div>
                     
                     <%-- Vorname --%>
@@ -121,12 +121,11 @@
                     </div>
                                                      
                     <%-- Dropdown Feld --%>
-                    <label for="signup_usage">
+                    <label for="update_usage">
                         Art der Nutzung
                         <span class="required">*</span>
                     </label>
-                    <select name="signup_usage" class="form-control" style="width=200px;" disabled = "true">
-                        <%-- <option value="${signup_form.values["signup_usage"][0]}">Lieferant</option> --%>
+                    <select name="update_usage" class="form-control" style="width=200px;">
                         <option value="Kunde">Kunde</option>
                         <option value="Mitarbeiter">Mitarbeiter</option>
                     </select>
