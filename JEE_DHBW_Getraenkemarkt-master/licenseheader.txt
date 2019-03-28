@@ -1,0 +1,13 @@
+<#if licenseFirst??>
+${licenseFirst}
+</#if>
+${licensePrefix}Copyright © ${date?date?string("2019")} Luca Marmonti, Patrick Mahler, Philip Mayer
+${licensePrefix}
+${licensePrefix}E-Mail: getraeke@pmdm1.de
+${licensePrefix}Webseite: https://www.getraeke.pmdm1.de
+${licensePrefix}
+${licensePrefix}Dieser Quellcode ist lizenziert unter einer
+${licensePrefix}Creative Commons Namensnennung 4.0 International Lizenz.
+<#if licenseLast??>
+${licenseLast}
+</#if>
