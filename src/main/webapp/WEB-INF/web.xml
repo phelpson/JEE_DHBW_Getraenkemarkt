@@ -23,7 +23,20 @@
         Vgl. https://docs.oracle.com/javaee/7/tutorial/security-advanced003.htm
         Vgl. https://dzone.com/articles/jdbc-realm-and-form-based
     -->
-    
+    <!--
+    <filter>
+        <filter-name>BasicLoginFilter</filter-name>
+        <filter-class>dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.web.BasicLoginFilter</filter-class>
+        <init-param>
+            <param-name>app-user</param-name>
+            <param-value>app-user</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>BasicLoginFilter</filter-name>
+        <url-pattern>/api/*</url-pattern>
+    </filter-mapping>
+    -->
     <security-constraint>
         <display-name>
             Geschützter Bereich für angemeldete Benutzer
