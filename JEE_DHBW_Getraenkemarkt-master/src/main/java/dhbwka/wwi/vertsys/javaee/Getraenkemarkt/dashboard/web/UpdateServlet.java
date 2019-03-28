@@ -17,11 +17,12 @@ import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb.UserBean;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.MitarbeiterEntity;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.User;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.ejb.KundeBean;
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa.Kunde;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.web.FormValues;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.web.WebUtils;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -53,16 +54,20 @@ public class UpdateServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        User user = this.userBean.getCurrentUser();
         
+        if (session.getAttribute("update_form") == null) {
+            // Keine Formulardaten mit fehlergetRequestedbestellunghaften Daten in der Session,
+            // daher Formulardaten aus dem Datenbankobjekt übernehmen
+            request.setAttribute("update_form", this.createUpdateForm(user));
+        }
         // Anfrage an dazugerhörige JSP weiterleiten
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/login/updateUser.jsp");
         dispatcher.forward(request, response);
         
         // Alte Formulardaten aus der Session entfernen
-        HttpSession session = request.getSession();
-        //session.removeAttribute("update_form");
-        //session.setAttribute(userBean.getCurrentUser().getUsername(),request.getParameter("update_username"));
-        //request.setAttribute("update_username",userBean.getCurrentUser().getUsername());
+       session.removeAttribute("update_form");
     }
     
     @Override
@@ -71,8 +76,6 @@ public class UpdateServlet extends HttpServlet {
         
         // Formulareingaben auslesen        
         String username     = request.getParameter("update_username");
-        String password1    = request.getParameter("update_password1");
-        String password2    = request.getParameter("update_password2");
         
         String companyname  = request.getParameter("update_companyname");
         String address      = request.getParameter("update_street");
@@ -95,54 +98,32 @@ public class UpdateServlet extends HttpServlet {
         
 
         // Eingaben prüfen
-        User user = new User(
-                username, 
-                password1,
-                email,
-                givenname,
-                name,
-                address,
-                plz,
-                disAttribut
-        );
+        User user = userBean.getCurrentUser();
+        user.setNachname(name);
+        user.setVorname(givenname);
+        user.setUsername(username);
+        user.setAdresse(address);
+        user.setEmail(email);
+        user.setPlz(plz);
         
 
         
-        Kunde kunde = new Kunde (companyname);
         MitarbeiterEntity mitarbeiter = new MitarbeiterEntity (this.mitarbeiterBean.generiereEintrittsdatum());
         
         errors = this.validationBean.validate(user);
-        this.validationBean.validate(user.getPassword(), errors);
-        
-        List<String> kunden_errors = this.validationBean.validate(kunde);
-        this.validationBean.validate(kunde, errors);
-        
-        List<String> mitarbeiter_errors = this.validationBean.validate(mitarbeiter);
-        this.validationBean.validate(mitarbeiter, errors);
-        
-        if (password1 != null && password2 != null && !password1.equals(password2)) {
-            errors.add("Die beiden Passwörter stimmen nicht überein.");
-        }
         
         if (nfeMessage != null) {
             errors.add(nfeMessage);
         }
         
         // Neuen Benutzer anlegen
-        if (errors.isEmpty() && kunden_errors.isEmpty() &&  mitarbeiter_errors.isEmpty()) {
-            
-            if (usage.equals("Kunde") == true) {
-                disAttribut = "Kunde";
-                this.kundeBean.updateKunde(kunde);
-            }
-            this.userBean.update(user);
-                         
-            
+        if (errors.isEmpty()) {
+            this.userBean.update(user);    
         }   
         
         
         // Weiter zur nächsten Seite
-        if (errors.isEmpty() && kunden_errors.isEmpty() &&  mitarbeiter_errors.isEmpty()) {
+        if (errors.isEmpty()) {
             // Keine Fehler: Startseite aufrufen
             //request.login(username, password1);
             response.sendRedirect(WebUtils.appUrl(request, "/app/dashboard/"));
@@ -159,4 +140,31 @@ public class UpdateServlet extends HttpServlet {
         }
     }
     
+    private FormValues createUpdateForm(User user) {
+        Map<String, String[]> values = new HashMap<>();
+
+        values.put("update_username", new String[]{
+            user.getUsername()
+        });
+        values.put("update_email", new String[]{
+            user.getEmail()
+            });
+        values.put("update_street", new String[]{
+            user.getAdresse()
+            });
+        values.put("update_givenname", new String[]{
+            user.getVorname()
+            });
+        values.put("update_name", new String[]{
+            user.getNachname()
+            });
+        values.put("update_plz", new String[]{
+            Integer.toString(user.getPlz())
+            });
+        FormValues formValues = new FormValues();
+        formValues.setValues(values);
+        return formValues;
+    }
 }
+
+      

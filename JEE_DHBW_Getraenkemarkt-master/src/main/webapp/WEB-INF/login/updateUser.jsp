@@ -49,7 +49,7 @@
                         <span class="required">*</span>
                     </label>
                     <div class="side-by-side">
-                        <input type="text" name="update_username" value="${update_form.values["update_username"][0]}">
+                        <input type="text" name="update_username" value="${update_form.values["update_username"][0]}" readonly="readonly">
                     </div>
                     
                     <%-- Vorname --%>
@@ -68,21 +68,6 @@
                         <input type="text" name="update_name" value="${update_form.values["update_name"][0]}">
                     </div>
 
-                    <label for="update_password1">
-                        Passwort:
-                        <span class="required">*</span>
-                    </label>
-                    <div class="side-by-side">
-                        <input type="password" name="update_password1" value="${update_form.values["update_password1"][0]}">
-                    </div>
-
-                    <label for="update_password2">
-                        Passwort (wdh.):
-                        <span class="required">*</span>
-                    </label>
-                    <div class="side-by-side">
-                        <input type="password" name="update_password2" value="${update_form.values["update_password2"][0]}">
-                    </div>
                     
                     <%-- E-Mail Adresse --%>
                     <label for="update_email">
@@ -93,14 +78,6 @@
                         <input type="text" name="update_email" value="${update_form.values["update_email"][0]}">
                     </div>
                     
-                    <%-- Firmenname --%>
-                    <label for="update_companyname">
-                        Firmenname
-                        <span class="required">*</span>
-                    </label>
-                    <div class="side-by-side">
-                        <input type="text" name="update_companyname" value="${update_form.values["update_companyname"][0]}">
-                    </div>
                     
                     <%-- Adressdaten - Straße --%>
                     <label for="update_street">
@@ -120,15 +97,6 @@
                         <input type="number" name="update_plz" value="${update_form.values["update_plz"][0]}">
                     </div>
                                                      
-                    <%-- Dropdown Feld --%>
-                    <label for="update_usage">
-                        Art der Nutzung
-                        <span class="required">*</span>
-                    </label>
-                    <select name="update_usage" class="form-control" style="width=200px;">
-                        <option value="Kunde">Kunde</option>
-                        <option value="Mitarbeiter">Mitarbeiter</option>
-                    </select>
                     
                     <label for="Pflichtfelder">
                         <span class="required">*</span>
