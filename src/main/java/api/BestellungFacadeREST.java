@@ -31,12 +31,13 @@ import javax.ws.rs.core.MediaType;
  */
 @Stateless
 @Path("api/bestellunganzeigen")
-@Consumes({"application/json", "text/xml"})
-@Produces({"application/json", "text/xml"})
 public class BestellungFacadeREST extends AbstractFacade<Bestellung> {
     
     @EJB
     BestellungBean bestellungBean;
+    
+    @EJB
+    private BestellungFacade bestellungFacade;
 
     public BestellungFacadeREST() {
         super(Bestellung.class);
@@ -44,16 +45,10 @@ public class BestellungFacadeREST extends AbstractFacade<Bestellung> {
 
     
     @GET
-    @Produces(MediaType.APPLICATION_JSON) 
-    @Consumes(MediaType.APPLICATION_JSON) 
-    public List<Bestellung> findBestellung (@QueryParam("query") @DefaultValue("") String query) {
-        List<Bestellung> bestellungen = this.bestellungBean.findByUsername(query);
-        return bestellungen.stream().map((Bestellung) -> {
-                Bestellung bestellungEntity = new Bestellung();
-                bestellungEntity.setkunde(Bestellung.getkunde());
-                bestellungEntity.setDueDate(Bestellung.getDueDate());
-                return bestellungEntity;
-            }).collect(Collectors.toList());
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public List<BestellungDTO> findBestellung (@QueryParam("query") @DefaultValue("") String query) {
+         return bestellungFacade.getAll(query);
     }
 
     @Override

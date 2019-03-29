@@ -45,9 +45,7 @@ public class Bestellung implements Serializable {
 
     @ManyToOne
     private Kunde kunde;
-    
-
-
+   
     @Column(length = 50)
     @NotNull(message = "Die Bezeichnung darf nicht leer sein.")
     @Size(min = 1, max = 50, message = "Die Bezeichnung muss zwischen ein und 50 Zeichen lang sein.")
