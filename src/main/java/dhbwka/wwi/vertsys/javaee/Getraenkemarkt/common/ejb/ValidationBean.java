@@ -9,10 +9,12 @@
  */
 package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb;
 
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa.Bestellung;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import javax.annotation.Resource;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
@@ -28,6 +30,9 @@ public class ValidationBean {
     
     @Resource
     Validator validator;
+    
+    @EJB
+    UserBean userbean;
     
     /**
      * Wertet die "Bean Validation" Annotationen des übergebenen Objekts aus
@@ -60,5 +65,16 @@ public class ValidationBean {
         });
         
         return messages;
+    }
+    
+    public boolean validateOwner( Bestellung bestellung) {
+       
+        
+        if(bestellung.getOwner().toString().equals(userbean.getCurrentUser().toString())){
+            return true;
+        }else{
+            return false;
+        }
+         
     }
 }

@@ -69,8 +69,8 @@ public class UserBean {
         );
         
         //hier muss Gruppe vergeben werden
-        //user.addToGroup(disAttribut);
-       user.addToGroup("app-user");
+        user.addToGroup(disAttribut);
+       //user.addToGroup("app-user");
         em.persist(user);
     }
 
@@ -81,7 +81,7 @@ public class UserBean {
      * @param newPassword
      * @throws UserBean.InvalidCredentialsException
      */
-    @RolesAllowed("app-user")
+    @RolesAllowed({"app-user","Kunde"})
     public void changePassword(User user, String oldPassword, String newPassword) throws InvalidCredentialsException {
         if (user == null || !user.checkPassword(oldPassword)) {
             throw new InvalidCredentialsException("Benutzername oder Passwort sind falsch.");
@@ -94,7 +94,7 @@ public class UserBean {
      * Benutzer löschen
      * @param user Zu löschender Benutzer
      */
-    @RolesAllowed("app-user")
+    @RolesAllowed({"app-user","Kunde"})
     public void delete(User user) {
         this.em.remove(user);
     }
@@ -104,7 +104,7 @@ public class UserBean {
      * @param user Zu aktualisierender Benutzer
      * @return Gespeicherter Benutzer
      */
-    @RolesAllowed("app-user")
+    @RolesAllowed({"app-user","Kunde"})
     public User update(User user) {
         return em.merge(user);
     }

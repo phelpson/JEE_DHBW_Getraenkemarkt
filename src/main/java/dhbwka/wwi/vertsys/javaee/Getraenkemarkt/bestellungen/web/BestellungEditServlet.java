@@ -33,6 +33,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 /**
  * Seite zum Anlegen oder Bearbeiten einer Aufgabe.
@@ -168,26 +171,39 @@ public class BestellungEditServlet extends HttpServlet {
         bestellung.setLongText(bestellungLongText);
 
         this.validationBean.validate(bestellung, errors);
+        Boolean validateOwner = this.validationBean.validateOwner(bestellung);
+        
+        if(validateOwner == true){
+        
 
-        // Datensatz speichern
-        if (errors.isEmpty()) {
-            this.bestellungBean.update(bestellung);
-        }
+            // Datensatz speichern
+            if (errors.isEmpty()) {
+                this.bestellungBean.update(bestellung);
+            }
 
-        // Weiter zur nächsten Seite
-        if (errors.isEmpty()) {
-            // Keine Fehler: Startseite aufrufen
-            response.sendRedirect(WebUtils.appUrl(request, "/app/bestellungen/list/"));
-        } else {
-            // Fehler: Formuler erneut anzeigen
-            FormValues formValues = new FormValues();
-            formValues.setValues(request.getParameterMap());
-            formValues.setErrors(errors);
+            // Weiter zur nächsten Seite
+            if (errors.isEmpty()) {
+                // Keine Fehler: Startseite aufrufen
+                response.sendRedirect(WebUtils.appUrl(request, "/app/bestellungen/list/"));
+            } else {
+                // Fehler: Formuler erneut anzeigen
+                FormValues formValues = new FormValues();
+                formValues.setValues(request.getParameterMap());
+                formValues.setErrors(errors);
 
-            HttpSession session = request.getSession();
-            session.setAttribute("bestellung_form", formValues);
+                HttpSession session = request.getSession();
+                session.setAttribute("bestellung_form", formValues);
 
-            response.sendRedirect(request.getRequestURI());
+                response.sendRedirect(request.getRequestURI());
+            }
+       }else{
+            errors.add("Du bischt net der Owner!");
+           /*JOptionPane.showMessageDialog(null,
+                                              "Sie sind nicht der Owner dieses Auftrags",
+                                              "Eine Nachricht",					      
+					      JOptionPane.WARNING_MESSAGE);
+ 
+                System.exit(0);*/
         }
     }
 
