@@ -119,23 +119,13 @@ public class UserBean {
         
         query = "%" + query + "%";
 
+        //Query not working yet
         return em.createQuery("SELECT u FROM User u"
                             + "    WHERE u.username     LIKE :query"
                             + "       OR u.vorname      LIKE :query"
                             + "       OR u.nachname     LIKE :query")
                 .setParameter("query", query)
                 .getResultList();
-    }
-    
-    public User findByUsername(String query) {
-        if (query == null || query.trim().isEmpty()) {
-            query = "";
-        }
-
-        return (User)(em.createQuery("SELECT u FROM User u"
-                            + "    WHERE u.username     = :query")
-                .setParameter("query", query)
-                .getSingleResult());
     }
 
     /**

@@ -34,6 +34,10 @@
         <div class="menuitem">
             <a href="<c:url value="/app/bestellungen/kunden/"/>">Kunden verwalten</a>
         </div>
+        
+        <div class="menuitem">
+            <a href="<c:url value="/app/update/"/>">Userdaten verwalten</a>
+        </div>
     </jsp:attribute>
 
     <jsp:attribute name="content">

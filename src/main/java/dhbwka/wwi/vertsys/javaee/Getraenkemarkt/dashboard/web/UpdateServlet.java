@@ -7,7 +7,7 @@
  * Dieser Quellcode ist lizenziert unter einer
  * Creative Commons Namensnennung 4.0 International Lizenz.
  */
-package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.web;
+package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.dashboard.web;
 
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb.MitarbeiterBean;
 
@@ -17,11 +17,12 @@ import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb.UserBean;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.MitarbeiterEntity;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.User;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.ejb.KundeBean;
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa.Kunde;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.web.FormValues;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.web.WebUtils;
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -35,8 +36,8 @@ import javax.servlet.http.HttpSession;
  * Servlet für die Registrierungsseite. Hier kann sich ein neuer Benutzer
  * registrieren. Anschließend wird der auf die Startseite weitergeleitet.
  */
-@WebServlet(urlPatterns = {"/signup/"})
-public class SignUpServlet extends HttpServlet {
+@WebServlet(urlPatterns = {"/app/update/"})
+public class UpdateServlet extends HttpServlet {
     
     @EJB
     ValidationBean validationBean;
@@ -53,14 +54,20 @@ public class SignUpServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        User user = this.userBean.getCurrentUser();
         
+        if (session.getAttribute("update_form") == null) {
+            // Keine Formulardaten mit fehlergetRequestedbestellunghaften Daten in der Session,
+            // daher Formulardaten aus dem Datenbankobjekt übernehmen
+            request.setAttribute("update_form", this.createUpdateForm(user));
+        }
         // Anfrage an dazugerhörige JSP weiterleiten
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/login/signup.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/login/updateUser.jsp");
         dispatcher.forward(request, response);
         
         // Alte Formulardaten aus der Session entfernen
-        HttpSession session = request.getSession();
-        session.removeAttribute("signup_form");
+       session.removeAttribute("update_form");
     }
     
     @Override
@@ -68,24 +75,22 @@ public class SignUpServlet extends HttpServlet {
             throws ServletException, IOException {
         
         // Formulareingaben auslesen        
-        String username     = request.getParameter("signup_username");
-        String password1    = request.getParameter("signup_password1");
-        String password2    = request.getParameter("signup_password2");
+        String username     = request.getParameter("update_username");
         
-        String companyname  = request.getParameter("signup_companyname");
-        String address      = request.getParameter("signup_street");
+        String companyname  = request.getParameter("update_companyname");
+        String address      = request.getParameter("update_street");
         int plz             = 000000;
         String nfeMessage   = null;
         try {
-            plz             = Integer.parseInt(request.getParameter("signup_plz"));
+            plz             = Integer.parseInt(request.getParameter("update_plz"));
         } catch(NumberFormatException nfe) {
             nfeMessage = "Bitte geben Sie einen numerischen ganzzahligen Wert für die PLZ ein.";
         }
         
-        String usage        = request.getParameter("signup_usage");
-        String email        = request.getParameter("signup_email");
-        String givenname    = request.getParameter("signup_givenname");
-        String name         = request.getParameter("signup_name");
+        String usage        = request.getParameter("update_usage");
+        String email        = request.getParameter("update_email");
+        String givenname    = request.getParameter("update_givenname");
+        String name         = request.getParameter("update_name");
         
         // Diskriminierendes Attribut für die DB Zuordnung zwischen Mitarbeiter und Kunde
         String disAttribut = usage;
@@ -93,65 +98,34 @@ public class SignUpServlet extends HttpServlet {
         
 
         // Eingaben prüfen
-        User user = new User(
-                username, 
-                password1,
-                email,
-                givenname,
-                name,
-                address,
-                plz,
-                disAttribut
-        );
+        User user = userBean.getCurrentUser();
+        user.setNachname(name);
+        user.setVorname(givenname);
+        user.setUsername(username);
+        user.setAdresse(address);
+        user.setEmail(email);
+        user.setPlz(plz);
         
 
         
-        Kunde kunde = new Kunde (companyname);
         MitarbeiterEntity mitarbeiter = new MitarbeiterEntity (this.mitarbeiterBean.generiereEintrittsdatum());
         
         errors = this.validationBean.validate(user);
-        this.validationBean.validate(user.getPassword(), errors);
-        
-        List<String> kunden_errors = this.validationBean.validate(kunde);
-        this.validationBean.validate(kunde, errors);
-        
-        List<String> mitarbeiter_errors = this.validationBean.validate(mitarbeiter);
-        this.validationBean.validate(mitarbeiter, errors);
-        
-        if (password1 != null && password2 != null && !password1.equals(password2)) {
-            errors.add("Die beiden Passwörter stimmen nicht überein.");
-        }
         
         if (nfeMessage != null) {
             errors.add(nfeMessage);
         }
         
         // Neuen Benutzer anlegen
-        if (errors.isEmpty() && kunden_errors.isEmpty() &&  mitarbeiter_errors.isEmpty()) {
-            try {
-                if (usage.equals("Kunde") == true) {
-                    disAttribut = "Kunde";
-                    this.kundeBean.createNewEntry(companyname);
-                }
-                else if (usage.equals("Mitarbeiter") == true) {
-                    disAttribut = "Mitarbeiter";
-                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-                    LocalDateTime date = LocalDateTime.now();
-                    String dateString = dtf.format(date);
-                    this.mitarbeiterBean.createNewEntry(dateString);    
-                }  
-                this.userBean.signup(username, password1, email, givenname, name, address, plz, disAttribut);
-                         
-            } catch (UserBean.UserAlreadyExistsException ex) {
-                errors.add(ex.getMessage());
-            }
+        if (errors.isEmpty()) {
+            this.userBean.update(user);    
         }   
         
         
         // Weiter zur nächsten Seite
-        if (errors.isEmpty() && kunden_errors.isEmpty() &&  mitarbeiter_errors.isEmpty()) {
+        if (errors.isEmpty()) {
             // Keine Fehler: Startseite aufrufen
-            request.login(username, password1);
+            //request.login(username, password1);
             response.sendRedirect(WebUtils.appUrl(request, "/app/dashboard/"));
         } else {
             // Fehler: Formuler erneut anzeigen
@@ -160,10 +134,37 @@ public class SignUpServlet extends HttpServlet {
             formValues.setErrors(errors);
             
             HttpSession session = request.getSession();
-            session.setAttribute("signup_form", formValues);
+            session.setAttribute("update_form", formValues);
             
             response.sendRedirect(request.getRequestURI());
         }
     }
     
+    private FormValues createUpdateForm(User user) {
+        Map<String, String[]> values = new HashMap<>();
+
+        values.put("update_username", new String[]{
+            user.getUsername()
+        });
+        values.put("update_email", new String[]{
+            user.getEmail()
+            });
+        values.put("update_street", new String[]{
+            user.getAdresse()
+            });
+        values.put("update_givenname", new String[]{
+            user.getVorname()
+            });
+        values.put("update_name", new String[]{
+            user.getNachname()
+            });
+        values.put("update_plz", new String[]{
+            Integer.toString(user.getPlz())
+            });
+        FormValues formValues = new FormValues();
+        formValues.setValues(values);
+        return formValues;
+    }
 }
+
+      

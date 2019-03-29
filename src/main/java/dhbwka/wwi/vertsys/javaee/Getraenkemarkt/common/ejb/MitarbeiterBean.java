@@ -65,12 +65,12 @@ public class MitarbeiterBean {
     }
 
     // Kundeninformationen updaten
-    public MitarbeiterEntity updateKunde(MitarbeiterEntity mitarbeiterEntity) {
+    public MitarbeiterEntity updateMitarbeiter(MitarbeiterEntity mitarbeiterEntity) {
         return this.em.merge(mitarbeiterEntity);
     }
     
     // Kundeninformationen löschen
-    public void deleteKunde(MitarbeiterEntity mitarbeiterEntity) {
+    public void deleteMitarbeiter(MitarbeiterEntity mitarbeiterEntity) {
         this.em.remove(mitarbeiterEntity);
     }
     
