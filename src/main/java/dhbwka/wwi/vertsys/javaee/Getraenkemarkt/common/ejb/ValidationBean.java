@@ -69,8 +69,10 @@ public class ValidationBean {
     
     public boolean validateOwner( Bestellung bestellung) {
        
+        String owner = bestellung.getOwner().getUsername();
+        String currentuser = userbean.getCurrentUser().getUsername();
         
-        if(bestellung.getOwner().toString().equals(userbean.getCurrentUser().toString())){
+        if(owner.equals(currentuser)){
             return true;
         }else{
             return false;

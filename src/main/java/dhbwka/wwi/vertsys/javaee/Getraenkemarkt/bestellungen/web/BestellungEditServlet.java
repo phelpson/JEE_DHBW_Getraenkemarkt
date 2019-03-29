@@ -173,9 +173,8 @@ public class BestellungEditServlet extends HttpServlet {
         this.validationBean.validate(bestellung, errors);
         Boolean validateOwner = this.validationBean.validateOwner(bestellung);
         
-        if(validateOwner == true){
-        
-
+        if(validateOwner){
+   
             // Datensatz speichern
             if (errors.isEmpty()) {
                 this.bestellungBean.update(bestellung);
@@ -198,12 +197,6 @@ public class BestellungEditServlet extends HttpServlet {
             }
        }else{
             errors.add("Du bischt net der Owner!");
-           /*JOptionPane.showMessageDialog(null,
-                                              "Sie sind nicht der Owner dieses Auftrags",
-                                              "Eine Nachricht",					      
-					      JOptionPane.WARNING_MESSAGE);
- 
-                System.exit(0);*/
         }
     }
 
