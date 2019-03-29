@@ -37,15 +37,6 @@
             <%-- CSRF-Token --%>
             <input type="hidden" name="csrf_token" value="${csrf_token}">
 
-            <%-- Feld zum Anlegen einer neuen Kategorie --%>
-            <div class="column margin">
-                <label for="j_username">Neue Kategorie:</label>
-                <input type="text" name="name" value="${kunden_form.values["name"][0]}">
-
-                <button type="submit" name="action" value="create" class="icon-pencil">
-                    Anlegen
-                </button>
-            </div>
 
             <%-- Fehlermeldungen --%>
             <c:if test="${!empty kunden_form.errors}">
@@ -75,9 +66,7 @@
                             </c:forEach>
                         </div>
 
-                        <button type="submit" name="action" value="delete" class="icon-trash">
-                            Markierte löschen
-                        </button>
+                      
                     </div>
                 </c:otherwise>
             </c:choose>
