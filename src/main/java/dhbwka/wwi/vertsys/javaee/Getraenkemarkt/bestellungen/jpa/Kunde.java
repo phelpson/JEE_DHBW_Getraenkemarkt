@@ -22,11 +22,14 @@ import javax.persistence.OneToMany;
 import javax.persistence.TableGenerator;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * Kategorien, die den Aufgaben zugeordnet werden können.
  */
 @Entity
+@XmlRootElement
 public class Kunde implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -70,6 +73,7 @@ public class Kunde implements Serializable {
         this.firmenName = name;
     }
 
+    @XmlTransient
     public List<Bestellung> getbestellungen() {
         return bestellungen;
     }

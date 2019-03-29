@@ -25,7 +25,6 @@ import javax.persistence.criteria.Root;
  * Einfache EJB mit den üblichen CRUD-Methoden für Aufgaben
  */
 @Stateless
-@RolesAllowed("app-user")
 public class BestellungBean extends EntityBean<Bestellung, Long> { 
    
     public BestellungBean() {
@@ -38,7 +37,7 @@ public class BestellungBean extends EntityBean<Bestellung, Long> {
      * @return Alle Aufgaben des Benutzers
      */
     public List<Bestellung> findByUsername(String username) {
-        return em.createQuery("SELECT t FROM bestellung t WHERE t.owner.username = :username ORDER BY t.dueDate, t.dueTime")
+        return em.createQuery("SELECT t FROM Bestellung t WHERE t.owner.username = :username ORDER BY t.dueDate, t.dueTime")
                  .setParameter("username", username)
                  .getResultList();
     }
