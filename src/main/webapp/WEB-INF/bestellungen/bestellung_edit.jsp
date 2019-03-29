@@ -27,6 +27,18 @@
 
     <jsp:attribute name="head">
         <link rel="stylesheet" href="<c:url value="/css/bestellung_edit.css"/>" />
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <link rel="stylesheet" href="/resources/demos/style.css">
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script>
+        $( function() {
+          $( ".datepicker" ).datepicker({
+                dateFormat: "dd.mm.yy",
+                dayNamesMin: [ "So", "Mo", "Di", "Mi", "Do", "Fr", "Sa" ],
+                monthNames: [ "Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember" ]});
+        } );
+        </script>
     </jsp:attribute>
 
     <jsp:attribute name="menu">
@@ -68,7 +80,7 @@
                     <span class="required">*</span>
                 </label>
                 <div class="side-by-side">
-                    <input type="text" name="bestellung_due_date" value="${bestellung_form.values["bestellung_due_date"][0]}">
+                    <input class="datepicker" type="text" name="bestellung_due_date" value="${bestellung_form.values["bestellung_due_date"][0]}">
                     <input type="text" name="bestellung_due_time" value="${bestellung_form.values["bestellung_due_time"][0]}">
                 </div>
                 
