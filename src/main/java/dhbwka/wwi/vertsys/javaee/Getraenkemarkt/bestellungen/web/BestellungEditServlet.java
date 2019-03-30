@@ -33,12 +33,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 
 /**
- * Seite zum Anlegen oder Bearbeiten einer Aufgabe.
+ * Seite zum Anlegen oder Bearbeiten einer Bestellung.
  */
 @WebServlet(urlPatterns = "/app/bestellungen/bestellung/*")
 public class BestellungEditServlet extends HttpServlet {
@@ -66,7 +63,7 @@ public class BestellungEditServlet extends HttpServlet {
         request.setAttribute("statuses", BestellungStatus.values());
         request.setAttribute("getraenk", GetraenkeEnum.values());
 
-        // Zu bearbeitende Aufgabe einlesen
+        // Zu bearbeitende Bestellung einlesen
         HttpSession session = request.getSession();
 
         Bestellung bestellung = this.getRequestedbestellung(request);
