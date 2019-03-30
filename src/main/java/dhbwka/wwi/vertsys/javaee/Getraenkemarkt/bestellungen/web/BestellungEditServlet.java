@@ -173,7 +173,9 @@ public class BestellungEditServlet extends HttpServlet {
         this.validationBean.validate(bestellung, errors);
         Boolean validateOwner = this.validationBean.validateOwner(bestellung);
         
-        if(validateOwner){
+        if(validateOwner == false){
+            errors.add("Die ausgewählte Bestellung kann nur vom Owner bearbeitet werden!");
+        }
    
             // Datensatz speichern
             if (errors.isEmpty()) {
@@ -195,9 +197,7 @@ public class BestellungEditServlet extends HttpServlet {
 
                 response.sendRedirect(request.getRequestURI());
             }
-       }else{
-            errors.add("Du bischt net der Owner!");
-        }
+       
     }
 
     /**
@@ -210,13 +210,36 @@ public class BestellungEditServlet extends HttpServlet {
      */
     private void deletebestellung(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        // Datensatz löschen
+        
+         // Formulareingaben prüfen
+        List<String> errors = new ArrayList<>();
+        
+          // Datensatz löschen
         Bestellung bestellung = this.getRequestedbestellung(request);
-        this.bestellungBean.delete(bestellung);
+        
+        //validation of delete prozess. only owner can delete 
+          Boolean validateOwner = this.validationBean.validateOwner(bestellung);
+        
+         if(validateOwner == false){
+            errors.add("Die ausgewählte Bestellung kann nur vom Owner gelöscht werden!");
+        }
+         
+        if (errors.isEmpty()) {
+             this.bestellungBean.delete(bestellung);
+              // Zurück zur Übersicht
+             response.sendRedirect(WebUtils.appUrl(request, "/app/bestellungen/list/"));
+         }else{
+            // Fehler: Formuler erneut anzeigen
+                FormValues formValues = new FormValues();
+                formValues.setValues(request.getParameterMap());
+                formValues.setErrors(errors);
 
-        // Zurück zur Übersicht
-        response.sendRedirect(WebUtils.appUrl(request, "/app/bestellungen/list/"));
+                HttpSession session = request.getSession();
+                session.setAttribute("bestellung_form", formValues);
+
+                response.sendRedirect(request.getRequestURI());
+        }
+       
     }
 
     /**
