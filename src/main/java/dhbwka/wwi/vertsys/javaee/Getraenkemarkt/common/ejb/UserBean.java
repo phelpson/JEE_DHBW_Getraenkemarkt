@@ -119,7 +119,6 @@ public class UserBean {
         
         query = "%" + query + "%";
 
-        //Query not working yet
         return em.createQuery("SELECT u FROM User u"
                             + "    WHERE u.username     LIKE :query"
                             + "       OR u.vorname      LIKE :query"

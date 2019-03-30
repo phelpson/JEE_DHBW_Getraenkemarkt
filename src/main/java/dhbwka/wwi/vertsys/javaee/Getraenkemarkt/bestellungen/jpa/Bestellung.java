@@ -25,11 +25,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.TableGenerator;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Eine zu erledigende Aufgabe.
  */
 @Entity
+@XmlRootElement
 public class Bestellung implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -144,7 +146,7 @@ public class Bestellung implements Serializable {
     }
 
     public BestellungStatus getStatus() {
-        return status;
+        return this.status;
     }
 
     public void setStatus(BestellungStatus status) {

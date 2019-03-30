@@ -1,14 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package api;
 
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.ejb.BestellungBean;
+import api.data.BestellungDTO;
+import api.data.BestellungFacade;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa.Bestellung;
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -30,30 +25,37 @@ import javax.ws.rs.core.MediaType;
  * @author Philip Mayer
  */
 @Stateless
-@Path("api/bestellunganzeigen")
+@Path("bestellungen")
 public class BestellungFacadeREST extends AbstractFacade<Bestellung> {
-    
-    @EJB
-    BestellungBean bestellungBean;
-    
-    @EJB
-    private BestellungFacade bestellungFacade;
 
+    @PersistenceContext(unitName = "default")
+    private EntityManager em;
+    
+    @EJB
+    BestellungFacade bestellungFacade;
+    
     public BestellungFacadeREST() {
         super(Bestellung.class);
     }
-
+    
+//    @GET
+//    @Override
+//    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+//    public List<Bestellung> findAll() {
+//        return super.findAll();
+//    }
     
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    public List<BestellungDTO> findBestellung (@QueryParam("query") @DefaultValue("") String query) {
-         return bestellungFacade.getAll(query);
+    @Path("findBestellung")
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<BestellungDTO> findBestellungByName(@QueryParam("query") @DefaultValue("") String query) {
+        return bestellungFacade.findBestellungByName(query);
     }
 
     @Override
     protected EntityManager getEntityManager() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return em;
     }
     
+
 }

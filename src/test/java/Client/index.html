@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Getränkemarkt: Bestellungen prüfen</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel = "stylesheet" type = "text/css" href = "style.css" />
+    </head>
+    <body>
+        <h1>Getränkemarkt-Bestellungen prüfen</h1>
+        <div class="whiteText">Mit der Hilfe dieser App können Sie nach Ihren Bestellungen suchen, indem Sie den Betreff dieser eingeben. <br>
+            Sie Können dazu auch den aktuellen Status einsehen, den unsere Mitarbeiter regelmäßig pflegen, um Ihre Bestellung nachzuverfolgen.
+        </div>
+
+        <input type="text" id="search" placeholder="Bitte Bestelltext eingeben">
+        <button onclick="callAPI()">Suchen</button>
+
+        <div>
+            <div id="ergebnis" class="unsichtbar"></div>
+        </div>
+
+        <script>
+            async function callAPI() {
+                // DOM Reference on UI-Elements
+                let search = document.getElementById("search");
+                let resDiv = document.getElementById("ergebnis");
+
+                resDiv.textContent = "Suche läuft …";
+                resDiv.classList.remove("unsichtbar");
+
+                // URL Path to API on Backend
+                let url = "http://localhost:8080/Getraenkemarkt/webresources/bestellungen/findBestellung"
+                        + "?query=" + encodeURI(search.value);
+
+                let antwort = await fetch(url, {
+                    method: "get",
+                    headers: {
+                        "accept": "application/json"
+                        // Setting HTTP-Heading for basic auth
+                        //"Authorization": 'Basic ' + btoa(username.value + ":" + password.value) 
+                    }
+                });
+
+                resDiv.innerHTML = "";
+                let Bestellung = await antwort.json();
+
+                // Show JSON by looping through it
+                Bestellung.forEach(Bestellung => {
+                    let html = `
+                        <div>
+                            <b>Bestellung:</b> ${Bestellung.shortText} <br/>
+                            <b>Bestelltext:</b> ${Bestellung.longText} <br/>
+                            <b>Getränk:</b> ${Bestellung.getraenk} <br/>
+                            <b>Lieferdatum:</b> ${Bestellung.dueDate} <br/>
+                            <b>Lieferzeit:</b> ${Bestellung.dueTime} <br/>
+                            <b>Bestellstatus:</b> ${Bestellung.status} <br/>
+                        </div>
+                    `;
+
+                    resDiv.innerHTML += html;
+                });
+            }
+        </script>
+    </body>
+</html>

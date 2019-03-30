@@ -16,6 +16,8 @@ import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa.BestellungStatu
 import java.util.List;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -25,22 +27,32 @@ import javax.persistence.criteria.Root;
  * Einfache EJB mit den üblichen CRUD-Methoden für Aufgaben
  */
 @Stateless
-@RolesAllowed("app-user")
+//@RolesAllowed("app-user")
 public class BestellungBean extends EntityBean<Bestellung, Long> { 
    
     public BestellungBean() {
         super(Bestellung.class);
     }
     
-    /**
-     * Alle Aufgaben eines Benutzers, nach Fälligkeit sortiert zurückliefern.
-     * @param username Benutzername
-     * @return Alle Aufgaben des Benutzers
-     */
-    public List<Bestellung> findByUsername(String username) {
-        return em.createQuery("SELECT t FROM Bestellung t WHERE t.owner.username = :username ORDER BY t.dueDate, t.dueTime")
-                 .setParameter("username", username)
-                 .getResultList();
+    @PersistenceContext
+    EntityManager em;
+    
+//    /**
+//     * Alle Aufgaben eines Benutzers, nach Fälligkeit sortiert zurückliefern.
+//     * @param username Benutzername
+//     * @return Alle Aufgaben des Benutzers
+//     */
+//    public List<Bestellung> findByUsername(String username) {
+//        return em.createQuery("SELECT t FROM Bestellung t WHERE t.owner.username = :username ORDER BY t.dueDate, t.dueTime")
+//                 .setParameter("username", username)
+//                 .getResultList();
+//    }
+    
+    public List<Bestellung> findByShortText(String shortText) {
+        shortText = "%" + shortText + "%";
+        return em.createQuery("SELECT b FROM Bestellung b WHERE b.shortText LIKE :shortText ORDER BY b.dueDate, b.dueTime")
+                .setParameter("shortText", shortText)
+                .getResultList();
     }
     
     /**
