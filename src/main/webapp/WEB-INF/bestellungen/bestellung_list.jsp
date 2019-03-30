@@ -15,7 +15,7 @@
 
 <template:base>
     <jsp:attribute name="title">
-        Liste der Aufträge
+        Liste der Bestellungen
     </jsp:attribute>
 
     <jsp:attribute name="head">
@@ -28,7 +28,7 @@
         </div>
 
         <div class="menuitem">
-            <a href="<c:url value="/app/bestellungen/bestellung/new/"/>">Auftrag anlegen</a>
+            <a href="<c:url value="/app/bestellungen/bestellung/new/"/>">Bestellung anlegen</a>
         </div>
 
         <div class="menuitem">
@@ -42,7 +42,7 @@
             <input type="text" name="search_text" value="${param.search_text}" placeholder="Beschreibung"/>
 
             <select name="search_kunde">
-                <option value="">Alle Kategorien</option>
+                <option value="">Alle Kunden</option>
 
                 <c:forEach items="${kunde}" var="kunde">
                     <option value="${kunde.id}" ${param.search_kunde == kunde.id ? 'selected' : ''}>
@@ -66,11 +66,11 @@
             </button>
         </form>
 
-        <%-- Gefundene Aufgaben --%>
+        <%-- Gefundene Bestellungen --%>
         <c:choose>
             <c:when test="${empty bestellungen}">
                 <p>
-                    Es wurden keine Aufträge gefunden. 🐈
+                    Es wurden keine Bestellungen gefunden. 🐈
                 </p>
             </c:when>
             <c:otherwise>
@@ -80,7 +80,7 @@
                     <thead>
                         <tr>
                             <th>Bezeichnung</th>
-                            <th>Kategorie</th>
+                            <th>Kunde</th>
                             <th>Eigentümer</th>
                             <th>Status</th>
                             <th>Fällig am</th>

@@ -74,7 +74,7 @@ public class DashboardContent implements DashboardContentProvider {
         if (kunde != null) {
             section.setLabel(kunde.getName());
         } else {
-            section.setLabel("Alle Kategorien");
+            section.setLabel("Alle Kunden");
             cssClass = "overview";
         }
 
