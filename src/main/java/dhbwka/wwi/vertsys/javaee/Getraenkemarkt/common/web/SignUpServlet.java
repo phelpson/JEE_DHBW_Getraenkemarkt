@@ -89,7 +89,7 @@ public class SignUpServlet extends HttpServlet {
         
         // Diskriminierendes Attribut für die DB Zuordnung zwischen Mitarbeiter und Kunde
         String disAttribut = usage;
-        List<String> errors = null;
+        List<String> errors;
         
 
         // Eingaben prüfen

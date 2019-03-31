@@ -70,7 +70,7 @@ public class UserBean {
         
         //hier muss Gruppe vergeben werden
         user.addToGroup(disAttribut);
-       //user.addToGroup("app-user");
+        user.addToGroup("app-user");
         em.persist(user);
     }
 
