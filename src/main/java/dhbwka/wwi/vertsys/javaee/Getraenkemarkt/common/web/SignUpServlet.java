@@ -91,7 +91,8 @@ public class SignUpServlet extends HttpServlet {
         String disAttribut = usage;
         List<String> errors;
         
-
+        
+        Kunde kunde = new Kunde (companyname);
         // Eingaben prüfen
         User user = new User(
                 username, 
@@ -103,10 +104,8 @@ public class SignUpServlet extends HttpServlet {
                 plz,
                 disAttribut
         );
-        
-
-        
-        Kunde kunde = new Kunde (companyname);
+        kunde.setUser(user);
+        user.setKunde(kunde);
         MitarbeiterEntity mitarbeiter = new MitarbeiterEntity (this.mitarbeiterBean.generiereEintrittsdatum());
         
         errors = this.validationBean.validate(user);
@@ -130,17 +129,17 @@ public class SignUpServlet extends HttpServlet {
         if (errors.isEmpty() && kunden_errors.isEmpty() &&  mitarbeiter_errors.isEmpty()) {
             try {
                 if (usage.equals("Kunde") == true) {
-                    disAttribut = "Kunde";
-                    this.kundeBean.createNewEntry(companyname);
+                    user.setDisAttribut("Kunde");
+                    this.kundeBean.createNewEntry(kunde);
                 }
                 else if (usage.equals("Mitarbeiter") == true) {
-                    disAttribut = "Mitarbeiter";
+                    user.setDisAttribut("Mitarbeiter");
                     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
                     LocalDateTime date = LocalDateTime.now();
                     String dateString = dtf.format(date);
                     this.mitarbeiterBean.createNewEntry(dateString);    
-                }  
-                this.userBean.signup(username, password1, email, givenname, name, address, plz, disAttribut);
+                } 
+                this.userBean.signup(user);
                          
             } catch (UserBean.UserAlreadyExistsException ex) {
                 errors.add(ex.getMessage());

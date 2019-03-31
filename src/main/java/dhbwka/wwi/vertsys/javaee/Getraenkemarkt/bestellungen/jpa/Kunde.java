@@ -49,11 +49,9 @@ public class Kunde implements Serializable {
     @OneToMany(mappedBy = "kunde", fetch = FetchType.LAZY)
     List<Bestellung> bestellungen = new ArrayList<>();
     
-//    @Column
-//    @NotNull(message = "Der Kunde muss auch einen User haben.")
-//    @OneToOne (mappedBy = "kunde", fetch = FetchType.EAGER)
-//    User user;
-
+    @OneToOne
+    @NotNull(message = "Der User im Kunden darf nicht leer sein.")
+    private User user;
 
     //<editor-fold defaultstate="collapsed" desc="Konstruktoren">
     public Kunde() {
@@ -72,7 +70,14 @@ public class Kunde implements Serializable {
     public void setId(long id) {
         this.id = id;
     }
+    
+    public User getUser() {
+        return user;
+    }
 
+    public void setUser(User user) {
+        this.user = user;
+    }
     public String getName() {
         return firmenName;
     }

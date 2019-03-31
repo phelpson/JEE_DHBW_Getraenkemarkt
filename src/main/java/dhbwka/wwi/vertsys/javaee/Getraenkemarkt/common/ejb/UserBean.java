@@ -9,6 +9,7 @@
  */
 package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb;
 
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa.Kunde;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.User;
 import java.util.List;
 import javax.annotation.Resource;
@@ -49,27 +50,15 @@ public class UserBean {
      * @param adresse
      * @param plz
      * @param disAttribut
+     * @param kunde
      * @throws UserBean.UserAlreadyExistsException
      */
-    public void signup(String username, String password, String email,String vorname, String nachname,
-            String adresse, int plz, String disAttribut) throws UserAlreadyExistsException {
-        if (em.find(User.class, username) != null) {
-            throw new UserAlreadyExistsException("Der Benutzername $B ist bereits vergeben.".replace("$B", username));
+    public void signup(User user) throws UserAlreadyExistsException {
+        if (em.find(User.class, user.getUsername()) != null) {
+            throw new UserAlreadyExistsException("Der Benutzername $B ist bereits vergeben.".replace("$B", user.getUsername()));
         }
-
-        User user = new User(
-                username, 
-                password,
-                email,
-                vorname,
-                nachname,
-                adresse,
-                plz,
-                disAttribut
-        );
-        
         //hier muss Gruppe vergeben werden
-        user.addToGroup(disAttribut);
+        user.addToGroup(user.getDisAttribut());
         user.addToGroup("app-user");
         em.persist(user);
     }

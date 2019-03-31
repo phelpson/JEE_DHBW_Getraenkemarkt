@@ -11,6 +11,7 @@ package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.ejb;
 
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb.EntityBean;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa.Kunde;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.User;
 import java.util.List;
 import javax.ejb.Stateless;
 
@@ -60,16 +61,12 @@ public class KundeBean extends EntityBean<Kunde, Long> {
      * Neuen Kunden anlegen + persistieren
      * 
      * 
-     * @param kundeId       Kundennummer (ID) des Kunden
-     * @param firmenname    Firmenname des Kunden
+     * @param kunde
      * @return              neues Kundenobject nach Erstellung
      */
-    public Kunde createNewEntry(String firmenname){
-        
-        Kunde Kunde = new Kunde(firmenname);
-                        
-        em.persist(Kunde);
-        return em.merge(Kunde);
+    public Kunde createNewEntry(Kunde kunde){
+        this.em.persist(kunde);
+        return em.merge(kunde);
     }
     
     // Kundeninformationen updaten
