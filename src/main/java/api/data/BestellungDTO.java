@@ -27,6 +27,14 @@ public class BestellungDTO {
 //        this.dueTime = dueTime;
     }
     
+    public BestellungDTO (String shortText, String longText, String getraenk, String dueDate, String dueTime) {
+        this.shortText = shortText;
+        this.longText = longText;
+        this.getraenk = getraenk;
+        this.dueDate = dueDate;
+        this.dueTime = dueTime;
+    }
+    
     public String getShortText() {
         return shortText;
     }

@@ -9,6 +9,7 @@
  */
 package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa;
 
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.User;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.TableGenerator;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -46,6 +48,12 @@ public class Kunde implements Serializable {
 
     @OneToMany(mappedBy = "kunde", fetch = FetchType.LAZY)
     List<Bestellung> bestellungen = new ArrayList<>();
+    
+//    @Column
+//    @NotNull(message = "Der Kunde muss auch einen User haben.")
+//    @OneToOne (mappedBy = "kunde", fetch = FetchType.EAGER)
+//    User user;
+
 
     //<editor-fold defaultstate="collapsed" desc="Konstruktoren">
     public Kunde() {
@@ -81,6 +89,7 @@ public class Kunde implements Serializable {
     public void setbestellungen(List<Bestellung> bestellungen) {
         this.bestellungen = bestellungen;
     }
+    
     //</editor-fold>
 
 }

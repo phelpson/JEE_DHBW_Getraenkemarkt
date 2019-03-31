@@ -25,7 +25,7 @@ import javax.ws.rs.core.MediaType;
  * @author Philip Mayer
  */
 @Stateless
-@Path("dhbwka.wwi.vertsys.javaee.getraenkemarkt.bestellungen.jpa.kunde")
+@Path("kunde")
 public class KundeFacadeREST extends AbstractFacade<Kunde> {
 
     @PersistenceContext(unitName = "default")

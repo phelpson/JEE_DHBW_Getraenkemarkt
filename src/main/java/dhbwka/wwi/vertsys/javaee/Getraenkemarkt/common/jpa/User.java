@@ -10,6 +10,7 @@
 package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa;
 
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa.Bestellung;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa.Kunde;
 import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -26,6 +27,7 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
@@ -79,14 +81,15 @@ public class User implements Serializable {
     @Column(name="post_code")
     @NotNull(message  = "Die PLZ darf nicht leer sein.")
     private int plz = 0;
-    
-    
-    
+
     // Diskriminierendes Attribut für die Generalisierung/Spezialisierung
     // User, Kunde, Mitarbeiter ggf. Lieferant
     @Column(name = "disAttribut")
     private String disAttribut;
     
+//    @Column
+//    @OneToOne
+//    Kunde kunde;
     
 
     @ElementCollection

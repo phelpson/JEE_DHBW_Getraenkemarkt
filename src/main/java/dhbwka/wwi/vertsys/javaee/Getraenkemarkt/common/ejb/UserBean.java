@@ -127,6 +127,17 @@ public class UserBean {
                 .getResultList();
     }
 
+        public List<User> findByUsername(String query) {
+            if (query == null || query.trim().isEmpty()) {
+                query = "";
+            }      
+            query = "%" + query + "%";
+            return em.createQuery("SELECT u FROM User u"
+                                + "    WHERE u.username     LIKE :query")
+                    .setParameter("query", query)
+                    .getResultList();
+    }
+        
     /**
      * Fehler: Der Benutzername ist bereits vergeben
      */
