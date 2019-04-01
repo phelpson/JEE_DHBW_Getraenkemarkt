@@ -67,6 +67,10 @@ public class Kunde implements Serializable {
     public long getId() {
         return id;
     }
+    
+    public String getFirmenname(){
+        return firmenName;
+    }
 
     public void setId(long id) {
         this.id = id;

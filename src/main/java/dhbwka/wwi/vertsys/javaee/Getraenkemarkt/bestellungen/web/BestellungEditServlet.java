@@ -19,6 +19,7 @@ import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa.AuftragEntity;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa.GetraenkeEnum;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa.Bestellung;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa.BestellungStatus;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.User;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.Time;
@@ -249,8 +250,10 @@ public class BestellungEditServlet extends HttpServlet {
      */
     private Bestellung getRequestedbestellung(HttpServletRequest request) {
         // Zunächst davon ausgehen, dass ein neuer Satz angelegt werden soll
+        User user = this.userBean.getCurrentUser();
         Bestellung bestellung = new Bestellung();
-        bestellung.setOwner(this.userBean.getCurrentUser());
+        bestellung.setOwner(user);
+        bestellung.setkunde(this.kundeBean.findByUsername(user).get(1));
         bestellung.setDueDate(new Date(System.currentTimeMillis()));
         bestellung.setDueTime(new Time(System.currentTimeMillis()));
 

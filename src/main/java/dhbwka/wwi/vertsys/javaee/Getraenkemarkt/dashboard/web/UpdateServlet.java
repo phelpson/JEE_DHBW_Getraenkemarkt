@@ -94,10 +94,8 @@ public class UpdateServlet extends HttpServlet {
         
         // Diskriminierendes Attribut für die DB Zuordnung zwischen Mitarbeiter und Kunde
         String disAttribut = usage;
-        List<String> errors = null;
+        List<String> errors;
         
-
-        // Eingaben prüfen
         User user = userBean.getCurrentUser();
         user.setNachname(name);
         user.setVorname(givenname);

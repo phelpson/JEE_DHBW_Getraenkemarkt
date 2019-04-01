@@ -11,10 +11,9 @@ package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.ejb;
 
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb.EntityBean;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa.Kunde;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.User;
 import java.util.List;
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 /**
  * Einfache EJB mit den üblichen CRUD-Methoden für Kategorien.
@@ -56,6 +55,15 @@ public class KundeBean extends EntityBean<Kunde, Long> {
     // Kunde via Firmenname suchen
     public Kunde findByFirmenname(String firmenname) {
         return this.em.find(Kunde.class, firmenname);
+    }
+    
+    public List<Kunde> findByUsername(User user) {   
+        String username = user.getUsername();
+        return em.createQuery("SELECT a From Kunde a"
+                                + "WHERE a.username :username,"
+                                + "ORDER BY a.kundeID DESC,").setParameter("username",username)
+               .getResultList();
+                
     }
     
     // Kunde via PLZ suchen
