@@ -58,7 +58,7 @@ header, main {
 
 /* Titelzeile */
 #titlebar {
-    color: rgb(145, 204, 229);
+    color: rgb(183, 183, 183);
     font-size: 260%;
     margin-bottom: 1rem;
 }
@@ -74,7 +74,7 @@ header, main {
 }
 
 #titlebar .appname {
-    color: rgb(83, 149, 176);
+    color: #6b6b6b;
 }
 
 /* Menüzeile */
@@ -86,10 +86,11 @@ header, main {
 
 /* Farben für Links */
 a, a:visited {
-    color: rgb(193, 33, 33);
+    color: rgb(0, 33, 33);
+    font-weight: bold;
     text-decoration: none;
 }
 
 a:hover {
-    text-decoration: underline;
+    color: #9ec3ff;
 }
