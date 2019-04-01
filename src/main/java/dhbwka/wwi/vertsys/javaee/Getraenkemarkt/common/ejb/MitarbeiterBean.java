@@ -6,28 +6,27 @@
 package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb;
 
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.MitarbeiterEntity;
-import java.sql.Date;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+
 
 /**
  *
  * @author LU_MA
  */
 @Stateless
-public class MitarbeiterBean {
+public class MitarbeiterBean extends EntityBean <MitarbeiterEntity, Long>{
     
-    /*
-    * Entity Manager
-    */
-    @PersistenceContext
-    protected EntityManager em;
+    
+    public MitarbeiterBean() {
+        super(MitarbeiterEntity.class);
+    }
+
+    public MitarbeiterBean(Class<MitarbeiterEntity> entityClass) {
+        super(entityClass);
+    }
     
     public String generiereEintrittsdatum() {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");

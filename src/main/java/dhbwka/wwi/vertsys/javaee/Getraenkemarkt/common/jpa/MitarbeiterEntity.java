@@ -11,7 +11,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -31,11 +33,18 @@ public class MitarbeiterEntity implements Serializable {
     @Column(name = "eintrittsdatum")
     private String eintrittsdatum;
     
+    @OneToOne 
+    @NotNull(message = "Der User im Mitarbeiter darf nicht leer sein.")
+    private User user;
+    
+    //<editor-fold defaultstate="collapsed" desc="Constructor">
      // Constructor
     public MitarbeiterEntity() {
         // empty base constructor
     }
+    //</editor-fold>
     
+    //<editor-fold defaultstate="collapsed" desc="Setter und Getter">
     public MitarbeiterEntity(String  eintrittsdatum) {
         this.eintrittsdatum = eintrittsdatum;
         
@@ -52,11 +61,13 @@ public class MitarbeiterEntity implements Serializable {
     public String  getDate() {
         return this.eintrittsdatum;
     }
-   
-
-    @Override
-    public String toString() {
-        return "Luca.MitarbeiterEntity[ id=" + mitarbeiterId + " ]";
-    }
     
+        public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+    //</editor-fold>    
 }

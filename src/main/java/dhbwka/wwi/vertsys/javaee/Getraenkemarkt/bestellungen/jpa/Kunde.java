@@ -13,6 +13,7 @@ import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.User;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -37,8 +38,8 @@ public class Kunde implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = "kunde_ids")
-    @TableGenerator(name = "kunde_ids", initialValue = 0, allocationSize = 50)
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "kunden_ids")
+    @TableGenerator(name = "kunden_ids", initialValue = 0, allocationSize = 50)
     private long id;
 
     @Column(length = 30)
@@ -49,7 +50,7 @@ public class Kunde implements Serializable {
     @OneToMany(mappedBy = "kunde", fetch = FetchType.LAZY)
     List<Bestellung> bestellungen = new ArrayList<>();
     
-    @OneToOne
+    @OneToOne 
     @NotNull(message = "Der User im Kunden darf nicht leer sein.")
     private User user;
 

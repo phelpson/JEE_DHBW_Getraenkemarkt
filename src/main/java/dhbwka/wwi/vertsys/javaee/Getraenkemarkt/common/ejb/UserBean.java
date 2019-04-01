@@ -40,19 +40,7 @@ public class UserBean {
         return this.em.find(User.class, this.ctx.getCallerPrincipal().getName());
     }
 
-    /**
-     *
-     * @param username
-     * @param password
-     * @param email
-     * @param vorname
-     * @param nachname
-     * @param adresse
-     * @param plz
-     * @param disAttribut
-     * @param kunde
-     * @throws UserBean.UserAlreadyExistsException
-     */
+    
     public void signup(User user) throws UserAlreadyExistsException {
         if (em.find(User.class, user.getUsername()) != null) {
             throw new UserAlreadyExistsException("Der Benutzername $B ist bereits vergeben.".replace("$B", user.getUsername()));
@@ -60,7 +48,8 @@ public class UserBean {
         //hier muss Gruppe vergeben werden
         user.addToGroup(user.getDisAttribut());
         user.addToGroup("app-user");
-        em.persist(user);
+        this.em.persist(user);
+        this.em.merge(user);
     }
 
     /**

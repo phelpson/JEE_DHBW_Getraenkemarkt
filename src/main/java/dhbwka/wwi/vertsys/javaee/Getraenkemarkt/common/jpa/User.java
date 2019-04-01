@@ -87,8 +87,6 @@ public class User implements Serializable {
     @Column(name = "disAttribut")
     private String disAttribut;
 
-    @OneToOne (mappedBy = "user", fetch = FetchType.LAZY)
-    private Kunde kunde;
 
     @ElementCollection
     @CollectionTable(
@@ -131,13 +129,6 @@ public class User implements Serializable {
         this.username = id;
     }
 
-    public Kunde getKunde() {
-        return kunde;
-    }
-
-    public void setKunde(Kunde kunde) {
-        this.kunde = kunde;
-    }
     @XmlTransient
     public List<Bestellung> getbestellungen() {
         return bestellungen;

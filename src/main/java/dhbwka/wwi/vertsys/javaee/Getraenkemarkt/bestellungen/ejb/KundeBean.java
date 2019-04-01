@@ -11,9 +11,10 @@ package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.ejb;
 
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb.EntityBean;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa.Kunde;
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.User;
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 /**
  * Einfache EJB mit den üblichen CRUD-Methoden für Kategorien.
@@ -21,10 +22,15 @@ import javax.ejb.Stateless;
 @Stateless
 public class KundeBean extends EntityBean<Kunde, Long> {
 
+
     public KundeBean() {
         super(Kunde.class);
     }
 
+
+    public KundeBean(Class<Kunde> entityClass) {
+        super(entityClass);
+    }
     /**
      * Auslesen aller Kategorien, alphabetisch sortiert.
      *
@@ -56,18 +62,7 @@ public class KundeBean extends EntityBean<Kunde, Long> {
     public Kunde findByPlz(int plz) {
         return this.em.find(Kunde.class, plz);
     }
-    
-    /**
-     * Neuen Kunden anlegen + persistieren
-     * 
-     * 
-     * @param kunde
-     * @return              neues Kundenobject nach Erstellung
-     */
-    public Kunde createNewEntry(Kunde kunde){
-        this.em.persist(kunde);
-        return em.merge(kunde);
-    }
+  
     
     // Kundeninformationen updaten
     public Kunde updateKunde(Kunde Kunde) {
