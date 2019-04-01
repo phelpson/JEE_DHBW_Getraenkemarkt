@@ -63,7 +63,7 @@ public class BestellungEditServlet extends HttpServlet {
         request.setAttribute("kunden", this.kundeBean.findAllSorted());
         request.setAttribute("statuses", BestellungStatus.values());
         request.setAttribute("getraenk", GetraenkeEnum.values());
-
+        request.setAttribute("rolle", userBean.getCurrentUser().getDisAttribut());
         // Zu bearbeitende Bestellung einlesen
         HttpSession session = request.getSession();
 
@@ -253,7 +253,10 @@ public class BestellungEditServlet extends HttpServlet {
         User user = this.userBean.getCurrentUser();
         Bestellung bestellung = new Bestellung();
         bestellung.setOwner(user);
-        bestellung.setkunde(this.kundeBean.findByUsername(user).get(1));
+        if("Kunde".equals(user.getDisAttribut())){
+            bestellung.setkunde(this.kundeBean.findByUsername(user).get(0));           
+        }
+        
         bestellung.setDueDate(new Date(System.currentTimeMillis()));
         bestellung.setDueTime(new Time(System.currentTimeMillis()));
 

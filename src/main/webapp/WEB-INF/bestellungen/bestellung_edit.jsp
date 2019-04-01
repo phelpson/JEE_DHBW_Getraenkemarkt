@@ -65,7 +65,15 @@
 
                 <label for="bestellung_kunde">Kunde</label>
                 <div class="side-by-side">
-                    <select name="bestellung_kunde">
+                    <c:choose>
+                        <c:when test="${rolle == 'Kunde'}">
+                            <select name="bestellung_kunde" readonly="true">
+                        </c:when>
+                        <c:otherwise>
+                            <select name="bestellung_kunde">
+                        </c:otherwise>
+                    </c:choose>
+                    
 
                         <c:forEach items="${kunden}" var="kunde">
                             <option value="${kunde.id}" ${bestellung_form.values["bestellung_kunde"][0] == kunde.id.toString() ? 'selected' : ''}>

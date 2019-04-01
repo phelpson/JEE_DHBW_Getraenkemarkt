@@ -59,10 +59,7 @@ public class KundeBean extends EntityBean<Kunde, Long> {
     
     public List<Kunde> findByUsername(User user) {   
         String username = user.getUsername();
-        return em.createQuery("SELECT a From Kunde a"
-                                + "WHERE a.username :username,"
-                                + "ORDER BY a.kundeID DESC,").setParameter("username",username)
-               .getResultList();
+        return em.createQuery("SELECT a FROM Kunde a WHERE a.user = :username").setParameter("username",user).getResultList();
                 
     }
     
