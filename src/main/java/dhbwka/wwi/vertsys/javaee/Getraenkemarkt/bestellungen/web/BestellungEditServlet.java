@@ -63,7 +63,8 @@ public class BestellungEditServlet extends HttpServlet {
         request.setAttribute("kunden", this.kundeBean.findAllSorted());
         request.setAttribute("statuses", BestellungStatus.values());
         request.setAttribute("getraenk", GetraenkeEnum.values());
-        request.setAttribute("rolle", userBean.getCurrentUser().getDisAttribut());
+        String attr = userBean.getCurrentUser().getDisAttribut();
+        request.setAttribute("rolle", attr);
         // Zu bearbeitende Bestellung einlesen
         HttpSession session = request.getSession();
 

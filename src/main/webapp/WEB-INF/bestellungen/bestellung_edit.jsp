@@ -66,8 +66,8 @@
                 <label for="bestellung_kunde">Kunde</label>
                 <div class="side-by-side">
                     <c:choose>
-                        <c:when test="${rolle == 'Kunde'}">
-                            <select name="bestellung_kunde" readonly="true">
+                        <c:when test="${rolle.equals('Kunde')}">
+                            <select name="bestellung_kunde" disabled="true">
                         </c:when>
                         <c:otherwise>
                             <select name="bestellung_kunde">
