@@ -49,7 +49,7 @@ public class BasicLoginFilter implements Filter {
     
   private static final String AUTHORIZATION_HEADER = "Authorization";
   private static final String BASIC_PREFIX = "Basic ";
-  private static final String FILTER_PARAMETER_ROLE_NAMES_COMMA_SEPARATED = "role-names-comma-sep";
+  private static final String FILTER_PARAMETER_ROLE_NAMES_COMMA_SEPARATED = "app-user";
   private static final String ROLE_SEPARATOR = ",";
   private static final String BASIC_AUTH_SEPARATOR = ":";
 

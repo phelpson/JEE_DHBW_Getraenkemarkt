@@ -9,6 +9,7 @@ import api.data.UserDTO;
 import api.data.UserFacade;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.User;
 import java.util.List;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -31,6 +32,7 @@ import javax.ws.rs.core.MediaType;
  */
 @Stateless
 @Path("user")
+@RolesAllowed({"app-user","Kunde"})
 public class UserFacadeREST extends AbstractFacade<User> {
 
     @PersistenceContext(unitName = "default")
@@ -45,6 +47,7 @@ public class UserFacadeREST extends AbstractFacade<User> {
 
     @GET
     @Override
+    @RolesAllowed({"app-user","Kunde"})
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<User> findAll() {
         return super.findAll();
@@ -52,6 +55,7 @@ public class UserFacadeREST extends AbstractFacade<User> {
     
     @GET
     @Path("/findByUsername")
+    @RolesAllowed({"app-user","Kunde"})
     @Produces({MediaType.APPLICATION_JSON})
     public List<UserDTO> findByUsername(@QueryParam("query") @DefaultValue("") String query) {
         return userFacade.findByUsername(query);

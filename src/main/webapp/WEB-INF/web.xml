@@ -4,6 +4,27 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
+    
+    
+    
+    <!-- 
+        Basic Auth Filter
+    -->
+    
+    <filter>
+        <filter-name>BasicLoginFilter</filter-name>
+        <filter-class>dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.web.BasicLoginFilter</filter-class>
+        <init-param>
+            <param-name>app-user</param-name>
+            <param-value>app-user</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>BasicLoginFilter</filter-name>
+        <url-pattern>/webresources/*</url-pattern>
+    </filter-mapping>
+    
+    
     <session-config>
         <session-timeout>
             30
@@ -23,20 +44,7 @@
         Vgl. https://docs.oracle.com/javaee/7/tutorial/security-advanced003.htm
         Vgl. https://dzone.com/articles/jdbc-realm-and-form-based
     -->
-    <!--
-    <filter>
-        <filter-name>BasicLoginFilter</filter-name>
-        <filter-class>dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.web.BasicLoginFilter</filter-class>
-        <init-param>
-            <param-name>app-user</param-name>
-            <param-value>app-user</param-value>
-        </init-param>
-    </filter>
-    <filter-mapping>
-        <filter-name>BasicLoginFilter</filter-name>
-        <url-pattern>/api/*</url-pattern>
-    </filter-mapping>
-    -->
+    
     <security-constraint>
         <display-name>
             Geschützter Bereich für angemeldete Benutzer
@@ -48,7 +56,7 @@
             <web-resource-name>todo-app</web-resource-name>
             <url-pattern>/app/*</url-pattern>
         </web-resource-collection>
-        
+                
         <!--
             Ein Benutzer muss die Rolle "app-user" besitzen, um die
             Seiten aufrufen zu können.
@@ -75,7 +83,7 @@
     -->
     <security-role>
         <description>
-            Ein Benutzer der jTodo-Beispielanwendung. Jeder Benutzer muss
+            Ein Benutzer des Getränkemarkts. Jeder Benutzer muss
             mindestens diese Rolle besitzen, um sich einloggen und neue
             Aufgaben anlegen zu können.
         </description>
