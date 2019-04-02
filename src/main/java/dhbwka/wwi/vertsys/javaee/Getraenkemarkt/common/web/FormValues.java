@@ -30,10 +30,12 @@ public class FormValues {
     }
     
     public List<String> getErrors() {
+        //auslesen der Error-Liste
         return errors;
     }
     
     public void setErrors(List<String> errors) {
+        //Error in errors Liste setzen
         this.errors = errors;
     }
     //</editor-fold>

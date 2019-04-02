@@ -19,15 +19,19 @@ import javax.validation.constraints.NotNull;
 public class MitarbeiterEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+    //MitarbeiterID
     @Id
+    //Anlegen einer Mitarbeiter ID Spalte
     @Column(name = "id")
+    //automatische Generierung der ID beim Anlegen
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long mitarbeiterId;
     
+    //Spalte für das Eintrittsdatum anlegen
     @Column(name = "eintrittsdatum")
     private String eintrittsdatum;
     
+    //1:1 Beziehung zu User Tabelle erstellen
     @OneToOne 
     @NotNull(message = "Der User im Mitarbeiter darf nicht leer sein.")
     private User user;
@@ -44,21 +48,27 @@ public class MitarbeiterEntity implements Serializable {
         this.eintrittsdatum = eintrittsdatum;
         
     }
+    //gibt Mitarbeiter ID zurück
     public long getMitarbeiterId() {
         return this.mitarbeiterId;
     }
+    //setzt die MitarbeiterID des aufgerufenen Mitarbeiters
     public void setMitarbeiterId(long mitarbeiterId) {
         this.mitarbeiterId = mitarbeiterId;
     }
+    //setzt das Eintrittsdatum des Mitarbeiters
     public void setDate (String  eintrittsdatum) {
         this.eintrittsdatum = eintrittsdatum;
     }
+    //gibt das Eintrittsdatum zurück
     public String  getDate() {
         return this.eintrittsdatum;
     }
+    //gibt das zugehörige Userobjekt zurück. Wird über die 1:1 Beziehung ermöglicht
     public User getUser() {
         return user;
     }
+    //weist dem Mitarbeiter das Zugehörige Userobjekt zu. Wird über die 1:1 Beziehung ermöglicht
     public void setUser(User user) {
         this.user = user;
     }

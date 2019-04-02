@@ -33,40 +33,55 @@ public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private static final char[] HEX_ARRAY = "0123456789ABCDEF".toCharArray();
-
+    
+    //User ID
     @Id
+    //User ID Spalte erzeugen
     @Column(name = "USERNAME", length = 64)
     @Size(min = 5, max = 64, message = "Der Benutzername muss zwischen fünf und 64 Zeichen lang sein.")
+    //Prüfung ob Benutzername-Eingabefeld leer ist
     @NotNull(message = "Der Benutzername darf nicht leer sein.")
     private String username;
     
+    //Passwort anlegen
     public class Password {
         @Size(min = 6, max = 64, message = "Das Passwort muss zwischen sechs und 64 Zeichen lang sein.")
         public String password = "";
     }
     @Transient
     private final Password password = new Password();
-
+    
+    //Passworthash Spalte erzeugen
     @Column(name = "PASSWORD_HASH", length = 64)
+    //Prüfung ob Passwort-Eingabefeld leer ist
     @NotNull(message = "Das Passwort darf nicht leer sein.")
     private String passwordHash;
     
+    //Email Spalte erzeugen
     @Column(name = "E-Mail", length = 64)
+    //Überprüfung ob Email zwischen 6 und 64 Zeichen lang ist
     @Size(min = 6, max = 64, message = "Die E-Mail-Adresse muss zwischen 6 und 64 Zeichen lang sein.")
+    //Prüfung ob Email-Eingabefeld leer ist
     @NotNull(message  = "Die E-Mail Adresse darf nicht leer sein.")
     private String email;
     
+    //Vorname Spalte erzeugen
     @Column
     private String vorname = "";
-      
+    
+    //Nachname Spalte erzeugen
     @Column
     private String nachname = "";
       
+    //Adress Spalte erzeugen
     @Column(name="address")
+    //Prüfung ob Adress-Eingabefeld leer ist
     @NotNull(message  = "Das Adress-Feld darf nicht leer sein.")
     private String adresse = "";
     
+    //Postleitzahl Spalte erzeugen
     @Column(name="post_code")
+    //Prüfung ob PLZ-Eingabefeld leer ist
     @NotNull(message  = "Die PLZ darf nicht leer sein.")
     private int plz = 0;
 
@@ -74,8 +89,8 @@ public class User implements Serializable {
     // Kunde oder Mitarbeiter
     @Column(name = "disAttribut")
     private String disAttribut;
-
-
+    
+    //Verknpüfung mit User-Group in Tabelle Getraenkemarkt_USER_GROUP herstellen
     @ElementCollection
     @CollectionTable(
             name = "Getraenkemarkt_USER_GROUP",
@@ -83,7 +98,8 @@ public class User implements Serializable {
     )
     @Column(name = "GROUPNAME")
     List<String> groups = new ArrayList<>();
-
+    
+    //1:n Beziehung zwischen Owner und Bestellung herstellen
     @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     List<Bestellung> bestellungen = new ArrayList<>();
     

@@ -1,7 +1,6 @@
 package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.web;
 
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb.MitarbeiterBean;
-
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb.ValidationBean;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb.UserBean;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.MitarbeiterEntity;
@@ -26,15 +25,16 @@ import javax.servlet.http.HttpSession;
 @WebServlet(urlPatterns = {"/signup/"})
 public class SignUpServlet extends HttpServlet {
     
+    //EJB für die Validierung eines Benutzers
     @EJB
     ValidationBean validationBean;
-            
+    //UserBean        
     @EJB
     UserBean userBean;
-    
+    //KundeBean
     @EJB
     KundeBean kundeBean;
-    
+    //MitarbeiterBean
     @EJB
     MitarbeiterBean mitarbeiterBean;
     
@@ -57,9 +57,11 @@ public class SignUpServlet extends HttpServlet {
         
         // Formulareingaben auslesen        
         String username     = request.getParameter("signup_username");
+        //passwort eingabe
         String password1    = request.getParameter("signup_password1");
+        //passwort bestätigung
         String password2    = request.getParameter("signup_password2");
-        
+        //firmenname
         String companyname  = request.getParameter("signup_companyname");
         String address      = request.getParameter("signup_street");
         int plz             = 000000;
@@ -77,9 +79,10 @@ public class SignUpServlet extends HttpServlet {
         
         // Diskriminierendes Attribut für die DB Zuordnung zwischen Mitarbeiter und Kunde
         String disAttribut = usage;
+        //error Liste erzeugen
         List<String> errors;
         
-        
+        //Kunde erzeugen 
         Kunde kunde = new Kunde (companyname);
         // Eingaben prüfen
         User user = new User(
@@ -92,19 +95,26 @@ public class SignUpServlet extends HttpServlet {
                 plz,
                 disAttribut
         );
+        //Zuweisung der Verbindung zwischen dem User und dem Kunden
         kunde.setUser(user);
+        //Mitarbeiter erzeugen
         MitarbeiterEntity mitarbeiter = new MitarbeiterEntity (this.mitarbeiterBean.generiereEintrittsdatum());
+        //Zuweisung der Verbindung zwischen dem User und dem Mitarbeiter
         mitarbeiter.setUser(user);
         
+        //validierung des User Objekts in der Datenbank
         errors = this.validationBean.validate(user);
+        
         this.validationBean.validate(user.getPassword(), errors);
         
+        //Validierung des Kundenobjekts
         List<String> kunden_errors = this.validationBean.validate(kunde);
         this.validationBean.validate(kunde, errors);
         
+        //Validierung des Mitarbeiterobjekts
         List<String> mitarbeiter_errors = this.validationBean.validate(mitarbeiter);
         this.validationBean.validate(mitarbeiter, errors);
-        
+        //Überprüfung der Übereinstimmung der beiden eingegebenen Passwörter
         if (password1 != null && password2 != null && !password1.equals(password2)) {
             errors.add("Die beiden Passwörter stimmen nicht überein.");
         }
@@ -113,16 +123,21 @@ public class SignUpServlet extends HttpServlet {
             errors.add(nfeMessage);
         }
         
-        // Neuen Benutzer anlegen
+        // Neuen Benutzer anlegen wenn keine Fehlermeldungen vorliegen 
         if (errors.isEmpty() && kunden_errors.isEmpty() &&  mitarbeiter_errors.isEmpty()) {
             try {
                 this.userBean.signup(user);
+                //setzten des DisAttributes je nach Auswahl des Nutzers im Dropdown (Kunde/Mitarbeiter)
                 if (usage.equals("Kunde") == true) {
+                    //setzen des DisAttributs 
                     user.setDisAttribut("Kunde");
+                    //Speichern des Kundenobjekts
                     this.kundeBean.saveNew(kunde);
                 }
                 else if (usage.equals("Mitarbeiter") == true) {
+                    //setzen des DisAttributs
                     user.setDisAttribut("Mitarbeiter");
+                    //Speicherung des Mitarbeiterobjekts
                     this.mitarbeiterBean.saveNew(mitarbeiter);    
                 } 
 

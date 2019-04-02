@@ -69,22 +69,26 @@ public class UpdateServlet extends HttpServlet {
         } catch(NumberFormatException nfe) {
             nfeMessage = "Bitte geben Sie einen numerischen ganzzahligen Wert für die PLZ ein.";
         }
-        
+        //usage (Mitarbeiter oder Kunde)
         String usage        = request.getParameter("update_usage");
         String email        = request.getParameter("update_email");
         String givenname    = request.getParameter("update_givenname");
         String name         = request.getParameter("update_name");
         
+        
         List<String> errors;
         
+        //aktuell eingeloggten User holen
         User user = userBean.getCurrentUser();
+        //Eingegebenen Werte dem Userobjekt zuweisen
         user.setNachname(name);
         user.setVorname(givenname);
         user.setUsername(username);
         user.setAdresse(address);
         user.setEmail(email);
         user.setPlz(plz);
-
+        
+        //User Objekt validieren
         errors = this.validationBean.validate(user);
         
         if (nfeMessage != null) {
@@ -114,7 +118,8 @@ public class UpdateServlet extends HttpServlet {
             response.sendRedirect(request.getRequestURI());
         }
     }
-    
+    //Befüllung der Maske mit den entsprechenden Daten des eingeloggten Benutzers
+    //um Änderungen der Daten zuzulassen
     private FormValues createUpdateForm(User user) {
         Map<String, String[]> values = new HashMap<>();
 
