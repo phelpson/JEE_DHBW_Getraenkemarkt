@@ -5,15 +5,38 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel = "stylesheet" type = "text/css" href = "style.css" />
+        <link rel="shortcut icon" type="image/x-icon" href="beer.png">
     </head>
     <body>
-        <h1>Getränkemarkt-User prüfen</h1>
-        <div class="whiteText">Mit der Hilfe dieser App können Sie nach einem User suchen <br>
-            Zusätzlich dazu bekommen Sie die Bestellungen dieses Users angezeigt.
-        </div>
+        <h1>Getränkemarkt-App</h1>
 
-        <input type="text" id="search" placeholder="Bitte Username eingeben">
-        <button onclick="callAPI()">Suchen</button>
+        <ul>
+            <li><a class="active" href="user_search.html">User suchen</a></li>
+            <li><a href="bestellung_search.html">Bestellung suchen</a></li>
+        </ul>
+        <h3>Getränkemarkt-User suchen</h3>
+        <div class="helptext">
+            <u>Tipp</u>: <br>
+            Mit der Hilfe dieser App können Sie nach einem User suchen <br>
+            Zusätzlich dazu bekommen Sie die Bestellungen dieses Users angezeigt. <br>
+            <br>
+            Zur Nutzung dieser App müssen Sie bereits ein Konto im Getränkemarkt besitzen, <br>
+            und sich mittels Username und Passwort authentifizieren.
+
+        </div>
+        
+        <div class="auth">
+                <u class="auth-headline">Authentifizierung:</u> <br>
+                <p><label>Username: </label><input type="text" id="username" placeholder="Bitte Username eingeben"></p>
+                <hr>
+                <p><label>Passwort:</label><input type="password" id="password" placeholder="Bitte Passwort eingeben"></p>
+                <hr>
+                <p><label>Suche:</label></p><input type="text" id="search" placeholder="Username suchen...">
+                <button onclick="callAPI()">Suchen</button>
+        </div>
+        
+        
+        
 
         <div>
             <div id="ergebnis" class="unsichtbar"></div>
@@ -25,25 +48,37 @@
                 let search = document.getElementById("search");
                 let resDiv = document.getElementById("ergebnis");
 
-                resDiv.textContent = "Suche läuft …";
+                // Search text to let user know what's happening
+                resDiv.innerHTML = '<p class="waiting">Suche läuft …<p>';
                 resDiv.classList.remove("unsichtbar");
 
                 // URL Path to API on Backend
-                let url = "http://localhost:8080/Getraenkemarkt/webresources/user/findByUsername"
+                let url = "http://localhost:8080/Getraenkemarkt/api/user/findByUsername"
                         + "?query=" + encodeURI(search.value);
 
                 let antwort = await fetch(url, {
                     method: "get",
+                    // Setting HTTP-Header for basic auth and JSON-Format
                     headers: {
-                        "accept": "application/json"
-                        // Setting HTTP-Heading for basic auth
-                        //"Authorization": 'Basic ' + btoa(username.value + ":" + password.value) 
+                        "accept": "application/json",
+                        /*
+                        "Authorization": "Basic " + btoa(username.value + ":" + password.value),
+                        "Access-Control-Allow-Origin": "http://localhost:8080",
+                        "Access-Control-Allow-Credentials": true,
+                        "Access-Control-Request-Method": "GET",
+                        "Access-Control-Request-Headers": "Content-Type",
+                        */
                     }
                 });
 
                 resDiv.innerHTML = "";
                 let users = await antwort.json();
                 
+                // Alert User if json is empty
+                if (users.length == 0) {
+                    alert("Ihre Suche liefert keine Ergebnisse!");
+                }
+                // S
                 // Outer Loop for each User
                 for(let i = 0; i < users.length; i++) {
                     let user = users[i];
@@ -61,7 +96,7 @@
                     
                     
                     // Inner Loop for each Bestellung
-                    for (k = 0; k< bestellungen.length; k++) {
+                    for (k = 1; k< bestellungen.length; k++) {
                         let bestellHtml = `
                             <h4>Bestellung ${k}:</h4>
                             <p class="bestellungen">

@@ -5,7 +5,6 @@
  */
 package api.data;
 
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa.Bestellung;
 import java.util.List;
 
 /**
@@ -18,6 +17,8 @@ public class UserDTO {
     String vorname;
     String nachname;
     String adresse;
+    String art;
+    int countGesamtBestellungen;
     int plz;
     List<BestellungDTO> bestellungen;
 
@@ -83,6 +84,21 @@ public class UserDTO {
     public void setBestellungen(List<BestellungDTO> bestellung) {
         this.bestellungen = bestellung;
     }
+    
+    public String getArt() {
+        return art;
+    }
 
+    public void setArt(String art) {
+        this.art = art;
+    }
+
+    public int getCountGesamtBestellungen() {
+        return countGesamtBestellungen;
+    }
+
+    public void setCountGesamtBestellungen(int countGesamtBestellungen) {
+        this.countGesamtBestellungen = countGesamtBestellungen;
+    }
      //</editor-fold>
 }

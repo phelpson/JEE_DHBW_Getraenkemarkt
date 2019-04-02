@@ -10,7 +10,7 @@ package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa;
  * @author Philip Mayer
  */
 public enum GetraenkeEnum {
-    Bier, Schnaps, Cola, Wasser;
+    Bier, Schnaps, Cola, Wasser, Orangensaft, Mischzeug, Radler, Apfelsaft, Traubensaft, ClubMate;
 
     /**
      * Bezeichnung ermitteln
@@ -27,8 +27,20 @@ public enum GetraenkeEnum {
                 return "Cola";
             case Wasser:
                 return "Wasser";
+            case Orangensaft:
+                return "Orangensaft";
+            case Mischzeug:
+                return "Mischzeug";
+            case Radler:
+                return "Radler";
+            case Apfelsaft:
+                return "Apfelsaft";
+            case Traubensaft:
+                return "Traubensaft";
+            case ClubMate:
+                return "ClubMate";     
             default:
-                return this.toString();
+                return "Unbekannt";
         }
     }
 

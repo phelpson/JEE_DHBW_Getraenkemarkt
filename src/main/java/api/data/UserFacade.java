@@ -39,10 +39,11 @@ public class UserFacade {
             dto.setNachname(user.getNachname());
             dto.setAdresse(user.getAdresse());
             dto.setPlz(user.getPlz());
+            dto.setArt(user.getDisAttribut());
             
             // provide open Bestellungen for this user
             dto.setBestellungen(this.mapBestellungList(user.getbestellungen()));
-            
+            dto.setCountGesamtBestellungen(user.getbestellungen().size());
             return dto;
         }).collect(Collectors.toList());
     }
