@@ -1,16 +1,7 @@
-/*
- * Copyright © 2018 Dennis Schulmeister-Zimolong
- * 
- * E-Mail: dhbw@windows3.de
- * Webseite: https://www.wpvs.de/
- * 
- * Dieser Quellcode ist lizenziert unter einer
- * Creative Commons Namensnennung 4.0 International Lizenz.
- */
 package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.web;
 
 
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.ejb.KundeBean;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb.KundeBean;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.ejb.BestellungBean;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa.Kunde;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa.Bestellung;
@@ -40,8 +31,7 @@ public class BestellungListServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // Verfügbare Kategorien und Stati für die Suchfelder ermitteln
-       // request.setAttribute("kunden", this.kundeBean.findAllSorted());
+        // Verfügbare Kunden und Statuuus für die Suchfelder ermitteln
         request.setAttribute("kunde", this.kundebean.findAllSorted());
         request.setAttribute("statuses", BestellungStatus.values());
 
@@ -51,10 +41,9 @@ public class BestellungListServlet extends HttpServlet {
         String searchStatus = request.getParameter("search_status");
 
         // Anzuzeigende Aufgaben suchen
-       
         BestellungStatus status = null;
         
-         Kunde kunde = null;
+        Kunde kunde = null;
 
         if (searchkunde != null) {
             try {

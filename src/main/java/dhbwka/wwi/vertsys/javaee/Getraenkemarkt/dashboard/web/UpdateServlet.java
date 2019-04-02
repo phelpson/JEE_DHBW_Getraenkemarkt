@@ -1,22 +1,10 @@
-/*
- * Copyright © 2018 Dennis Schulmeister-Zimolong
- * 
- * E-Mail: dhbw@windows3.de
- * Webseite: https://www.wpvs.de/
- * 
- * Dieser Quellcode ist lizenziert unter einer
- * Creative Commons Namensnennung 4.0 International Lizenz.
- */
 package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.dashboard.web;
 
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb.MitarbeiterBean;
-
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb.ValidationBean;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb.UserBean;
-
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.MitarbeiterEntity;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.User;
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.ejb.KundeBean;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb.KundeBean;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.web.FormValues;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.web.WebUtils;
 import java.io.IOException;
@@ -32,10 +20,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-/**
- * Servlet für die Registrierungsseite. Hier kann sich ein neuer Benutzer
- * registrieren. Anschließend wird der auf die Startseite weitergeleitet.
- */
 @WebServlet(urlPatterns = {"/app/update/"})
 public class UpdateServlet extends HttpServlet {
     
@@ -77,7 +61,6 @@ public class UpdateServlet extends HttpServlet {
         // Formulareingaben auslesen        
         String username     = request.getParameter("update_username");
         
-        String companyname  = request.getParameter("update_companyname");
         String address      = request.getParameter("update_street");
         int plz             = 000000;
         String nfeMessage   = null;
@@ -92,8 +75,6 @@ public class UpdateServlet extends HttpServlet {
         String givenname    = request.getParameter("update_givenname");
         String name         = request.getParameter("update_name");
         
-        // Diskriminierendes Attribut für die DB Zuordnung zwischen Mitarbeiter und Kunde
-        String disAttribut = usage;
         List<String> errors;
         
         User user = userBean.getCurrentUser();
@@ -103,11 +84,7 @@ public class UpdateServlet extends HttpServlet {
         user.setAdresse(address);
         user.setEmail(email);
         user.setPlz(plz);
-        
 
-        
-        MitarbeiterEntity mitarbeiter = new MitarbeiterEntity (this.mitarbeiterBean.generiereEintrittsdatum());
-        
         errors = this.validationBean.validate(user);
         
         if (nfeMessage != null) {

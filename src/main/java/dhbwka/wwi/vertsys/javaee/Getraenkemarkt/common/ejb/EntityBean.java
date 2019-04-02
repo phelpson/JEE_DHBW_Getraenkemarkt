@@ -1,25 +1,9 @@
-/*
- * Copyright © 2018 Dennis Schulmeister-Zimolong
- * 
- * E-Mail: dhbw@windows3.de
- * Webseite: https://www.wpvs.de/
- * 
- * Dieser Quellcode ist lizenziert unter einer
- * Creative Commons Namensnennung 4.0 International Lizenz.
- */
 package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb;
 
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-/**
- * Abstrakte Basisklasse für EJBs, die einfach nur Standardmethoden zum Lesen
- * und Schreiben eines Entity-Typs bietet.
- *
- * @param <Entity> Basisklasse der Entität
- * @param <EntityId> Datentyp oder Klasse für die Schlüsselwerte
- */
 public abstract class EntityBean<Entity, EntityId> {
 
     @PersistenceContext

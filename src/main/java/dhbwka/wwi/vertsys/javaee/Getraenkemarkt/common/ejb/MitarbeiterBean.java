@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb;
 
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.MitarbeiterEntity;
@@ -40,13 +35,6 @@ public class MitarbeiterBean extends EntityBean <MitarbeiterEntity, Long>{
         this.em.persist(mitarbeiter);
         return this.em.merge(mitarbeiter);
     }
-        
-    // Liste mit allen verfügbaren MitabeiterIds zurückgeben
-    public List<MitarbeiterEntity> findAllEntries() {
-         return em.createQuery("SELECT a FROM MitarbeiterEntity a"
-                             + "ORDER BY a.MitarbeiterId DESC,")
-                .getResultList();
-    }
     
     // Mitarbeiter via MitarbeiterId (ID - Primary Key) suchen
     public MitarbeiterEntity findByMitarbeiterId(long mitarbeiterId){
@@ -57,21 +45,10 @@ public class MitarbeiterBean extends EntityBean <MitarbeiterEntity, Long>{
     public MitarbeiterEntity findByNachNamen(String mitarbeiternamen) {
         return this.em.find(MitarbeiterEntity.class, mitarbeiternamen);
     }
-    
-    // Kunde via PLZ suchen
-    public MitarbeiterEntity findByxx(int plz) {
-        return this.em.find(MitarbeiterEntity.class, plz);
-    }
 
-    // Kundeninformationen updaten
+    // MA Infos updaten
     public MitarbeiterEntity updateMitarbeiter(MitarbeiterEntity mitarbeiterEntity) {
         return this.em.merge(mitarbeiterEntity);
     }
-    
-    // Kundeninformationen löschen
-    public void deleteMitarbeiter(MitarbeiterEntity mitarbeiterEntity) {
-        this.em.remove(mitarbeiterEntity);
-    }
-    
 }
 

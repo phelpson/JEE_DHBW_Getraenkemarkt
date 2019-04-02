@@ -1,12 +1,4 @@
-<%-- 
-    Copyright © 2018 Dennis Schulmeister-Zimolong
 
-    E-Mail: dhbw@windows3.de
-    Webseite: https://www.wpvs.de/
-
-    Dieser Quellcode ist lizenziert unter einer
-    Creative Commons Namensnennung 4.0 International Lizenz.
---%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <%@taglib tagdir="/WEB-INF/tags/templates" prefix="template"%>
@@ -17,7 +9,7 @@
 
 <template:base>
     <jsp:attribute name="title">
-        Signup
+        Update User
     </jsp:attribute>
 
     <jsp:attribute name="head">
@@ -106,7 +98,7 @@
  
                     <%-- Button zum Abschicken --%>
                     <div class="side-by-side" style="margin-top: 30px;">
-                        <button class="icon-pencil" type="submit">
+                        <button type="submit">
                             Update User
                         </button>
                     </div>

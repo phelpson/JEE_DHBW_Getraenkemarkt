@@ -1,21 +1,11 @@
-/*
- * Copyright © 2018 Dennis Schulmeister-Zimolong
- * 
- * E-Mail: dhbw@windows3.de
- * Webseite: https://www.wpvs.de/
- * 
- * Dieser Quellcode ist lizenziert unter einer
- * Creative Commons Namensnennung 4.0 International Lizenz.
- */
 package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.web;
 
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.web.WebUtils;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.web.FormValues;
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.ejb.KundeBean;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb.KundeBean;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.ejb.BestellungBean;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb.UserBean;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb.ValidationBean;
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa.AuftragEntity;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa.GetraenkeEnum;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa.Bestellung;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa.BestellungStatus;
@@ -53,13 +43,12 @@ public class BestellungEditServlet extends HttpServlet {
     @EJB
     ValidationBean validationBean;
     
-    AuftragEntity getraenk;
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // Verfügbare Kategorien und Stati für die Suchfelder ermitteln
+        // Verfügbare Kunden und Stati für die Suchfelder ermitteln
         request.setAttribute("kunden", this.kundeBean.findAllSorted());
         request.setAttribute("statuses", BestellungStatus.values());
         request.setAttribute("getraenk", GetraenkeEnum.values());
@@ -76,17 +65,10 @@ public class BestellungEditServlet extends HttpServlet {
             // daher Formulardaten aus dem Datenbankobjekt übernehmen
             request.setAttribute("bestellung_form", this.createbestellungForm(bestellung));
         }
-        /*if (session.getAttribute("getraenk_form") == null) {
-            // Keine Formulardaten mit fehlergetRequestedbestellunghaften Daten in der Session,
-            // daher Formulardaten aus dem Datenbankobjekt übernehmen
-            request.setAttribute("getraenk_form", this.createGetraenkForm(getraenk));
-        }*/
 
         // Anfrage an die JSP weiterleiten
         request.getRequestDispatcher("/WEB-INF/bestellungen/bestellung_edit.jsp").forward(request, response);
-        
         session.removeAttribute("bestellung_form");
-        // session.removeAttribute("getraenk_form");
     }
 
     @Override
@@ -242,7 +224,7 @@ public class BestellungEditServlet extends HttpServlet {
     }
 
     /**
-     * Zu bearbeitende Aufgabe aus der URL ermitteln und zurückgeben. Gibt
+     * Zu bearbeitende Bestellung aus der URL ermitteln und zurückgeben. Gibt
      * entweder einen vorhandenen Datensatz oder ein neues, leeres Objekt
      * zurück.
      *
@@ -250,7 +232,6 @@ public class BestellungEditServlet extends HttpServlet {
      * @return Zu bearbeitende Aufgabe
      */
     private Bestellung getRequestedbestellung(HttpServletRequest request) {
-        // Zunächst davon ausgehen, dass ein neuer Satz angelegt werden soll
         User user = this.userBean.getCurrentUser();
         Bestellung bestellung = new Bestellung();
         bestellung.setOwner(user);

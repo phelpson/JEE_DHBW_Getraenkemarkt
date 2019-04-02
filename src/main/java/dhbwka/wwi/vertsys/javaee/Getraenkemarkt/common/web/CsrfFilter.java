@@ -1,12 +1,3 @@
-/*
- * Copyright © 2018 Dennis Schulmeister-Zimolong
- * 
- * E-Mail: dhbw@windows3.de
- * Webseite: https://www.wpvs.de/
- * 
- * Dieser Quellcode ist lizenziert unter einer
- * Creative Commons Namensnennung 4.0 International Lizenz.
- */
 package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.web;
 
 import java.io.IOException;
@@ -27,10 +18,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  * HTTP-Filter, der alle Anfragen abfängt, bevor sie das eigentliche Servlet
- * erreichen und CSRF-Attacken abwehrt.
- *
- * Vgl. https://de.wikipedia.org/wiki/Cross-Site-Request-Forgery Vgl.
- * https://dzone.com/articles/preventing-csrf-java-web-apps
+ * erreichen und CSRF-Attacken abwehrt
  */
 @WebFilter(filterName = "CsrfFilter", urlPatterns = {"/*"})
 public class CsrfFilter implements Filter {
@@ -159,7 +147,7 @@ public class CsrfFilter implements Filter {
         return tokenCache;
     }
 
-    //<editor-fold defaultstate="collapsed" desc="Methoden, die wir leider mitschleppen müssen">
+    //<editor-fold defaultstate="collapsed" desc="Lifecycle Methoden">
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
     }

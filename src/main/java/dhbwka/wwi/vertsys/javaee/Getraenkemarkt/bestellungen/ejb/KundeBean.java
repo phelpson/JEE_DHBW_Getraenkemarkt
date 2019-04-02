@@ -1,13 +1,4 @@
-/*
- * Copyright © 2018 Dennis Schulmeister-Zimolong
- * 
- * E-Mail: dhbw@windows3.de
- * Webseite: https://www.wpvs.de/
- * 
- * Dieser Quellcode ist lizenziert unter einer
- * Creative Commons Namensnennung 4.0 International Lizenz.
- */
-package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.ejb;
+package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb;
 
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb.EntityBean;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa.Kunde;
@@ -32,18 +23,10 @@ public class KundeBean extends EntityBean<Kunde, Long> {
     }
     /**
      * Auslesen aller Kategorien, alphabetisch sortiert.
-     *
      * @return Liste mit allen Kategorien
      */
     public List<Kunde> findAllSorted() {
         return this.em.createQuery("SELECT c FROM Kunde c").getResultList();
-    }
-    
-      // Liste mit allen verfügbaren KundenIds zurückgeben
-    public List<Kunde> findAllEntries() {
-         return em.createQuery("SELECT a FROM Kunde a"
-                             + "ORDER BY a.kundeId DESC,")
-                .getResultList();
     }
     
     // Kunde via Kundennummer (ID - Primary Key) suchen

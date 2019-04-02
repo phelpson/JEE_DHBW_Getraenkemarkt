@@ -1,15 +1,7 @@
-/*
- * Copyright © 2018 Dennis Schulmeister-Zimolong
- * 
- * E-Mail: dhbw@windows3.de
- * Webseite: https://www.wpvs.de/
- * 
- * Dieser Quellcode ist lizenziert unter einer
- * Creative Commons Namensnennung 4.0 International Lizenz.
- */
 package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb;
 
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa.Bestellung;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.User;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -71,12 +63,18 @@ public class ValidationBean {
        
         String owner = bestellung.getOwner().getUsername();
         String currentuser = userbean.getCurrentUser().getUsername();
+        User user = userbean.getCurrentUser();
         
-        if(owner.equals(currentuser)){
+        if ("Mitarbeiter".equals(user.getDisAttribut())) {
             return true;
-        }else{
+        }
+        else if ("Kunde".equals(user.getDisAttribut())) {
+            if (owner.equals(currentuser))
+                return true;
             return false;
         }
-         
+        else {
+            return false;
+        }
     }
 }

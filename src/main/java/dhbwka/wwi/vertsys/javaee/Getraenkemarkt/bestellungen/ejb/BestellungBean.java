@@ -1,12 +1,3 @@
-/*
- * Copyright © 2018 Dennis Schulmeister-Zimolong
- * 
- * E-Mail: dhbw@windows3.de
- * Webseite: https://www.wpvs.de/
- * 
- * Dieser Quellcode ist lizenziert unter einer
- * Creative Commons Namensnennung 4.0 International Lizenz.
- */
 package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.ejb;
 
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb.EntityBean;
@@ -14,7 +5,6 @@ import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa.Kunde;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa.Bestellung;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa.BestellungStatus;
 import java.util.List;
-import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -27,7 +17,6 @@ import javax.persistence.criteria.Root;
  * Einfache EJB mit den üblichen CRUD-Methoden für Aufgaben
  */
 @Stateless
-//@RolesAllowed("app-user")
 public class BestellungBean extends EntityBean<Bestellung, Long> { 
    
     public BestellungBean() {
@@ -36,17 +25,6 @@ public class BestellungBean extends EntityBean<Bestellung, Long> {
     
     @PersistenceContext
     EntityManager em;
-    
-//    /**
-//     * Alle Aufgaben eines Benutzers, nach Fälligkeit sortiert zurückliefern.
-//     * @param username Benutzername
-//     * @return Alle Aufgaben des Benutzers
-//     */
-//    public List<Bestellung> findByUsername(String username) {
-//        return em.createQuery("SELECT t FROM Bestellung t WHERE t.owner.username = :username ORDER BY t.dueDate, t.dueTime")
-//                 .setParameter("username", username)
-//                 .getResultList();
-//    }
     
     public List<Bestellung> findByShortText(String shortText) {
         shortText = "%" + shortText + "%";
@@ -57,9 +35,6 @@ public class BestellungBean extends EntityBean<Bestellung, Long> {
     
     /**
      * Suche nach Aufgaben anhand ihrer Bezeichnung, Kategorie und Status.
-     * 
-     * Anders als in der Vorlesung behandelt, wird die SELECT-Anfrage hier
-     * mit der CriteriaBuilder-API vollkommen dynamisch erzeugt.
      * 
      * @param search In der Kurzbeschreibung enthaltener Text (optional)
      * @param kunde Kategorie (optional)

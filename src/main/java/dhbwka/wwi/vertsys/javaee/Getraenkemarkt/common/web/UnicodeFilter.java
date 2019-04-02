@@ -46,7 +46,7 @@ public class UnicodeFilter implements Filter {
         chain.doFilter(request, response);
     }
     
-    //<editor-fold defaultstate="collapsed" desc="Methoden, die wir leider mitschleppen müssen">
+    //<editor-fold defaultstate="collapsed" desc="Lifecycle Methoden">
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
     }

@@ -21,7 +21,7 @@
     </filter>
     <filter-mapping>
         <filter-name>BasicLoginFilter</filter-name>
-        <url-pattern>/webresources/*</url-pattern>
+        <url-pattern>/api/*</url-pattern>
     </filter-mapping>
     
     

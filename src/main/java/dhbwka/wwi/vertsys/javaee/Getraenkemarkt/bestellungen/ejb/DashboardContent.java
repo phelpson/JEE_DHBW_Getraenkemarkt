@@ -1,14 +1,6 @@
-/*
- * Copyright © 2019 Dennis Schulmeister-Zimolong
- * 
- * E-Mail: dhbw@windows3.de
- * Webseite: https://www.wpvs.de/
- * 
- * Dieser Quellcode ist lizenziert unter einer
- * Creative Commons Namensnennung 4.0 International Lizenz.
- */
 package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.ejb;
 
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb.KundeBean;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.web.WebUtils;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.dashboard.ejb.DashboardContentProvider;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.dashboard.ejb.DashboardSection;
@@ -20,7 +12,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 /**
- * EJB zur Definition der Dashboard-Kacheln für Aufgaben.
+ * EJB zur Definition der Dashboard-Kacheln für Bestellung.
  */
 @Stateless(name = "bestellungen")
 public class DashboardContent implements DashboardContentProvider {
@@ -32,15 +24,12 @@ public class DashboardContent implements DashboardContentProvider {
     private BestellungBean bestellungBean;
     
     /**
-     * Vom Dashboard aufgerufenen Methode, um die anzuzeigenden Rubriken und
-     * Kacheln zu ermitteln.
-     *
      * @param sections Liste der Dashboard-Rubriken, an die die neuen Rubriken
      * angehängt werden müssen
      */
     @Override
     public void createDashboardContent(List<DashboardSection> sections) {
-        // Zunächst einen Abschnitt mit einer Gesamtübersicht aller Aufgaben
+        // Zunächst einen Abschnitt mit einer Gesamtübersicht aller Bestellungen
         // in allen Kategorien erzeugen
         DashboardSection section = this.createSection(null);
         sections.add(section);
@@ -55,15 +44,15 @@ public class DashboardContent implements DashboardContentProvider {
     }
 
     /**
-     * Hilfsmethode, die für die übergebene Aufgaben-Kategorie eine neue Rubrik
-     * mit Kacheln im Dashboard erzeugt. Je Aufgabenstatus wird eine Kachel
-     * erzeugt. Zusätzlich eine Kachel für alle Aufgaben innerhalb der
+     * Hilfsmethode, die für die übergebene Bestellung-Kategorie eine neue Rubrik
+     * mit Kacheln im Dashboard erzeugt. Je Bestellungenstatus wird eine Kachel
+     * erzeugt. Zusätzlich eine Kachel für alle Bestellungen innerhalb der
      * jeweiligen Kategorie.
      *
-     * Ist die Kategorie null, bedeutet dass, dass eine Rubrik für alle Aufgaben
+     * Ist die Kategorie null, bedeutet dass, dass eine Rubrik für alle Bestellungen
      * aus allen Kategorien erzeugt werden soll.
      *
-     * @param kunde Aufgaben-Kategorie, für die Kacheln erzeugt werden sollen
+     * @param kunde Bestellung-Kategorie, für die Kacheln erzeugt werden sollen
      * @return Neue Dashboard-Rubrik mit den Kacheln
      */
     private DashboardSection createSection(Kunde kunde) {
@@ -78,11 +67,11 @@ public class DashboardContent implements DashboardContentProvider {
             cssClass = "overview";
         }
 
-        // Eine Kachel für alle Aufgaben in dieser Rubrik erzeugen
+        // Eine Kachel für alle Bestellungen in dieser Rubrik erzeugen
         DashboardTile tile = this.createTile(kunde, null, "Alle", cssClass + " status-all", "calendar");
         section.getTiles().add(tile);
 
-        // Ja Aufgabenstatus eine weitere Kachel erzeugen
+        // Ja Bestellungenstatus eine weitere Kachel erzeugen
         for (BestellungStatus status : BestellungStatus.values()) {
             String cssClass1 = cssClass + " status-" + status.toString().toLowerCase();
             String icon = "";

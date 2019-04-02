@@ -1,21 +1,10 @@
-/*
- * Copyright © 2018 Dennis Schulmeister-Zimolong
- * 
- * E-Mail: dhbw@windows3.de
- * Webseite: https://www.wpvs.de/
- * 
- * Dieser Quellcode ist lizenziert unter einer
- * Creative Commons Namensnennung 4.0 International Lizenz.
- */
 package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa;
 
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa.Bestellung;
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa.Kunde;
 import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -27,7 +16,6 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
@@ -83,7 +71,7 @@ public class User implements Serializable {
     private int plz = 0;
 
     // Diskriminierendes Attribut für die Generalisierung/Spezialisierung
-    // User, Kunde, Mitarbeiter ggf. Lieferant
+    // Kunde oder Mitarbeiter
     @Column(name = "disAttribut")
     private String disAttribut;
 
@@ -200,7 +188,6 @@ public class User implements Serializable {
         }
 
         // Hashwert in einen Hex-String umwandeln
-        // Vgl. https://stackoverflow.com/a/9855338
         char[] hashHex = new char[hash.length * 2];
 
         for (int i = 0; i < hash.length; i++) {

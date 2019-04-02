@@ -1,21 +1,10 @@
-/*
- * Copyright © 2018 Dennis Schulmeister-Zimolong
- * 
- * E-Mail: dhbw@windows3.de
- * Webseite: https://www.wpvs.de/
- * 
- * Dieser Quellcode ist lizenziert unter einer
- * Creative Commons Namensnennung 4.0 International Lizenz.
- */
 package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.web;
 
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.web.FormValues;
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.ejb.KundeBean;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.ejb.BestellungBean;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb.ValidationBean;
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.ejb.KundenListBean;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb.KundenListBean;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa.Kunde;
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa.Bestellung;
 import java.io.IOException;
 import java.util.List;
 import javax.ejb.EJB;
@@ -27,11 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-/**
- * Seite zum Anzeigen und Bearbeiten der Kategorien. Die Seite besitzt ein
- * Formular, mit dem ein neue Kategorie angelegt werden kann, sowie eine Liste,
- * die zum Löschen der Kategorien verwendet werden kann.
- */
 @WebServlet(urlPatterns = {"/app/bestellungen/kunden/"})
 public class KundenListServlet extends HttpServlet {
 
@@ -80,7 +64,7 @@ public class KundenListServlet extends HttpServlet {
     }
 
     /**
-     * Aufgerufen in doPost(): Neue Kategorie anlegen
+     * Aufgerufen in doPost(): Neuen Kunden anlegen
      *
      * @param request
      * @param response
@@ -95,11 +79,6 @@ public class KundenListServlet extends HttpServlet {
 
         Kunde kunde = new Kunde(name);
         List<String> errors = this.validationBean.validate(kunde);
-
-        // Neue Kategorie anlegen
-        if (errors.isEmpty()) {
-            this.kundelistbean.saveNew(kunde);
-        }
 
         // Browser auffordern, die Seite neuzuladen
         if (!errors.isEmpty()) {

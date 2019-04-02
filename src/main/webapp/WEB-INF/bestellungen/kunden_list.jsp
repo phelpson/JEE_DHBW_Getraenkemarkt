@@ -15,7 +15,7 @@
 
 <template:base>
     <jsp:attribute name="title">
-        Kunden verwalten
+        Kunden anzeigen
     </jsp:attribute>
 
     <jsp:attribute name="head">
@@ -29,6 +29,10 @@
 
         <div class="menuitem">
             <a href="<c:url value="/app/bestellungen/list/"/>">Liste</a>
+        </div>
+        
+        <div class="menuitem">
+            <a href="<c:url value="/app/update/"/>">Userdaten verwalten</a>
         </div>
     </jsp:attribute>
 

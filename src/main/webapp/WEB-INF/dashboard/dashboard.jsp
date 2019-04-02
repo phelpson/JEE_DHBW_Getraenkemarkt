@@ -32,7 +32,7 @@
         </div>
 
         <div class="menuitem">
-            <a href="<c:url value="/app/bestellungen/kunden/"/>">Kunden verwalten</a>
+            <a href="<c:url value="/app/bestellungen/kunden/"/>">Kunden anzeigen</a>
         </div>
         
         <div class="menuitem">
