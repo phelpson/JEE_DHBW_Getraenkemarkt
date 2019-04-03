@@ -36,7 +36,6 @@ public class UserBean {
             throw new UserAlreadyExistsException("Der Benutzername $B ist bereits vergeben.".replace("$B", user.getUsername()));
         }
         //hier muss Gruppe vergeben werden
-        user.addToGroup(user.getDisAttribut());
         user.addToGroup("app-user");
         this.em.persist(user);
         this.em.merge(user);

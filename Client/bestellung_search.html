@@ -56,12 +56,14 @@
                 let url = "http://localhost:8080/Getraenkemarkt/api/bestellungen/findBestellung"
                         + "?query=" + encodeURI(search.value);
 
+                console.log('Basic ' + btoa(username.value + ":" + password.value));
                 let antwort = await fetch(url, {
                     method: "get",
                     headers: {
                         "accept": "application/json",
                         // Setting HTTP-Heading for basic auth
-                        "Authorization": 'Basic ' + btoa(username.value + ":" + password.value) 
+                        // "Authorization": 'Basic ' + btoa(username.value + ":" + password.value) 
+                        
                     }
                 });
 

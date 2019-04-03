@@ -39,6 +39,10 @@ form.stacked .side-by-side > *:last-child {
     margin-right: 0;
 }
 
+#grau {
+    color: gray;
+}
+
 /* Feldbezeichner */
 form.stacked label {
     margin-top: 1em;

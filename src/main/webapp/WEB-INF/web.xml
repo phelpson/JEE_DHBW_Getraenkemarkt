@@ -10,7 +10,7 @@
     <!-- 
         Basic Auth Filter
     -->
-<!--    <filter>
+    <filter>
         <filter-name>BasicLoginFilter</filter-name>
         <filter-class>dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.web.BasicLoginFilter</filter-class>
         <init-param>
@@ -21,7 +21,7 @@
     <filter-mapping>
         <filter-name>BasicLoginFilter</filter-name>
         <url-pattern>/api/*</url-pattern>
-    </filter-mapping>-->
+    </filter-mapping>
     
     
     <session-config>

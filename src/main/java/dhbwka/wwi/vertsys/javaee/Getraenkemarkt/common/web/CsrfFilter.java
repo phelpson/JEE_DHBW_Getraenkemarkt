@@ -50,6 +50,9 @@ public class CsrfFilter implements Filter {
             case "GET":
                 this.insertCsrfToken(request, response);
                 break;
+            case "OPTIONS":
+                this.insertCsrfToken(request, response);
+                break;
             default:
                 this.checkCsrfToken(request, response);
         }

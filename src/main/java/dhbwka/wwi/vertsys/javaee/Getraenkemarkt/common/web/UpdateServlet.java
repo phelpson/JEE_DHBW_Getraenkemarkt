@@ -1,12 +1,10 @@
-package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.dashboard.web;
+package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.web;
 
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb.MitarbeiterBean;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb.ValidationBean;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb.UserBean;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.User;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb.KundeBean;
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.web.FormValues;
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.web.WebUtils;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;

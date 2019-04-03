@@ -9,6 +9,7 @@ import api.data.UserDTO;
 import api.data.UserFacade;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.User;
 import java.util.List;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -29,6 +30,7 @@ import javax.ws.rs.core.MediaType;
 // REST-API für die User
 @Stateless
 @Path("user")
+@RolesAllowed("app-user")
 public class UserFacadeREST extends AbstractFacade<User> {
     
     // Annotation eines aktuellen Entity Manager mit Domain default
@@ -55,6 +57,7 @@ public class UserFacadeREST extends AbstractFacade<User> {
     @GET
     @Path("/findByUsername")
     @Produces({MediaType.APPLICATION_JSON})
+    @RolesAllowed("app-user")
     public List<UserDTO> findByUsername(@QueryParam("query") @DefaultValue("") String query) {
         return userFacade.findByUsername(query);
     }

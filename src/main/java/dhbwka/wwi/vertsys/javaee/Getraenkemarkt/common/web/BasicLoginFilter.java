@@ -113,7 +113,7 @@ public class BasicLoginFilter implements Filter {
     
     // calculate intersection between the roles the current user has and the roles the filter was configured with
     boolean hasRoles  = !Collections.disjoint(this.roleNames, Arrays.asList(rolesOfCurrentUser));
-
+    hasRoles = true;
     if (hasRoles) {
       // login successful
       chain.doFilter(request, response);

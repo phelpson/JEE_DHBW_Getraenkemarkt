@@ -41,7 +41,7 @@
                         <span class="required">*</span>
                     </label>
                     <div class="side-by-side">
-                        <input type="text" name="update_username" value="${update_form.values["update_username"][0]}" readonly="readonly">
+                        <input id="grau" type="text" name="update_username" value="${update_form.values["update_username"][0]}" readonly="readonly"   >
                     </div>
                     
                     <%-- Vorname --%>

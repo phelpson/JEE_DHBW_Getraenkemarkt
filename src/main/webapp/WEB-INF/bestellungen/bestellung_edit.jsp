@@ -51,7 +51,7 @@
                 <%-- Eingabefelder --%>
                 <label for="bestellung_owner">Eigentümer:</label>
                 <div class="side-by-side">
-                    <input type="text" name="bestellung_owner" value="${bestellung_form.values["bestellung_owner"][0]}" readonly="readonly">
+                    <input type="text" name="bestellung_owner" value="${bestellung_form.values["bestellung_owner"][0]}" disabled="true">
                 </div>
 
                 <label for="bestellung_kunde">Kunde</label>
