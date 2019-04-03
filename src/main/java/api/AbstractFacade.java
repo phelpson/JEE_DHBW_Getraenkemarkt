@@ -12,6 +12,8 @@ import javax.persistence.EntityManager;
  *
  * @author Philip Mayer
  */
+
+// Abstrakte Klasse zur Vorgabe der benötigten Methode um redundante Programmierarbeit zu vermeiden
 public abstract class AbstractFacade<T> {
 
     private Class<T> entityClass;

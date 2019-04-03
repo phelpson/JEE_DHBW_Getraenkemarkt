@@ -9,6 +9,8 @@ package api.data;
  *
  * @author Philip Mayer
  */
+
+//Data Transfer Object, welches die Entity Bestellung.jpa in String-Felder für den JSON Output mappt
 public class BestellungDTO {
     
     private String shortText;
@@ -18,15 +20,11 @@ public class BestellungDTO {
     private String dueTime;
     private String status;
     
-    
-    public BestellungDTO () {//(String shortText, String longText, String getraenk, String dueDate, String dueTime) {
-//        this.shortText = shortText;
-//        this.longText = longText;
-//        this.getraenk = getraenk;
-//        this.dueDate = dueDate;
-//        this.dueTime = dueTime;
+//    Default Konstruktur für die einfach Instanzierung des DTOs
+    public BestellungDTO () {
     }
     
+//    Erweiterter Konstruktur für die effizientere Instanzierung des DTOs
     public BestellungDTO (String shortText, String longText, String getraenk, String dueDate, String dueTime) {
         this.shortText = shortText;
         this.longText = longText;
@@ -35,6 +33,7 @@ public class BestellungDTO {
         this.dueTime = dueTime;
     }
     
+//<editor-fold defaultstate="collapsed" desc="Setter und Getter">
     public String getShortText() {
         return shortText;
     }
@@ -82,4 +81,6 @@ public class BestellungDTO {
     public void setStatus(String status) {
         this.status = status;
     }
+//</editor-fold>
+    
 }

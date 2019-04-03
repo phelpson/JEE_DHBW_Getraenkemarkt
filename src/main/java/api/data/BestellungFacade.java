@@ -18,12 +18,14 @@ import javax.ejb.Stateless;
  * @author Philip Mayer
  */
 
+//Bestellungs-Facade zum Mappen der Bestellung.jpa Entity in ein übertragbares JSON-Format
 @Stateless
 public class BestellungFacade {
     
     @EJB
     BestellungBean bestellungBean;
     
+//    Simple-Date-Format zum Mappen der Datums- Uhrzeitfelder
     SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yy");
     SimpleDateFormat sdfTime = new SimpleDateFormat("hh:mm:ss");
     

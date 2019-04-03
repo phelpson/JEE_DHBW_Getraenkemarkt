@@ -26,9 +26,11 @@ public class UserFacade {
     @EJB
     UserBean userBean;
     
+//    Simple Date Format für das Mappen des Datums ins DTO
     SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yy");
     SimpleDateFormat sdfTime = new SimpleDateFormat("hh:mm:ss");
     
+//    Find by Username Methode, die vom UserBean die Daten ausliest und diese in ein Data-Transfer-Object schreibt
     public List<UserDTO> findByUsername(String query) {
         List<User> users = userBean.findByUsername(query);
         
@@ -41,7 +43,7 @@ public class UserFacade {
             dto.setPlz(user.getPlz());
             dto.setArt(user.getDisAttribut());
             
-            // provide open Bestellungen for this user
+//            Bestellungen sind im User als ArrayList gemappt und werden mit einer seperaten Methode verarbeitet
             dto.setBestellungen(this.mapBestellungList(user.getbestellungen()));
             dto.setCountGesamtBestellungen(user.getbestellungen().size());
             return dto;
@@ -49,8 +51,8 @@ public class UserFacade {
     }
     
     
-    // Method for mapping Bestellung List Elements into bestellungDTO Elements for JSON Output
-    // Loop through each Bestellung-Element and provide mapped list
+//    Methode für das Mappen von der Bestellung List Elementen in das BestellungsDTO für den JSON Output
+//    Loop durch die einzelnen Bestellungselemente, die dann eine gemappte Liste zurückgibt.
     public List<BestellungDTO> mapBestellungList(List<Bestellung> toMapBestellungen) {
         List <Bestellung> bestellungen = toMapBestellungen;
         return bestellungen.stream().map((bestellung) -> {

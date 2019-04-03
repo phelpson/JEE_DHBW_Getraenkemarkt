@@ -24,6 +24,9 @@ import javax.ws.rs.core.MediaType;
  *
  * @author Philip Mayer
  */
+
+//Kundenfacade für spätere Erweiterbarkeit der APP und Nutzung der KundenEntity
+//Bisher keine direkte Nutzung im Projekt
 @Stateless
 @Path("kunde")
 public class KundeFacadeREST extends AbstractFacade<Kunde> {

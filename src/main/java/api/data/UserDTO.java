@@ -11,6 +11,8 @@ import java.util.List;
  *
  * @author Philip Mayer
  */
+
+//User DTO zum Mappen der User Entity in ein DTO für die JSON Darstellung im Output
 public class UserDTO {
     String username;
     String email;
@@ -21,9 +23,6 @@ public class UserDTO {
     int countGesamtBestellungen;
     int plz;
     List<BestellungDTO> bestellungen;
-
-
-
 
     public UserDTO() {
         // Empty Constructor
