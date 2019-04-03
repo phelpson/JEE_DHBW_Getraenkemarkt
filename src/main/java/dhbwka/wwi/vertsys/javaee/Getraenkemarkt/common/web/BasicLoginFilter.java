@@ -80,6 +80,7 @@ public class BasicLoginFilter implements Filter {
   public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
     HttpServletRequest request = (HttpServletRequest)req;
     HttpServletResponse response = (HttpServletResponse)resp;
+    response.setHeader("Access-Control-Allow-Origin", "*");
 
     // get username and password from the Authorization header
     String authHeader = request.getHeader(AUTHORIZATION_HEADER);

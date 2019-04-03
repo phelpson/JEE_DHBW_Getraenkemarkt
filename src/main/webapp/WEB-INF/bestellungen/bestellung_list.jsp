@@ -80,7 +80,7 @@
             <c:otherwise>
                 <jsp:useBean id="utils" class="dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.web.WebUtils"/>
                 
-                <table>
+                <table  id="list_box" >
                     <thead>
                         <tr>
                             <th>Bezeichnung</th>
