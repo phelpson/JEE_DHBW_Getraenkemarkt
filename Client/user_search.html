@@ -56,13 +56,11 @@
                 let url = "http://localhost:8080/Getraenkemarkt/api/user/findByUsername"
                         + "?query=" + encodeURI(search.value);
                 
-                console.log('Basic ' + btoa(username.value + ":" + password.value));
                 let antwort = await fetch(url, {
                     method: "get",
                     // Setting HTTP-Header for basic auth and JSON-Format
                     headers: {
                         "accept": "application/json",
-                        
                         "Authorization": "Basic " + btoa(username.value + ":" + password.value),
 
                         
@@ -70,7 +68,19 @@
                 });
 
                 resDiv.innerHTML = "";
-                let users = await antwort.json();
+                let users;
+
+                // Try-Catch Block for Exception handling on Client-Side. If Server Error 500 - Login Failed occurs.
+                try {
+                    users = await antwort.json();
+                } catch (e) {
+                    alert("Login fehlgeschlagen. \nBitte prüfen Sie die Eingabe Ihres Usernames und Passworts");
+                    console.log("Username and Password did not match a User in the Database. \n "+
+                    "HTTP Status 500 – Internal Server Error \n" +
+                    "Type: Exception RTCStatsReport \n" +
+                    "Message: Login failed - Description The server encountered an unexpected condition that prevented it from fulfilling the request. Exception: javax.servlet.ServletException: Login failed"
+                    )
+                }
                 
                 // Alert User if json is empty
                 if (users.length == 0) {
@@ -80,7 +90,6 @@
                 // Outer Loop for each User
                 for(let i = 0; i < users.length; i++) {
                     let user = users[i];
-                    console.log(user.bestellungen);
                     let bestellungen = user.bestellungen;
                     let html = `
                         <div>

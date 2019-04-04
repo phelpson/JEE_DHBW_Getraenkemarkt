@@ -57,22 +57,35 @@
                         + "?query=" + encodeURI(search.value);
 
                 console.log('Basic ' + btoa(username.value + ":" + password.value));
+                // Setting HTTP-Heading for basic auth
                 let antwort = await fetch(url, {
                     method: "get",
                     headers: {
                         "accept": "application/json",
-                        // Setting HTTP-Heading for basic auth
-                        // "Authorization": 'Basic ' + btoa(username.value + ":" + password.value) 
+                        "Authorization": 'Basic ' + btoa(username.value + ":" + password.value) 
                         
                     }
                 });
 
                 resDiv.innerHTML = "";
-                let Bestellung = await antwort.json();
-                // Alter user is json is empty
-                if (Bestellung.length == 0) {
-                    alert("Ihre Suche liefert keine Ergebnisse!");
+                let Bestellung;
+                // Try-Catch for Login Failed Exception from Server.
+                try { 
+                    Bestellung = await antwort.json();
+
+                    // Alert User is json is empty
+                    if (Bestellung.length == 0) 
+                        alert("Ihre Suche liefert keine Ergebnisse!");
+
+                } catch (e) {
+                    alert("Login fehlgeschlagen. \nBitte prüfen Sie die Eingabe Ihres Usernames und Passworts");
+                    console.log("Username and Password did not match a User in the Database. \n" +
+                    "HTTP Status 500 – Internal Server Error \n" +
+                    "Type: Exception RTCStatsReport \n" +
+                    "Message: Login failed - Description The server encountered an unexpected condition that prevented it from fulfilling the request. Exception: javax.servlet.ServletException: Login failed"
+                    )
                 }
+                
                 // Show JSON by looping through it
                 Bestellung.forEach(Bestellung => {
                     let html = `
