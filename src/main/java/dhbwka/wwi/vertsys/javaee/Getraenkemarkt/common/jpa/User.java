@@ -70,12 +70,12 @@ public class User implements Serializable {
     
     //Vorname Spalte erzeugen
     @Column
-    @Size(min = 1, max = 64, message = "Die Vorname muss zwischen 6 und 64 Zeichen lang sein.")
+    @Size(min = 0, max = 64, message = "Die Vorname darf höchstens 64 Zeichen lang sein.")
     private String vorname = "";
     
     //Nachname Spalte erzeugen
     @Column
-    @Size(min = 1, max = 64, message = "Die Nachname muss zwischen 6 und 64 Zeichen lang sein.")
+    @Size(min = 0, max = 64, message = "Die Nachname darf höchstens 64 Zeichen lang sein.")
     private String nachname = "";
       
     //Adress Spalte erzeugen
@@ -89,8 +89,7 @@ public class User implements Serializable {
     @Column(name="post_code")
     //Prüfung ob PLZ-Eingabefeld leer ist
     @NotNull(message  = "Die PLZ darf nicht leer sein.")
-    @Digits(integer=5, fraction=0, message="Die PLZ muss 5 Stellen haben und numerisch sein. Schau mal hier: http://lmgtfy.com/?q=postleitzahlen+deutschland")
-    private int plz = 0;
+    private int plz;
 
     // Diskriminierendes Attribut für die Generalisierung/Spezialisierung
     // Kunde oder Mitarbeiter
