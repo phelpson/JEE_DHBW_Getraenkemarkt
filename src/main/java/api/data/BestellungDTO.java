@@ -13,6 +13,7 @@ package api.data;
 //Data Transfer Object, welches die Entity Bestellung.jpa in String-Felder für den JSON Output mappt
 public class BestellungDTO {
     
+//    Variablen die für das JSON gemappt werden sollen
     private String shortText;
     private String longText;
     private String getraenk;

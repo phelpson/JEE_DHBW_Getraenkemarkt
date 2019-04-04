@@ -14,6 +14,8 @@ import java.util.List;
 
 //User DTO zum Mappen der User Entity in ein DTO für die JSON Darstellung im Output
 public class UserDTO {
+    
+//    Variablen die für das JSON gemappt werden sollen
     String username;
     String email;
     String vorname;

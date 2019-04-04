@@ -25,7 +25,6 @@ public class ApplicationConfig extends Application {
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(api.BestellungFacadeREST.class);
-        resources.add(api.KundeFacadeREST.class);
         resources.add(api.UserFacadeREST.class);
     }
     

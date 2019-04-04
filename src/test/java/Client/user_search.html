@@ -55,24 +55,32 @@
                 // URL Path to API on Backend
                 let url = "http://localhost:8080/Getraenkemarkt/api/user/findByUsername"
                         + "?query=" + encodeURI(search.value);
-
+                
                 let antwort = await fetch(url, {
                     method: "get",
                     // Setting HTTP-Header for basic auth and JSON-Format
                     headers: {
                         "accept": "application/json",
-                        /*
                         "Authorization": "Basic " + btoa(username.value + ":" + password.value),
-                        "Access-Control-Allow-Origin": "http://localhost:8080",
-                        "Access-Control-Allow-Credentials": true,
-                        "Access-Control-Request-Method": "GET",
-                        "Access-Control-Request-Headers": "Content-Type",
-                        */
+
+                        
                     }
                 });
 
                 resDiv.innerHTML = "";
-                let users = await antwort.json();
+                let users;
+
+                // Try-Catch Block for Exception handling on Client-Side. If Server Error 500 - Login Failed occurs.
+                try {
+                    users = await antwort.json();
+                } catch (e) {
+                    alert("Login fehlgeschlagen. \nBitte prüfen Sie die Eingabe Ihres Usernames und Passworts");
+                    console.log("Username and Password did not match a User in the Database. \n "+
+                    "HTTP Status 500 – Internal Server Error \n" +
+                    "Type: Exception RTCStatsReport \n" +
+                    "Message: Login failed - Description The server encountered an unexpected condition that prevented it from fulfilling the request. Exception: javax.servlet.ServletException: Login failed"
+                    )
+                }
                 
                 // Alert User if json is empty
                 if (users.length == 0) {
@@ -82,23 +90,28 @@
                 // Outer Loop for each User
                 for(let i = 0; i < users.length; i++) {
                     let user = users[i];
-                    console.log(user.bestellungen);
                     let bestellungen = user.bestellungen;
                     let html = `
                         <div>
                             <b>Username:</b> ${user.username} <br/>
+                            <b>Art des Nuters:</b> ${user.art}<br/>
+                            <br/>
                             <b>Vorname:</b> ${user.vorname} <br/>
                             <b>Nachname:</b> ${user.nachname} <br/>
                             <b>Adresse:</b> ${user.adresse} <br/>
                             <b>PLZ:</b> ${user.plz} <br/>
+                            <br/>
+                            <b>Anzahl der Bestellungen:</b> ${user.countGesamtBestellungen}<br/>
                         
                     `;
                     
                     
                     // Inner Loop for each Bestellung
-                    for (k = 1; k< bestellungen.length; k++) {
+                    for (k = 0; k< bestellungen.length; k++) {
+                        // Index-Var for iteration starting at 1 instead of 0
+                        let j = k+1;
                         let bestellHtml = `
-                            <h4>Bestellung ${k}:</h4>
+                            <h4>Bestellung ${j}:</h4>
                             <p class="bestellungen">
                                 <b>Bestellung:</b> ${bestellungen[k].shortText} <br/>
                                 <b>Bestelltext:</b> ${bestellungen[k].longText} <br/>

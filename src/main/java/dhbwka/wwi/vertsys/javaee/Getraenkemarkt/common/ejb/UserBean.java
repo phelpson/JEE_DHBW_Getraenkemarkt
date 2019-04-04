@@ -106,7 +106,7 @@ public class UserBean {
         
         return  user;
     }
-        
+    
     /**
      * Fehler: Der Benutzername ist bereits vergeben
      */

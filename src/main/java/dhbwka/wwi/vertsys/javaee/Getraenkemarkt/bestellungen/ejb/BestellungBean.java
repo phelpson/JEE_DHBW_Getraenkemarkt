@@ -26,6 +26,12 @@ public class BestellungBean extends EntityBean<Bestellung, Long> {
     @PersistenceContext
     EntityManager em;
     
+    /*
+    * Suche nach Bestellungsliste anhand des Kurzbeschreibungstextes
+    *
+    * @param shortText übergabe des gesuchten Kurztextes
+    * @return Rückgabe der Liste mit Bestellungen
+    */
     public List<Bestellung> findByShortText(String shortText) {
         shortText = "%" + shortText + "%";
         return em.createQuery("SELECT b FROM Bestellung b WHERE b.shortText LIKE :shortText ORDER BY b.dueDate, b.dueTime")
@@ -34,12 +40,12 @@ public class BestellungBean extends EntityBean<Bestellung, Long> {
     }
     
     /**
-     * Suche nach Aufgaben anhand ihrer Bezeichnung, Kategorie und Status.
+     * Suche nach Aufgaben anhand ihrer Bezeichnung, Bestellungen und Status.
      * 
      * @param search In der Kurzbeschreibung enthaltener Text (optional)
-     * @param kunde Kategorie (optional)
+     * @param kunde Kunde (optional)
      * @param status Status (optional)
-     * @return Liste mit den gefundenen Aufgaben
+     * @return Liste mit den gefundenen Bestellungen
      */
     public List<Bestellung> search(String search, Kunde kunde, BestellungStatus status) {
         // Hilfsobjekt zum Bauen des Query

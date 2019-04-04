@@ -26,7 +26,7 @@ public class UserFacade {
     @EJB
     UserBean userBean;
     
-//    Simple Date Format für das Mappen des Datums ins DTO
+//    Simple Date Format für das Mappen des Datums ins DTO als String
     SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yy");
     SimpleDateFormat sdfTime = new SimpleDateFormat("hh:mm:ss");
     
