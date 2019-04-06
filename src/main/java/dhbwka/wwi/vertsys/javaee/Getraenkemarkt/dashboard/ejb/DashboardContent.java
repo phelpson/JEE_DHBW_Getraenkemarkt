@@ -1,5 +1,6 @@
-package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.ejb;
+package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.dashboard.ejb;
 
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.ejb.BestellungBean;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb.KundeBean;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.web.WebUtils;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.dashboard.ejb.DashboardContentProvider;

@@ -108,7 +108,7 @@
                 <c:if test="${!empty update_form.errors}">
                     <ul class="errors">
                         <c:forEach items="${update_form.errors}" var="error">
-                            <li>${error}</li>
+                            <li id="errors">${error}</li>
                             </c:forEach>
                     </ul>
                 </c:if>

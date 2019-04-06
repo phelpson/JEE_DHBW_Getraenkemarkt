@@ -54,12 +54,14 @@ public class BestellungEditServlet extends HttpServlet {
         request.setAttribute("getraenk", GetraenkeEnum.values());
         String attr = userBean.getCurrentUser().getDisAttribut();
         request.setAttribute("rolle", attr);
+        
         // Zu bearbeitende Bestellung einlesen
         HttpSession session = request.getSession();
 
         Bestellung bestellung = this.getRequestedbestellung(request);
         request.setAttribute("edit", bestellung.getId() != 0);
-                                
+        
+        
         if (session.getAttribute("bestellung_form") == null) {
             // Keine Formulardaten mit fehlergetRequestedbestellunghaften Daten in der Session,
             // daher Formulardaten aus dem Datenbankobjekt übernehmen
@@ -169,8 +171,7 @@ public class BestellungEditServlet extends HttpServlet {
                 response.sendRedirect(WebUtils.appUrl(request, "/app/bestellungen/list/"));
             } else {
                 // Fehler: Formuler erneut anzeigen
-                FormValues formValues = new FormValues();
-                formValues.setValues(request.getParameterMap());
+                FormValues formValues = this.createbestellungForm(bestellung);
                 formValues.setErrors(errors);
 
                 HttpSession session = request.getSession();

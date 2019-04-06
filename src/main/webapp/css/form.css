@@ -1,14 +1,4 @@
 /*
-Copyright © 2018 Dennis Schulmeister-Zimolong
-
-E-Mail: dhbw@windows3.de
-Webseite: https://www.wpvs.de/
-
-Dieser Quellcode ist lizenziert unter einer
-Creative Commons Namensnennung 4.0 International Lizenz.
-*/
-
-/*
  * Vertikal gestapelte Formulare
  */
 
@@ -108,4 +98,13 @@ form .errors {
     color: red;
     font-weight: bold;
     background-color: rgba(255,255,255,0.8);
+    display: inline-block !important;
+}
+
+#errors {
+    margin-top: 1em;
+    color: red;
+    font-weight: bold;
+    background-color: rgba(255,255,255,0.8);
+    display: inline-block !important;
 }
