@@ -18,6 +18,8 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
+
+//Kundenobjekt, welches in der Datenbank abgespeichert werden soll
 @Entity
 @XmlRootElement
 public class Kunde implements Serializable {
@@ -34,9 +36,12 @@ public class Kunde implements Serializable {
     @Size(min = 3, max = 48, message = "Der Firmenname muss zwischen drei und 48 Zeichen lang sein.")
     private String firmenName;
 
+//    Fremdschlusselbeziehung mit der Tabelle Bestellung. Jeder Kunde kann eine oder mehrere Bestellungen anlegen.
     @OneToMany(mappedBy = "kunde", fetch = FetchType.LAZY)
     List<Bestellung> bestellungen = new ArrayList<>();
     
+//    Fremdschlüsselbeziehung mit der tabelle User. Jeder Kunde muss auch einen User haben.
+//    Hier Spezialisierungsform des Users.
     @OneToOne 
     @NotNull(message = "Der User im Kunden darf nicht leer sein.")
     private User user;

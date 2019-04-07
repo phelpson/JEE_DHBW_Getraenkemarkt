@@ -14,6 +14,8 @@ import javax.validation.constraints.NotNull;
  *
  * @author LU_MA
  */
+
+// Mitarbeiter-Entity zum Persistieren der Daten in der Datenbank
 @Entity
 @Table(name = "Mitarbeiter")
 public class MitarbeiterEntity implements Serializable {
@@ -31,7 +33,7 @@ public class MitarbeiterEntity implements Serializable {
     @Column(name = "eintrittsdatum")
     private String eintrittsdatum;
     
-    //1:1 Beziehung zu User Tabelle erstellen
+    //1:1 Beziehung (Fremdschlüssel-Beziehung) zu User Tabelle erstellen
     @OneToOne 
     @NotNull(message = "Der User im Mitarbeiter darf nicht leer sein.")
     private User user;

@@ -27,6 +27,7 @@ public class BestellungListServlet extends HttpServlet {
     @EJB
     private BestellungBean bestellungBean;
 
+//    Get Methode für das Anzeige der Liste der Bestellungen
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

@@ -26,9 +26,11 @@ public class UserDTO {
     int plz;
     List<BestellungDTO> bestellungen;
 
+//    Leerer default Konstruktor für die einfache und schnelle Instanzierung
     public UserDTO() {
-        // Empty Constructor
     }
+    
+//    Getter und Setter für den Aufruf der privaten Variablen 
    //<editor-fold defaultstate="collapsed" desc="Setter und Getter">
     public String getUsername() {
         return username;

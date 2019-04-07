@@ -28,11 +28,12 @@ public class KundenListServlet extends HttpServlet {
     @EJB
     ValidationBean validationBean;
 
+//    Gibt eine List von Kunden zurück, die mittels einer Tickbox anzuhaken sind.
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // Alle vorhandenen Kategorien ermitteln
+        // Alle vorhandenen Kunden ermitteln
         request.setAttribute("kunden", this.kundelistbean.findAllSorted());
        
         // Anfrage an dazugerhörige JSP weiterleiten
@@ -43,55 +44,4 @@ public class KundenListServlet extends HttpServlet {
         HttpSession session = request.getSession();
         session.removeAttribute("kunden_form");
     }
-
-    @Override
-    public void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
-        // Angeforderte Aktion ausführen        
-        String action = request.getParameter("action");
-
-        if (action == null) {
-            action = "";
-        }
-
-        switch (action) {
-            case "create":
-                this.createkunde(request, response);
-                break;
-            
-        }
-    }
-
-    /**
-     * Aufgerufen in doPost(): Neuen Kunden anlegen
-     *
-     * @param request
-     * @param response
-     * @throws ServletException
-     * @throws IOException
-     */
-    private void createkunde(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
-        // Formulareingaben prüfen
-        String name = request.getParameter("name");
-
-        Kunde kunde = new Kunde(name);
-        List<String> errors = this.validationBean.validate(kunde);
-
-        // Browser auffordern, die Seite neuzuladen
-        if (!errors.isEmpty()) {
-            FormValues formValues = new FormValues();
-            formValues.setValues(request.getParameterMap());
-            formValues.setErrors(errors);
-
-            HttpSession session = request.getSession();
-            session.setAttribute("kunden_form", formValues);
-        }
-
-        response.sendRedirect(request.getRequestURI());
-    }
-
-
 }

@@ -1,29 +1,8 @@
-
-/**
- *
- * @author Martin Kutscher
- * 
- * This Filter is required to support "Form Auth" and "Basic Auth" methods alongside in the same web application on the TomEE.
- * It can be configured via web.xml via role parameter "role-names-comma-sep" (role names as comma separated list, e.g. admin,user,read-only) and url pattern for endpoints.
- * The Filter will read the HTTP Request Header "Authorization" and decode the Base64 Credentials. Afterwards, the user is logged in via role-checking against standard Principal.
- * 
- * <filter>
-      <filter-name>BasicLoginFilter</filter-name>
-      <filter-class>dhbwka.wwi.vertsys.javaee.jtodo.common.web.BasicLoginFilter</filter-class>
-      <init-param>
-        <param-name>role-names-comma-sep</param-name>
-        <param-value>app-user</param-value>
-      </init-param>
-    </filter>
-    <filter-mapping>
-      <filter-name>BasicLoginFilter</filter-name>
-      <url-pattern>/api/*</url-pattern>
-    </filter-mapping>
- * 
- * 
- *  c.f. :  https://stackoverflow.com/questions/27588665/how-do-i-configure-both-basic-and-form-authentication-methods-in-the-same-java-e
- * 
- */
+/*
+* Basic Auth Filterfunktionalitäten parallel zulassen.
+* Filter nimmt alle anfragen auf den api/*Pfad und checkt danach, ob der User der anfragt existiert und
+* ob seine Credentials stimmen. Falls alles passt, lässt er den User durch, andernfalls wird dieser geblockt.
+*/
 
 package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.web;
 
@@ -44,30 +23,6 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
  
-/**
-* Lösungsvorschlag von Martin Kutscher. Da in der web.xml nur ein
-* Anmeldeverfahren definiert werden kann, programmieren wir den HTTP Basic Auth
-* für den Webservice hier einfach manuell aus.
-*
-* In der web.xml müssen hierfür folgende Zeilen ergänzt werden, um diese Klasse
-* zu konfigurieren:
-*
-* <filter>
-* <filter-name>BasicAuthFilter</filter-name>
-* <filter-class>dhbwka.wwi.vertsys.javaee.jtodo.tasks.rest.BasicLoginFilter</filter-class>
-* <init-param>
-* <param-name>role-names-comma-sep</param-name>
-* <param-value>app-user</param-value>
-* </init-param>
-* </filter>
-* <filter-mapping>
-* <filter-name>BasicLoginFilter</filter-name>
-* <url-pattern>/api/*</url-pattern>
-* </filter-mapping>
-*
-* Vgl.
-* https://stackoverflow.com/questions/27588665/how-do-i-configure-both-basic-and-form-authentication-methods-in-the-same-java-e
-*/
 public class BasicLoginFilter implements Filter {
  
     private static final String AUTHORIZATION_HEADER = "Authorization";
@@ -103,6 +58,8 @@ public class BasicLoginFilter implements Filter {
         }
     }
  
+    // Eigenetliche Filter-Funktionalität, lässt alle Origins und die unten angegebenen http Verben zu 
+    // Prüft die eingaben und loggt den User ein
     @Override
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain)
             throws IOException, ServletException {

@@ -1,14 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa;
 
 /**
  *
  * @author Philip Mayer
  */
+
+//Getränk Enum zur anzeige der Getränke, die der Getränkemarkt aktuell auf Lager hat
+//pro Getränk wird eine Bestellung angelegt. Auf Hinzufügung von Getränke wurde bewusst verzichtet.
 public enum GetraenkeEnum {
     Bier, Schnaps, Cola, Wasser, Orangensaft, Mischzeug, Radler, Apfelsaft, Traubensaft, ClubMate;
 

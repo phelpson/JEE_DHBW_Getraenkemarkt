@@ -23,6 +23,9 @@ public class MitarbeiterBean extends EntityBean <MitarbeiterEntity, Long>{
         super(entityClass);
     }
     
+//    Methode die ein Eintrittsdatum für den Mitarbeiter generiert.
+//    Der Mitarbeiter hat in der Tabelle Mitarbeiter ledigtlich seine ID und das Eintrittsdatum gespeichert.
+//    Das Eintrittsdatum wird, aus Wartungsgründen, vom Servlet zum Bean verschoben.
     public String generiereEintrittsdatum() {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
         LocalDateTime date = LocalDateTime.now();
@@ -34,21 +37,6 @@ public class MitarbeiterBean extends EntityBean <MitarbeiterEntity, Long>{
         MitarbeiterEntity mitarbeiter = new MitarbeiterEntity(dateString);
         this.em.persist(mitarbeiter);
         return this.em.merge(mitarbeiter);
-    }
-    
-    // Mitarbeiter via MitarbeiterId (ID - Primary Key) suchen
-    public MitarbeiterEntity findByMitarbeiterId(long mitarbeiterId){
-        return this.em.find(MitarbeiterEntity.class, mitarbeiterId);
-    }
-    
-    // Mitarbeiter via Namen suchen
-    public MitarbeiterEntity findByNachNamen(String mitarbeiternamen) {
-        return this.em.find(MitarbeiterEntity.class, mitarbeiternamen);
-    }
-
-    // MA Infos updaten
-    public MitarbeiterEntity updateMitarbeiter(MitarbeiterEntity mitarbeiterEntity) {
-        return this.em.merge(mitarbeiterEntity);
     }
 }
 

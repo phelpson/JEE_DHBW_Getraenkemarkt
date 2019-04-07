@@ -19,7 +19,7 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * Eine Getränkebestellung.
+ * Eine Getränkebestellung-Entity. Dieses Objekt wird in der Datenbank gespeichert.
  */
 @Entity
 @XmlRootElement

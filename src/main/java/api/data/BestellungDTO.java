@@ -21,7 +21,7 @@ public class BestellungDTO {
     private String dueTime;
     private String status;
     
-//    Default Konstruktur für die einfach Instanzierung des DTOs
+//    Default Konstruktur für die einfach und schnelle Instanzierung des DTOs
     public BestellungDTO () {
     }
     
@@ -34,7 +34,8 @@ public class BestellungDTO {
         this.dueTime = dueTime;
     }
     
-//<editor-fold defaultstate="collapsed" desc="Setter und Getter">
+//    Getter und Setter für den Aufruf der privaten Variablen 
+//    <editor-fold defaultstate="collapsed" desc="Setter und Getter">
     public String getShortText() {
         return shortText;
     }

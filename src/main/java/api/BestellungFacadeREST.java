@@ -29,6 +29,7 @@ public class BestellungFacadeREST {
 //    Bestellung anhand eines übertragenen Query-String-Parameters auslesen ?query=
 //    Aufruf der BestellungFacade um das Data Transfer Object zu mappen
 //    Um alle Bestellungen abzurufen, kann der query-String leer bleiben (?query="") - analog Default-Value
+//    Output im JSON-Format. Auf XML Output wird an dieser Stelle verzichtet.
     @GET
     @Path("findBestellung")
     @Produces({MediaType.APPLICATION_JSON})

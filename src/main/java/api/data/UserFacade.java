@@ -43,7 +43,7 @@ public class UserFacade {
             dto.setPlz(user.getPlz());
             dto.setArt(user.getDisAttribut());
             
-//            Bestellungen sind im User als ArrayList gemappt und werden mit einer seperaten Methode verarbeitet
+//          Bestellungen sind im User als ArrayList gemappt und werden mit einer seperaten Methode verarbeitet
             dto.setBestellungen(this.mapBestellungList(user.getbestellungen()));
             dto.setCountGesamtBestellungen(user.getbestellungen().size());
             return dto;

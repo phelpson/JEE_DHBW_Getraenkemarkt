@@ -51,6 +51,7 @@ public class SignUpServlet extends HttpServlet {
         session.removeAttribute("signup_form");
     }
     
+    // Absenden des Registrierungsformulars zum Anlegen von neunen Usern, Kunden oder Mitarbeitern
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -66,6 +67,10 @@ public class SignUpServlet extends HttpServlet {
         String address      = request.getParameter("signup_street");
         int plz             = 000000;
         String nfeMessage   = null;
+        
+        // Parse Integer PLZ, und facnge die entstehende Exception
+        // Exception-Text wird zunächst in Variable gespeichert, um dann an der richtigen Stelle in das Errors String-Array
+        // übergeben zu werden.
         try {
             plz             = Integer.parseInt(request.getParameter("signup_plz"));
         } catch(NumberFormatException nfe) {

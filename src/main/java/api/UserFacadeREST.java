@@ -35,6 +35,7 @@ public class UserFacadeREST {
     
 //    User anhand eines übertragenen Query-String-Parameters auslesen ?query=
 //    Aufruf der UserFacade um das Data Transfer Object zu mappen
+//    Output im JSON-Format. Auf XML Output wird an dieser Stelle verzichtet.
     @GET
     @Path("/findByUsername")
     @Produces({MediaType.APPLICATION_JSON})

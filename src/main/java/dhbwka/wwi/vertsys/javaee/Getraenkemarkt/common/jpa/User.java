@@ -92,7 +92,8 @@ public class User implements Serializable {
     private int plz;
 
     // Diskriminierendes Attribut für die Generalisierung/Spezialisierung
-    // Kunde oder Mitarbeiter
+    // Dient zur Identifikation in der Datenbank und lässt rückschlüsse zu, ob es sich um einen 
+    // Kunden oder Mitarbeiter handelt
     @Column(name = "disAttribut")
     private String disAttribut;
     

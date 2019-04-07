@@ -61,15 +61,6 @@ public class UserBean {
     }
     
     /**
-     * Benutzer löschen
-     * @param user Zu löschender Benutzer
-     */
-    @RolesAllowed("app-user")
-    public void delete(User user) {
-        this.em.remove(user);
-    }
-    
-    /**
      * Benutzer aktualisieren
      * @param user Zu aktualisierender Benutzer
      * @return Gespeicherter Benutzer
@@ -90,7 +81,7 @@ public class UserBean {
                 .getResultList();
     }
     
-     // Simples Beispiel, wie man den User per Name ausliesst und dann die Standardgruppe hinzufÃ¼gt. Sauberer waere natuerlich, die Gruppe aus der UserGroup MappingTabelle auszulesen
+     // User per Name auslesen und die Standardgruppe hinzufügen. 
     public User findUserForAuth(String userName){
         CriteriaBuilder cb = this.em.getCriteriaBuilder();
         CriteriaQuery<User> query = cb.createQuery(User.class);
@@ -107,6 +98,8 @@ public class UserBean {
         return  user;
     }
     
+    
+    // Exception-Handling für bereits angelegte Usernamen oder falsche Credetials
     /**
      * Fehler: Der Benutzername ist bereits vergeben
      */

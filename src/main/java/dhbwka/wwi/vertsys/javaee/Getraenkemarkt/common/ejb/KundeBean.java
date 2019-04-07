@@ -1,6 +1,5 @@
 package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb;
 
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb.EntityBean;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa.Kunde;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.User;
 import java.util.List;
@@ -42,23 +41,6 @@ public class KundeBean extends EntityBean<Kunde, Long> {
     
     public List<Kunde> findByUsername(User user) {   
         String username = user.getUsername();
-        return em.createQuery("SELECT a FROM Kunde a WHERE a.user = :username").setParameter("username",user).getResultList();
-                
-    }
-    
-    // Kunde via PLZ suchen
-    public Kunde findByPlz(int plz) {
-        return this.em.find(Kunde.class, plz);
-    }
-  
-    
-    // Kundeninformationen updaten
-    public Kunde updateKunde(Kunde Kunde) {
-        return this.em.merge(Kunde);
-    }
-    
-    // Kundeninformationen löschen
-    public void deleteKunde(Kunde Kunde) {
-        this.em.remove(Kunde);
+        return em.createQuery("SELECT a FROM Kunde a WHERE a.user = :username").setParameter("username",user).getResultList();         
     }
 }

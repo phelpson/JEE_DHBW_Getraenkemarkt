@@ -44,6 +44,7 @@ public class BestellungEditServlet extends HttpServlet {
     ValidationBean validationBean;
     
 
+//    Get-Methode zum Anzeigen der bereits angelegten Bestellung, bevor diese bearbeitet wird.
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -73,6 +74,7 @@ public class BestellungEditServlet extends HttpServlet {
         session.removeAttribute("bestellung_form");
     }
 
+//    Absenden der geänderten Bestellung mit der Post-Methode.
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -84,6 +86,8 @@ public class BestellungEditServlet extends HttpServlet {
             action = "";
         }
 
+//      Switch-Case Abfrage zur Auswahl der Methode.
+//      Soll die Bestellung überspeichert oder gelöscht werden?
         switch (action) {
             case "save":
                 this.savebestellung(request, response);
@@ -183,7 +187,7 @@ public class BestellungEditServlet extends HttpServlet {
     }
 
     /**
-     * Aufgerufen in doPost: Vorhandene Aufgabe löschen
+     * Aufgerufen in doPost: Vorhandene Bestellung löschen
      *
      * @param request
      * @param response
