@@ -74,7 +74,7 @@ Screenshots
     <tr>
         <td>
             <a href="Screenshots/bestellung_anlegen.png">
-                <img src="Screenshots/bestellung_anlegen" style="display: block; width: 100%;" />
+                <img src="Screenshots/bestellung_anlegen.png" style="display: block; width: 100%;" />
             </a>
         </td>
         <td>
@@ -102,7 +102,7 @@ Screenshots
         </td>
         <td>
             <a href="Screenshots/Client_User_suchen.png">
-                <img src="Screenshots/Client_user_suchen.png" style="display: block; width: 100%;" />
+                <img src="Screenshots/Client_User_suchenn.png" style="display: block; width: 100%;" />
             </a>
         </td>
     </tr>
@@ -115,16 +115,6 @@ Screenshots
         </td>
     </tr>
 </table>
-
-
-
-
-
-
-
-
---> Client - User suchen:
-![alt-text](https://github.com/phelpson/JEE_DHBW_Getraenkemarkt/tree/master/Screenshots/Client_User_suchen.png)
 
 
 
