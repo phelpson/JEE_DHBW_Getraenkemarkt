@@ -102,7 +102,7 @@ Screenshots
         </td>
         <td>
             <a href="Screenshots/Client_User_suchen.png">
-                <img src="Screenshots/Client_User_suchenn.png" style="display: block; width: 100%;" />
+                <img src="Screenshots/Client_User_suchen.png" style="display: block; width: 100%;" />
             </a>
         </td>
     </tr>
