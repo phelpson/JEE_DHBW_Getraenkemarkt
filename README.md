@@ -46,23 +46,80 @@ Bitte stellen Sie dafür sichen, dass die Getränkemarkt-App deployed ist und ei
 Screenshots
 -----------
 
---> Dashboard-Overview:
-![alt-text](https://github.com/phelpson/JEE_DHBW_Getraenkemarkt/tree/master/Screenshots/dashboard.png)
+
+<table style="max-width: 100%;">
+    <tr>
+        <td>
+            <a href="Screenshots/dashboard.png">
+                <img src="Screenshots/dashboard.png" style="display: block; width: 100%;" />
+            </a>
+        </td>
+        <td>
+            <a href="Screenshots/bestellungen_anzeigen.png">
+                <img src="Screenshots/bestellungen_anzeigen.png" style="display: block; width: 100%;" />
+            </a>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Dashboard
+        </td>
+        <td>
+            Bestellungen anzeigen
+        </td>
+    </tr>
+</table>
+
+<table style="max-width: 100%;">
+    <tr>
+        <td>
+            <a href="Screenshots/bestellung_anlegen.png">
+                <img src="Screenshots/bestellung_anlegen" style="display: block; width: 100%;" />
+            </a>
+        </td>
+        <td>
+            <a href="Screenshots/Client.png">
+                <img src="Screenshots/Client.png" style="display: block; width: 100%;" />
+            </a>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Bestellung anlegen
+        </td>
+        <td>
+            Client Application
+        </td>
+    </tr>
+</table>
+
+<table style="max-width: 100%;">
+    <tr>
+        <td>
+            <a href="Screenshots/Client_Bestellung_suchen.png">
+                <img src="Screenshots/Client_Bestellung_suchen.png" style="display: block; width: 100%;" />
+            </a>
+        </td>
+        <td>
+            <a href="Screenshots/Client_User_suchen.png">
+                <img src="Screenshots/Client_user_suchen.png" style="display: block; width: 100%;" />
+            </a>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Client - Bestellung suchen
+        </td>
+        <td>
+            Client - User suchen
+        </td>
+    </tr>
+</table>
 
 
 
---> Bestellungen anzeigen:
-![alt-text](https://github.com/phelpson/JEE_DHBW_Getraenkemarkt/tree/master/Screenshots/bestellungen_anzeigen.png)
 
 
-
---> Client-Overview:
-![alt-text](https://github.com/phelpson/JEE_DHBW_Getraenkemarkt/tree/master/Screenshots/client.png)
-
-
-
---> Client - Bestellungen suchen:
-![alt-text](https://github.com/phelpson/JEE_DHBW_Getraenkemarkt/tree/master/Screenshots/Client_Bestellung_suchen.png)
 
 
 
