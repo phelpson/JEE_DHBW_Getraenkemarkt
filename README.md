@@ -12,6 +12,9 @@ ausgelegten Applikationsserver. Sämtliche Anwendungslogik wird dabei vom Server
 implementiert, so dass für jedes URL-Pattern der Anwendung ein komplett serverseitig
 generierte HTML-Seite abgerufen und im Browser dargestellt wird.
 
+Dazu ist eine Client App, die einen AJAX-Call per JavaScript startet. Dieser wird vom Server entgegengenommen und mittels der
+implementierten REST-API verwertet.
+
 Verwendete Technologien
 -----------------------
 
@@ -33,11 +36,40 @@ Folgende Entwicklungswerkzeuge kommen dabei zum Einsatz:
  * [Git:](https://git-scm.com/") Versionsverwaltung zur gemeinsamen Arbeit am Quellcode
  * [TomEE:](https://tomee.apache.org/) Applikationsserver zum lokalen Testen der Anwendung
  * [Derby:](https://db.apache.org/derby/) In Java implementierte SQL-Datenbank zum Testen der Anwendung
+ 
+How-To: Client App Starten
+-----------
+Die Client App befindent sich im Git-Root Verzeichnis. Von dort aus, kann der gesamte Inhalt heruntergeladen werden.
+Zum Ausführen ist es nur notwendig, entweder die bestelung_search.html oder die user_search.html Datei auszuführen.
+Bitte stellen Sie dafür sichen, dass die Getränkemarkt-App deployed ist und eine Verbindung zur DerbyDB besteht.
 
 Screenshots
 -----------
 
--- to be filled --
+--> Dashboard-Overview:
+![alt-text](https://github.com/phelpson/JEE_DHBW_Getraenkemarkt/tree/master/Screenshots/dashboard.png)
+
+
+
+--> Bestellungen anzeigen:
+![alt-text](https://github.com/phelpson/JEE_DHBW_Getraenkemarkt/tree/master/Screenshots/bestellungen_anzeigen.png)
+
+
+
+--> Client-Overview:
+![alt-text](https://github.com/phelpson/JEE_DHBW_Getraenkemarkt/tree/master/Screenshots/client.png)
+
+
+
+--> Client - Bestellungen suchen:
+![alt-text](https://github.com/phelpson/JEE_DHBW_Getraenkemarkt/tree/master/Screenshots/Client_Bestellung_suchen.png)
+
+
+
+--> Client - User suchen:
+![alt-text](https://github.com/phelpson/JEE_DHBW_Getraenkemarkt/tree/master/Screenshots/Client_User_suchen.png)
+
+
 
 
 Copyright
