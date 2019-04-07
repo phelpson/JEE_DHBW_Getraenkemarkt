@@ -33,6 +33,7 @@ public class UpdateServlet extends HttpServlet {
     @EJB
     MitarbeiterBean mitarbeiterBean;
     
+    // Aktuelle Userdaten anzeigen
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -52,6 +53,7 @@ public class UpdateServlet extends HttpServlet {
        session.removeAttribute("update_form");
     }
     
+    // Aktuelle Userdaten überspeichern und aktualisieren
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -62,13 +64,16 @@ public class UpdateServlet extends HttpServlet {
         String address      = request.getParameter("update_street");
         int plz             = 000000;
         String nfeMessage   = null;
+        
+        // Parse Integer PLZ, und facnge die entstehende Exception
+        // Exception-Text wird zunächst in Variable gespeichert, um dann an der richtigen Stelle in das Errors String-Array
+        // übergeben zu werden.
         try {
             plz             = Integer.parseInt(request.getParameter("update_plz"));
         } catch(NumberFormatException nfe) {
-            nfeMessage = "Bitte geben Sie einen numerischen ganzzahligen Wert für die PLZ ein.";
+            nfeMessage      = "Bitte geben Sie einen numerischen ganzzahligen Wert für die PLZ ein.";
         }
-        //usage (Mitarbeiter oder Kunde)
-        String usage        = request.getParameter("update_usage");
+        
         String email        = request.getParameter("update_email");
         String givenname    = request.getParameter("update_givenname");
         String name         = request.getParameter("update_name");
@@ -78,6 +83,7 @@ public class UpdateServlet extends HttpServlet {
         
         //aktuell eingeloggten User holen
         User user = userBean.getCurrentUser();
+        
         //Eingegebenen Werte dem Userobjekt zuweisen
         user.setNachname(name);
         user.setVorname(givenname);

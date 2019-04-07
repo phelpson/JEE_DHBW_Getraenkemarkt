@@ -3,10 +3,7 @@ package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.dashboard.ejb;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.ejb.BestellungBean;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb.KundeBean;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.web.WebUtils;
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.dashboard.ejb.DashboardContentProvider;
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.dashboard.ejb.DashboardSection;
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.dashboard.ejb.DashboardTile;
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa.Kunde;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.Kunde;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa.BestellungStatus;
 import java.util.List;
 import javax.ejb.EJB;
@@ -31,11 +28,11 @@ public class DashboardContent implements DashboardContentProvider {
     @Override
     public void createDashboardContent(List<DashboardSection> sections) {
         // Zunächst einen Abschnitt mit einer Gesamtübersicht aller Bestellungen
-        // in allen Kategorien erzeugen
+        // in allen Kunden erzeugen
         DashboardSection section = this.createSection(null);
         sections.add(section);
 
-        // Anschließend je Kategorie einen weiteren Abschnitt erzeugen
+        // Anschließend je Kunde einen weiteren Abschnitt erzeugen
         List<Kunde> kunden = this.kundeBean.findAllSorted();
 
         for (Kunde kunde : kunden) {
@@ -45,15 +42,15 @@ public class DashboardContent implements DashboardContentProvider {
     }
 
     /**
-     * Hilfsmethode, die für die übergebene Bestellung-Kategorie eine neue Rubrik
+     * Hilfsmethode, die für den übergebenen Kunden eine neue Rubrik
      * mit Kacheln im Dashboard erzeugt. Je Bestellungenstatus wird eine Kachel
-     * erzeugt. Zusätzlich eine Kachel für alle Bestellungen innerhalb der
-     * jeweiligen Kategorie.
+     * erzeugt. Zusätzlich eine Kachel für alle Bestellungen innerhalb des
+     * jeweiligen Kunden.
      *
-     * Ist die Kategorie null, bedeutet dass, dass eine Rubrik für alle Bestellungen
-     * aus allen Kategorien erzeugt werden soll.
+     * Ist der Kunde null, bedeutet dass, dass eine Rubrik für alle Bestellungen
+     * aus allen Kunden erzeugt werden soll.
      *
-     * @param kunde Bestellung-Kategorie, für die Kacheln erzeugt werden sollen
+     * @param kunde Bestellung-Kunde, für die Kacheln erzeugt werden sollen
      * @return Neue Dashboard-Rubrik mit den Kacheln
      */
     private DashboardSection createSection(Kunde kunde) {

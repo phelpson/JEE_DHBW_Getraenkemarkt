@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <!-- Head - Definition von Charset, Stylsheet, Scale und Favicon-->
         <title>Getränkemarkt: Bestellungen prüfen</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,10 +11,13 @@
     <body>
         <h1>Getränkemarkt-App</h1>
 
+        <!-- Navigationsleiste -->
         <ul>
             <li><a class="active" href="user_search.html">User suchen</a></li>
             <li><a href="bestellung_search.html">Bestellung suchen</a></li>
         </ul>
+
+        <!-- Überschrift und Tipp-Text -->
         <h3>Getränkemarkt-User suchen</h3>
         <div class="helptext">
             <u>Tipp</u>: <br>
@@ -26,6 +30,7 @@
             Zur Suche von allen Usern inklusive Bestellungen können Sie das Suchfeld leer lassen.
         </div>
         
+        <!-- User-Authentication und Suchfeld -->
         <div class="auth">
                 <u class="auth-headline">Authentifizierung:</u> <br>
                 <p><label>Username: </label><input type="text" id="username" placeholder="Bitte Username eingeben"></p>
@@ -35,45 +40,52 @@
                 <p><label>Suche:</label></p><input type="text" id="search" placeholder="Username suchen...">
                 <button onclick="callAPI()">Suchen</button>
         </div>
-        
-        
-        
 
         <div>
             <div id="ergebnis" class="unsichtbar"></div>
         </div>
 
+        <!-- Begin of JavaScript -->
         <script>
+            // CallAPI-Methode für den asynchronen REST-API-Call
             async function callAPI() {
                 // DOM Reference on UI-Elements
                 let search = document.getElementById("search");
                 let resDiv = document.getElementById("ergebnis");
 
-                // Search text to let user know what's happening
+                // Suchtext um den Nutzer auf den Suchvorgang aufmerksam zu machen
                 resDiv.innerHTML = '<p class="waiting">Suche läuft …<p>';
                 resDiv.classList.remove("unsichtbar");
 
-                // URL Path to API on Backend
+                // URL Pfad zum API-Backend
                 let url = "http://localhost:8080/Getraenkemarkt/api/user/findByUsername"
                         + "?query=" + encodeURI(search.value);
                 
+                // Fetch-Api-Call inklusive den Header-Feldern
                 let antwort = await fetch(url, {
                     method: "get",
-                    // Setting HTTP-Header for basic auth and JSON-Format
+                    // Setzen vom HTTP-Header für die basic auth mit JSON-Format
                     headers: {
                         "accept": "application/json",
-                        "Authorization": "Basic " + btoa(username.value + ":" + password.value),
-
-                        
+                        "Authorization": "Basic " + btoa(username.value + ":" + password.value)                       
                     }
                 });
 
+                // Setzen eines leeren innerHTML-Divs
                 resDiv.innerHTML = "";
+
+                // Deklaration von den Users, die aus der JSON-Antwort folgt
                 let users;
 
-                // Try-Catch Block for Exception handling on Client-Side. If Server Error 500 - Login Failed occurs.
+                // Try-Catch Block für Exception-Handling auf Client-Seite.
+                // Falls Server Error 500 - Login Failed auftritt wird dieser in die Console geloggt.
                 try {
                     users = await antwort.json();
+                    
+                    // Alert ausgeben, falls die Nutzersuche keine Ergebnisse im JSON liefert
+                    if (users.length == 0) {
+                        alert("Ihre Suche liefert keine Ergebnisse!");
+                    }
                 } catch (e) {
                     alert("Login fehlgeschlagen. \nBitte prüfen Sie die Eingabe Ihres Usernames und Passworts");
                     console.log("Username and Password did not match a User in the Database. \n "+
@@ -83,12 +95,9 @@
                     )
                 }
                 
-                // Alert User if json is empty
-                if (users.length == 0) {
-                    alert("Ihre Suche liefert keine Ergebnisse!");
-                }
-                // S
-                // Outer Loop for each User
+            
+                // Äußere Schleife für die Iteration durch das User-JSON
+                // Verschachteltes JSON-File, aufgrund der Bestellungen, die als ArrayList innerhalb der User vorliegen
                 for(let i = 0; i < users.length; i++) {
                     let user = users[i];
                     let bestellungen = user.bestellungen;
@@ -106,10 +115,9 @@
                         
                     `;
                     
-                    
-                    // Inner Loop for each Bestellung
+                    // Inner Loop um die einzelnen Bestellungen durchzuiterieren
                     for (k = 0; k< bestellungen.length; k++) {
-                        // Index-Var for iteration starting at 1 instead of 0
+                        // Index-Var damit die Iteration der "Bestellung X" bei 1 statt bei 0 starten kann, um höhere Nutzerfreundlichkeit zu garantieren
                         let j = k+1;
                         let bestellHtml = `
                             <h4>Bestellung ${j}:</h4>
@@ -123,8 +131,11 @@
                             </p>
                             <hr>
                         `;
+                        // Zusammensetzung des HTML (der User) mit den inneren HTML der einzelnen Bestellungen
                         html += bestellHtml;
-                    }    
+                    }
+
+                    // Nach Ende der äußeren Schleife die beiden Div-Boxen zusammenführen und schließen, damit pro User und deren Bestellungen eine div-Box erzeugt wird    
                     resDiv.innerHTML += html + '</div>';    
                 } 
             }

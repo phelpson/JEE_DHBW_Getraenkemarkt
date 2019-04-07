@@ -1,12 +1,9 @@
-package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.web;
+package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.web;
 
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.web.FormValues;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.ejb.BestellungBean;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb.ValidationBean;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb.KundenListBean;
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa.Kunde;
 import java.io.IOException;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -28,7 +25,7 @@ public class KundenListServlet extends HttpServlet {
     @EJB
     ValidationBean validationBean;
 
-//    Gibt eine List von Kunden zurück, die mittels einer Tickbox anzuhaken sind.
+//    Gibt eine List von Kunden zurück, die mittels einer Checkbox anzuhaken sind.
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

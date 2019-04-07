@@ -1,7 +1,7 @@
 
 package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb;
 
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa.Kunde;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.Kunde;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;

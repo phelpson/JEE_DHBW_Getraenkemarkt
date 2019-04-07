@@ -110,7 +110,7 @@ public class BasicLoginFilter implements Filter {
         
         
  
-        // check roles for the user
+        // Rollen für den User überprüfen
         // Logindaten und Rollenzuordnung prüfen
         User user = this.userBean.findUserForAuth(userDecoded);
  

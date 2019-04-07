@@ -1,7 +1,7 @@
 package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.ejb;
 
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb.EntityBean;
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa.Kunde;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.Kunde;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa.Bestellung;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa.BestellungStatus;
 import java.util.List;
@@ -14,7 +14,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 /**
- * Einfache EJB mit den üblichen CRUD-Methoden für Aufgaben
+ * Einfache EJB mit den üblichen CRUD-Methoden für Bestellungen
  */
 @Stateless
 public class BestellungBean extends EntityBean<Bestellung, Long> { 
@@ -34,13 +34,15 @@ public class BestellungBean extends EntityBean<Bestellung, Long> {
     */
     public List<Bestellung> findByShortText(String shortText) {
         shortText = "%" + shortText + "%";
-        return em.createQuery("SELECT b FROM Bestellung b WHERE b.shortText LIKE :shortText ORDER BY b.dueDate, b.dueTime")
+        return em.createQuery("SELECT b FROM Bestellung b  "
+                + "WHERE b.shortText LIKE :shortText "
+                + "ORDER BY b.dueDate, b.dueTime")
                 .setParameter("shortText", shortText)
                 .getResultList();
     }
     
     /**
-     * Suche nach Aufgaben anhand ihrer Bezeichnung, Bestellungen und Status.
+     * Suche nach Bestellungen anhand ihrer Bezeichnung, Kunden und Status.
      * 
      * @param search In der Kurzbeschreibung enthaltener Text (optional)
      * @param kunde Kunde (optional)

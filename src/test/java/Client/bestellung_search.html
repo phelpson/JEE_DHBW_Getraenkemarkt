@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <!-- Head - Definition von Charset, Stylsheet, Scale und Favicon-->
         <title>Getränkemarkt: Bestellungen prüfen</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,10 +11,13 @@
     <body>
         <h1>Getränkemarkt-App</h1>
 
+        <!-- Navigationsleiste -->
         <ul>
             <li><a  href="user_search.html">User suchen</a></li>
             <li><a class="active" href="bestellung_search.html">Bestellung suchen</a></li>
         </ul>
+
+        <!-- Überschrift und Tipp-Text -->
         <h3>Getränkemarkt-Bestellung suchen</h3>
         <div class="helptext">
             <u>Tipp</u>: <br>
@@ -28,6 +32,7 @@
 
         </div>
         
+        <!-- User-Authentication und Suchfeld -->
         <div class="auth">
                 <u class="auth-headline">Authentifizierung:</u> <br>
                 <p><label>Username: </label><input type="text" id="username" placeholder="Bitte Username eingeben"></p>
@@ -37,29 +42,31 @@
                 <p><label>Suche:</label></p><input type="text" id="search" placeholder="Bestelltext suchen...">
                 <button onclick="callAPI()">Suchen</button>
         </div>
-        
-        
-        
 
         <div>
             <div id="ergebnis" class="unsichtbar"></div>
         </div>
 
+        <!-- Begin of JavaScript -->
         <script>
             async function callAPI() {
-                // DOM Reference on UI-Elements
+                // CallAPI-Methode für den asynchronen REST-API-Call
                 let search = document.getElementById("search");
                 let resDiv = document.getElementById("ergebnis");
 
+                // Suchtext um den Nutzer auf den Suchvorgang aufmerksam zu machen
                 resDiv.innerHTML = '<p class="waiting">Suche läuft …<p>';
                 resDiv.classList.remove("unsichtbar");
 
-                // URL Path to API on Backend
+                // URL Pfad zum API-Backend
                 let url = "http://localhost:8080/Getraenkemarkt/api/bestellungen/findBestellung"
                         + "?query=" + encodeURI(search.value);
 
+                // Console-Log of Basic Authentication
                 console.log('Basic ' + btoa(username.value + ":" + password.value));
-                // Setting HTTP-Heading for basic auth
+                
+                // Fetch-Api-Call inklusive den Header-Feldern
+                // Setzen vom HTTP-Header für die basic auth mit JSON-Format
                 let antwort = await fetch(url, {
                     method: "get",
                     headers: {
@@ -69,13 +76,18 @@
                     }
                 });
 
+                // Setzen eines leeren innerHTML-Divs
                 resDiv.innerHTML = "";
+
+                // Deklaration von den Users, die aus der JSON-Antwort folgt
                 let Bestellung;
-                // Try-Catch for Login Failed Exception from Server.
+
+                // Try-Catch Block für Exception-Handling auf Client-Seite.
+                // Falls Server Error 500 - Login Failed auftritt wird dieser in die Console geloggt.
                 try { 
                     Bestellung = await antwort.json();
 
-                    // Alert User is json is empty
+                    // Alert ausgeben, falls die Nutzersuche keine Ergebnisse im JSON liefert
                     if (Bestellung.length == 0) 
                         alert("Ihre Suche liefert keine Ergebnisse!");
 
@@ -88,7 +100,7 @@
                     )
                 }
                 
-                // Show JSON by looping through it
+                // Schleife um durch den JSON-Input zu loopen, um daraufhin das innerHTML als Output zu erzeugen
                 Bestellung.forEach(Bestellung => {
                     let html = `
                         <div>
@@ -100,7 +112,8 @@
                             <b>Bestellstatus:</b> ${Bestellung.status} <br/>
                         </div>
                     `;
-
+                    
+                    // Output zusammenführen
                     resDiv.innerHTML += html;
                 });
             }

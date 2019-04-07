@@ -1,12 +1,12 @@
 package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb;
 
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa.Kunde;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.Kunde;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.User;
 import java.util.List;
 import javax.ejb.Stateless;
 
 /**
- * Einfache EJB mit den üblichen CRUD-Methoden für Kategorien.
+ * Einfache EJB mit den üblichen CRUD-Methoden für Kunden.
  */
 @Stateless
 public class KundeBean extends EntityBean<Kunde, Long> {
@@ -21,8 +21,8 @@ public class KundeBean extends EntityBean<Kunde, Long> {
         super(entityClass);
     }
     /**
-     * Auslesen aller Kategorien, alphabetisch sortiert.
-     * @return Liste mit allen Kategorien
+     * Auslesen aller Kunden, alphabetisch sortiert.
+     * @return Liste mit allen Kunden
      */
     public List<Kunde> findAllSorted() {
         return this.em.createQuery("SELECT c FROM Kunde c").getResultList();
@@ -40,7 +40,9 @@ public class KundeBean extends EntityBean<Kunde, Long> {
     }
     
     public List<Kunde> findByUsername(User user) {   
-        String username = user.getUsername();
-        return em.createQuery("SELECT a FROM Kunde a WHERE a.user = :username").setParameter("username",user).getResultList();         
+        return em.createQuery("SELECT a FROM Kunde a "
+                + "WHERE a.user = :username")
+                .setParameter("username",user)
+                .getResultList();         
     }
 }

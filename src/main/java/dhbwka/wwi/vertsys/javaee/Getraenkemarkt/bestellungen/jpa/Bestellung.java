@@ -1,5 +1,6 @@
 package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa;
 
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.Kunde;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.User;
 import java.io.Serializable;
 import java.sql.Date;
@@ -32,10 +33,11 @@ public class Bestellung implements Serializable {
     @TableGenerator(name = "bestellung_ids", initialValue = 0, allocationSize = 50)
     private long id;
 
+//  Fremdschlüsselbeziehung zu User
     @ManyToOne
-    @NotNull(message = "Die Aufgabe muss einem Benutzer geordnet werden.")
+    @NotNull(message = "Die Bestellung muss einem Benutzer geordnet werden.")
     private User owner;
-
+    
     @ManyToOne
     private Kunde kunde;
    
@@ -96,14 +98,6 @@ public class Bestellung implements Serializable {
         this.owner = owner;
     }
 
-    public Kunde getkunde() {
-        return kunde;
-    }
-
-    public void setkunde(Kunde kunde) {
-        this.kunde = kunde;
-    }
-
     public String getShortText() {
         return shortText;
     }
@@ -134,6 +128,14 @@ public class Bestellung implements Serializable {
 
     public void setDueTime(Time dueTime) {
         this.dueTime = dueTime;
+    }
+    
+    public Kunde getkunde() {
+        return kunde;
+    }
+
+    public void setkunde(Kunde kunde) {
+        this.kunde = kunde;
     }
 
     public BestellungStatus getStatus() {

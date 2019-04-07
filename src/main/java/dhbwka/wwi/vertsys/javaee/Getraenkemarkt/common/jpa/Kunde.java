@@ -1,6 +1,6 @@
-package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa;
+package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa;
 
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.User;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa.Bestellung;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;

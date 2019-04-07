@@ -3,7 +3,6 @@ package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.MitarbeiterEntity;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 import javax.ejb.Stateless;
 
 

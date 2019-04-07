@@ -76,25 +76,31 @@ public class UserBean {
         }      
         query = "%" + query + "%";
         return em.createQuery("SELECT u FROM User u"
-                + "    WHERE u.username     LIKE :query")
+                + "    WHERE u.username LIKE :query")
                 .setParameter("query", query)
                 .getResultList();
     }
     
      // User per Name auslesen und die Standardgruppe hinzufügen. 
     public User findUserForAuth(String userName){
+        
         CriteriaBuilder cb = this.em.getCriteriaBuilder();
         CriteriaQuery<User> query = cb.createQuery(User.class);
         Root<User> from = query.from(User.class);
-        query.select(from);
-        query.where(cb.and(
-        cb.equal(from.get("username"), userName)));
-        List<User> result = em.createQuery(query).getResultList(); // getResultList() verhindert Nullpointer
-        User user = result != null && result.size() == 1 ? result.get(0) : null;
-        if(user!= null){
-            user.addToGroup("app-user"); // Defaultgruppe
-        }
         
+        query.select(from);
+        
+        query.where(cb.and(
+            cb.equal(from.get("username"), userName)));
+        
+        // getResultList() verhindert Nullpointer
+        List<User> result = em.createQuery(query).getResultList();
+        User user = result != null && result.size() == 1 ? result.get(0) : null;
+        
+        // Defaultgruppe für den User setzen
+        if(user!= null)
+            user.addToGroup("app-user"); 
+       
         return  user;
     }
     

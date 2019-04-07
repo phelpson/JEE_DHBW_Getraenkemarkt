@@ -44,7 +44,7 @@ public class BestellungEditServlet extends HttpServlet {
     ValidationBean validationBean;
     
 
-//    Get-Methode zum Anzeigen der bereits angelegten Bestellung, bevor diese bearbeitet wird.
+//  Get-Methode zum Anzeigen der bereits angelegten Bestellung, bevor diese bearbeitet wird.
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -74,7 +74,7 @@ public class BestellungEditServlet extends HttpServlet {
         session.removeAttribute("bestellung_form");
     }
 
-//    Absenden der geänderten Bestellung mit der Post-Methode.
+//  Absenden der geänderten Bestellung mit der Post-Methode.
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -99,7 +99,7 @@ public class BestellungEditServlet extends HttpServlet {
     }
 
     /**
-     * Aufgerufen in doPost(): Neue oder vorhandene Aufgabe speichern
+     * Aufgerufen in doPost(): Neue oder vorhandene Bestellung speichern
      *
      * @param request
      * @param response
@@ -234,7 +234,7 @@ public class BestellungEditServlet extends HttpServlet {
      * zurück.
      *
      * @param request HTTP-Anfrage
-     * @return Zu bearbeitende Aufgabe
+     * @return Zu bearbeitende Bestellung
      */
     private Bestellung getRequestedbestellung(HttpServletRequest request) {
         User user = this.userBean.getCurrentUser();
@@ -277,7 +277,7 @@ public class BestellungEditServlet extends HttpServlet {
      * Formular aus der Entity oder aus einer vorherigen Formulareingabe
      * stammen.
      *
-     * @param bestellung Die zu bearbeitende Aufgabe
+     * @param bestellung Die zu bearbeitende Bestellung
      * @return Neues, gefülltes FormValues-Objekt
      */
     private FormValues createbestellungForm(Bestellung bestellung) {

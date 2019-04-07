@@ -3,7 +3,7 @@ package dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.web;
 
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.ejb.KundeBean;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.ejb.BestellungBean;
-import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa.Kunde;
+import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.common.jpa.Kunde;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa.Bestellung;
 import dhbwka.wwi.vertsys.javaee.Getraenkemarkt.bestellungen.jpa.BestellungStatus;
 import java.io.IOException;
@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet für die tabellarische Auflisten der Aufgaben.
+ * Servlet für die tabellarische Auflisten der Bestellungen.
  */
 @WebServlet(urlPatterns = {"/app/bestellungen/list/"})
 public class BestellungListServlet extends HttpServlet {
@@ -41,7 +41,7 @@ public class BestellungListServlet extends HttpServlet {
         String searchkunde = request.getParameter("search_kunde");
         String searchStatus = request.getParameter("search_status");
 
-        // Anzuzeigende Aufgaben suchen
+        // Anzuzeigende Bestellungen suchen
         BestellungStatus status = null;
         
         Kunde kunde = null;
